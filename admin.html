@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Territórios – Anciãos e Servos Ministeriais</title>
+<style id="css">
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:#fff;color:#000;font:13px Arial,Helvetica,sans-serif}
+.wrap{overflow-x:auto;padding:0 0 24px}
+table{border-collapse:collapse;min-width:1480px;width:100%;table-layout:fixed}
+td,th{border:1px solid #d4d4d4;padding:2px 5px;vertical-align:middle;word-wrap:break-word}
+col.a{width:72px}col.b{width:104px}col.c{width:84px}col.d{width:34px}col.e{width:200px}col.f{width:70px}col.g{width:250px}col.h{width:130px}col.i{width:340px}col.j{width:130px}
+.top td{height:36px;border:none}
+.top .ab{background:#b7dff2;color:#1c5fa8;font:bold 26px Arial,sans-serif;text-align:center;border:2px solid #1a73e8}
+.top .ti{font:bold 26px Arial,sans-serif;text-align:center}
+.top .al{background:#fcd57f;text-align:center;font-size:12px;font-weight:bold}
+.top .al a{color:#1155cc}
+th{background:#d9d9d9;font-weight:normal;text-align:center;height:36px;position:sticky;top:0;z-index:2}
+th.l{background:#fff;font-size:12px}
+td.dt{text-align:center;background:#fff}
+td.cd{text-align:center}
+.NC{background:#fde3b4;color:#4a4a4a}
+.V{background:#d3e8c6;color:#2d7a32}
+.J,.VZ{background:#e3d3ee;color:#5b3a86}
+td.n{background:#fff;text-align:center;font-size:38px;color:#1155cc;text-decoration:underline;vertical-align:middle;border-bottom:none}
+td.n0{background:#efefef}
+td.pin{text-align:center;padding:0}
+tr.r td{background:#ffc7c0;color:#d00000}
+tr.r td.n{background:#fff}
+tr.r td.cd,tr.r td.dt{background:#ffc7c0}
+tr.b td.p,tr.b td.o{color:#1a3ee0}
+tr.gap td{height:21px;border-left:none;border-right:none}
+tr.gap td.n{border-bottom:none}
+td.dt{position:relative;cursor:pointer}
+td.dt input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+td.dt .ph{color:#b5b5b5;font-size:11px}
+select.cs{width:100%;border:0;background:transparent;font:inherit;color:inherit;text-align:center;text-align-last:center;appearance:none;-webkit-appearance:none;cursor:pointer;padding:4px 0}
+td.pin a{text-decoration:none;font-size:16px}
+.rj{display:block;font-size:11px;color:#777}
+tr.add td{background:#fafafa;border-left:none;border-right:none}
+tr.add td.fm{padding:4px 8px}
+.btn{font:12px Arial;padding:3px 8px;border:1px solid #1155cc;background:#fff;color:#1155cc;border-radius:4px;cursor:pointer}
+.fm input,.fm select{font:12px Arial;padding:3px;margin-right:6px}
+tr.new td:not(.cd):not(.n){background:#e8f1fb}
+#hist{padding:8px 12px 28px;max-width:900px}
+#hist h3{font-size:15px;margin:12px 0 6px}
+.hs{min-width:0;width:100%}
+.hs th{position:static;height:auto;padding:4px 6px}
+.hn{color:#777}
+.mg{color:#b00020;font-size:12px}
+.nv{display:flex;gap:4px;padding:6px 8px;border-bottom:1px solid #d4d4d4;background:#f8f8f8}
+.tb{font:13px Arial;padding:5px 12px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer}
+.tb.on{background:#1155cc;color:#fff;border-color:#1155cc}
+#va{padding:12px 16px;max-width:1000px}
+.sec{border-top:1px solid #d4d4d4;padding:10px 0 14px}
+.sec h4{font-size:14px;margin:0 0 6px}
+.btn.rd{border-color:#b00020;color:#b00020}
+.btn.rd.go{background:#b00020;color:#fff}
+.hs td{border:1px solid #d4d4d4;padding:3px 6px;font-size:12px}
+details summary{cursor:pointer;color:#1155cc}
+.ok{color:#2d7a32;font-size:12px}
+.top .tg{color:#1155cc;font-size:13px;text-align:center}
+#vi{padding:12px 16px 32px;max-width:900px}
+.ih{font-size:18px;margin:4px 0 8px}
+.ig{font-size:15px;margin:18px 0 6px;color:#1155cc}
+.it{min-width:0;width:100%;table-layout:auto;margin-bottom:8px}
+.it th{position:static;height:auto;padding:4px 6px;text-align:left}
+.it td{padding:5px 6px;vertical-align:top}
+.it td.cod{white-space:nowrap}
+.lk{border:0;background:none;color:#1155cc;text-decoration:underline;font:inherit;font-weight:bold;cursor:pointer;padding:0}
+.tn{font-weight:bold}
+a[id^="mv"],#ntv{color:#1155cc;font-size:12px;margin-right:6px}
+.adm2 textarea{display:block;width:100%;max-width:340px;padding:6px;margin:0 0 6px;font:12px Arial}
+.adm2 label{display:block;margin:4px 0 2px}
+#eds{max-width:100%;padding:5px;font:12px Arial;margin-bottom:8px}
+.og{display:inline-block;width:100%;font-size:11px;color:#777;line-height:1.2}
+.adm2 input{display:block;margin:0 0 6px;width:100%;max-width:340px;padding:6px}
+#va h3{font-size:16px;margin:8px 0}
+.adm input{display:block;margin:0 0 8px;width:100%;max-width:280px;padding:6px}
+.ix{border-collapse:collapse;min-width:1000px;width:1000px;table-layout:fixed;font-family:Arial,sans-serif}
+.ix col.xa{width:34px}.ix col.xb{width:300px}.ix col.xc{width:180px}.ix col.xd{width:100px}.ix col.xh{width:86px}
+.ix th{position:static;height:44px;background:#fff;border:1px solid #d4d4d4;font-weight:bold}
+.ix th.xt{background:#d9d9d9;font:bold 22px Arial,sans-serif;border:2px solid #000}
+.ix th.xg{background:#d9d9d9;font:22px Arial,sans-serif}
+.ix th.xl{color:#1155cc;text-decoration:underline;font:bold 22px Arial,sans-serif}
+.ix th.x0{background:#f3f3f3}
+.ix td{border:1px solid #d4d4d4;height:44px;padding:2px 4px;vertical-align:middle}
+.ix td.xm{text-align:center;vertical-align:bottom;padding-bottom:6px}
+.ix td.xn{border:2px solid #000}
+.ix td.xn .lk,.ix td.xn{font:28px Arial,sans-serif;text-align:left}
+.ix td.xn .lk{color:#1155cc;text-decoration:underline;font-weight:normal}
+.ix td.xr{font:26px Arial,sans-serif;text-align:center}
+.ix td.xe{background:#fff;text-align:center;font-size:12px;line-height:1.25;vertical-align:bottom}
+.ix td.xe.bu{background:#9fc5e8}.ix td.xe.pk{background:#d5a6bd}
+.ix td.xe a{color:#1155cc}
+.ix td.xk{background:#fff;text-align:center;font-size:13px;vertical-align:bottom}
+.dm{display:inline-block;width:9px;height:9px;transform:rotate(45deg)}.dm.or{background:#f6a13a}.dm.bl{background:#3d6fb6}
+.iw{overflow-x:auto}
+#vi{max-width:none}
+.pgh{margin-bottom:8px}.pgh input{font:13px Arial;padding:3px}
+#vp{padding:12px 16px 32px}
+.pgt1{text-align:center;letter-spacing:5px;font-size:14px;margin-top:10px;max-width:1100px}.pgt2{text-align:center;font-size:22px;margin:2px 0 10px;max-width:1100px}
+.pg{border-collapse:collapse;min-width:1100px;width:1100px;table-layout:fixed}
+.pg col.pcl{width:120px}.pg col.pdw{width:110px}.pg col.pds{width:320px}
+.pg th{position:static;height:24px;border:2px solid #000;font-weight:normal;font-size:13px;color:#000}
+.pg td{border:1px solid #bbb;height:24px;padding:1px 3px;font-size:13px;text-align:center}
+.pg td.plb,.pg td.pl0{border:none;text-align:left;background:#fff}
+.pg tr.pdr td.pdn{border:2px solid #000;font-size:14px}
+.pg td.pl2{height:42px}.pg tr.plr td{border-bottom:2px solid #000}
+.pg td.px{background:#fce5cd}.pg td.pl2 .pin2+.pin2,.pg td.pc .pin2+.pin2{margin-top:2px}.pg td.pc{cursor:pointer}.pg td.bu{background:#9fc5e8}.pg td.pk{background:#d5a6bd}.pg td.pam{background:#cfe2f3}
+.pg td.psun{padding:0;vertical-align:top;border:2px solid #000;background:#fff}
+.psu{width:100%;border-collapse:collapse;min-width:0;table-layout:fixed}
+.psu td{border:none;border-bottom:1px solid #ddd;height:24px;font-size:13px}.psu td.psg{width:110px;text-align:left;padding-left:6px}
+.lk2{border:0;background:none;color:#1155cc;text-decoration:underline;font:inherit;cursor:pointer;padding:0}
+.pg a,.zm{color:#1155cc;text-decoration:underline}
+.pin2{width:100%;font:12px Arial;padding:1px;border:1px solid #9ab;background:#fff}
+.pg td.pz{font-size:12px}.psun .btn{margin:4px;font-size:11px}
+.lx{border-collapse:collapse;min-width:0;width:100%;table-layout:auto}
+.lx td{border:1px solid #d4d4d4;padding:6px;vertical-align:top}
+.lx td.lxn{width:180px;font-size:15px;color:#1155cc;font-weight:bold}.lxg{display:block;font-size:11px;color:#555;font-weight:normal;margin-top:2px}
+.lx td.lxc{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+.lcx{width:190px;padding:5px;border-radius:3px}.lcx.bu{background:#9fc5e8}.lcx.pk{background:#d5a6bd}
+.lcx input{display:block;width:100%;font:12px Arial;padding:3px;margin-bottom:3px;border:1px solid #9ab}
+.lcb{display:flex;gap:6px;align-items:center;font-size:11px}.lcb a{color:#1155cc}.lcb .btn{padding:1px 6px;font-size:11px}
+.lad{align-self:center}
+.cfw{background:#fff4f4;border:1px solid #e6b8b8;padding:8px 10px;margin:4px 0 10px;border-radius:4px}.cfw .fm input{padding:5px}.sec h4 .btn{margin-left:8px;font-weight:normal}.hs td.nw{white-space:nowrap}
+.trn{display:block;font-size:10px;color:#a61c00;line-height:1.2;text-decoration:none}.pg .trb{font-size:10px;padding:0 5px;margin-top:2px}.pg td .btn[data-utr]{font-size:10px;padding:0 5px}#pgt{max-width:1100px}
+.pgdl{margin-left:10px}.pgdl .btn{margin-right:4px;border-color:#2d7a32;color:#2d7a32}
+
+.cx{max-width:420px;margin:60px auto;padding:24px;border:1px solid #ccc;border-radius:8px;font-size:15px;text-align:center}
+.cx h2{margin:0 0 14px;font-size:20px}.cx input{display:block;width:100%;padding:10px;margin:8px 0;font-size:16px;border:1px solid #aaa;border-radius:4px}
+.cx button{padding:10px 24px;font-size:16px;background:#1a73e8;color:#fff;border:0;border-radius:4px;cursor:pointer}
+.cx .er{color:#a61c00}.sair{float:right}
+/* ===== Tema no estilo do app de relatório (S-21) ===== */
+:root{--fundo:#e8f0f8;--escuro:#1d1915;--ouro:#c9a65b;--marrom:#8a5a3b;--verde:#3f7d3f;--azul:#2d5fb4;--cinza:#8d8a86;--borda:#d3dfeb;--card:#fff}
+[hidden]{display:none!important}
+body{background:var(--fundo);color:var(--escuro);font-family:"DM Sans",Arial,sans-serif}
+table,td,th,.btn,.tb,input,select,textarea,.lk,.lk2{font-family:"DM Sans",Arial,sans-serif!important}
+.hd{background:var(--escuro);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 28px 16px}
+.hd1{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;font-weight:600;line-height:1.1}
+.hd2{font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-top:4px;opacity:.9}
+.hdm{background:var(--ouro);color:var(--escuro);font-weight:600;border-radius:999px;padding:8px 20px;white-space:nowrap;font-size:15px}
+.nv{background:var(--escuro);border:0;margin:24px 28px 0;padding:0 8px;gap:0;overflow-x:auto;white-space:nowrap}
+.nv .tb{background:none;border:0;border-bottom:3px solid transparent;border-radius:0;color:#cfc9c2;font-size:15px;padding:16px 22px 13px}
+.nv .tb:hover{color:#fff}
+.nv .tb.on{background:none;color:var(--ouro);border-bottom-color:var(--ouro)}
+.tb[data-v="vp"]:before{content:"📅 "}.tb[data-v="vi"]:before{content:"🗺️ "}.tb[data-v="vt"]:before{content:"📍 "}.tb[data-v="va"]:before{content:"⚙️ "}
+.nv .sair{margin-left:auto;align-self:center;background:var(--cinza);color:#fff;border-radius:10px;padding:8px 16px;border:0;float:none}
+.nv .sair:hover{color:#fff;opacity:.9}
+#vi,#vp,#va{padding:20px 28px 40px;max-width:none}
+#vt>.wrap{background:var(--card);margin:20px 28px 40px;border-radius:14px;border:1px solid var(--borda);box-shadow:0 2px 10px rgba(40,30,20,.06);padding:0 0 12px}
+.iw,#pgt{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:16px;box-shadow:0 2px 10px rgba(40,30,20,.06)}
+#pgt{max-width:1140px;margin-bottom:14px}#pgt:empty{display:none}.pgt1,.pgt2{max-width:1180px}
+.iw{display:inline-block;max-width:100%}
+.btn{border:1.5px solid var(--azul);color:var(--azul);background:#fff;border-radius:9px;padding:6px 14px;font-size:13px;font-weight:500}
+.btn:hover{background:#eef3fb}
+.btn.rd{border-color:#b3261e;color:#b3261e}.btn.rd.go{background:#b3261e;color:#fff}
+.pgdl .btn{background:var(--verde);border-color:var(--verde);color:#fff}
+.pgh{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:14px}
+.pgh input{border:1.5px solid var(--borda);border-radius:9px;padding:6px 10px;background:#fff}
+.pgt1{color:var(--cinza)}.pgt2{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:30px;font-weight:600}
+/* página do território */
+th{background:var(--escuro);color:#f3eee8;border-color:#3a332c}
+th.l{background:var(--escuro);color:#f3eee8}
+th.l[style]{background:var(--escuro)!important}
+.top td{background:var(--card)}
+.top .ab{background:var(--verde);color:#fff;border:0;border-radius:10px 0 0 0;font-size:22px;letter-spacing:2px}
+.top .ti{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:30px;font-weight:700}
+td.n{color:var(--marrom)}
+td,th{border-color:#e6e0d8}
+tr.add td{background:#f6f9fc}
+/* lista de territórios */
+.ix th.xt,.ix th.xg,.ix th.xl{background:var(--escuro);color:#f3eee8;border-color:var(--escuro);text-decoration:none}
+.ix th.x0{background:var(--escuro);border-color:var(--escuro)}
+.ix td.xn .lk{color:var(--escuro);font-weight:600}
+.ix td.xn{font-size:22px!important}.ix td.xn .lk{font-size:22px!important}.ix td.xr{font-size:20px}
+.ix td.xe{border-radius:0}
+/* administração */
+#va>h3{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:30px;margin:0 0 12px}
+#lk,#ap{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(40,30,20,.06);max-width:1000px}
+.sec{border-top:1px solid var(--borda)}
+.adm input,.adm2 input,.adm2 textarea,.fm input,.fm select,#eds{border:1.5px solid var(--borda);border-radius:9px;padding:8px 10px}
+/* login e avisos */
+.cx{background:var(--card);border:1px solid var(--borda);border-radius:14px;box-shadow:0 2px 10px rgba(40,30,20,.06);margin:50px auto}
+.cx h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px}
+.cx input{border:1.5px solid var(--borda);border-radius:9px}
+.cx button{background:var(--escuro);color:#fff;border-radius:10px;width:100%;font-family:"DM Sans",Arial,sans-serif}
+@media (max-width:700px){.hd{padding:12px 16px}.hd1{font-size:26px}.hd2{font-size:10px;letter-spacing:2px}.hdm{font-size:13px;padding:6px 12px}
+ .nv{margin:14px 10px 0}.nv .tb{padding:13px 14px 10px;font-size:14px}#vi,#vp,#va{padding:14px 10px 30px}#vt>.wrap{margin:14px 10px 30px}}
+/* ===== Ajustes do 2º print (Listas / S-21 Inativos) ===== */
+.barra{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:22px 28px 0}
+.pill{border:0;border-radius:12px;padding:10px 20px;font:500 15px "DM Sans",Arial,sans-serif;color:#fff;cursor:pointer}
+.pill.cz{background:var(--cinza)}.pill.on{background:#5f7f6b;border-radius:999px;cursor:default}.pill.off{background:#b3261e;border-radius:999px;cursor:default}
+.nv{margin-top:20px}
+#ap{background:none;border:0;box-shadow:none;padding:0;max-width:1100px}
+.stb{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 22px}
+.stb button{background:#fff;border:2px solid var(--borda);border-radius:12px;padding:10px 18px;font:500 15px "DM Sans",Arial,sans-serif;color:var(--escuro);cursor:pointer}
+.stb button:hover{border-color:#aebfd2}
+.stb button.on{background:var(--escuro);border-color:var(--escuro);color:#fff}
+#ap .sec{background:#f6f9fc;border:1.5px solid #d3dfeb;border-radius:16px;padding:20px 24px;box-shadow:0 1px 4px rgba(40,30,20,.05)}
+#ap .sec h4{font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:600;margin:0 0 16px;padding-bottom:10px;border-bottom:1.5px solid var(--borda)}
+#ap .sec h4 .btn{font-family:"DM Sans",Arial,sans-serif;font-size:13px;vertical-align:middle}
+#ap>p:first-child:empty{display:none}
+#ap input,#ap select,#ap textarea,#lk input{border:1.5px solid var(--borda)!important;border-radius:10px!important;padding:10px 14px!important;font-size:15px!important;background:#fff;max-width:520px}
+#ap input[type=checkbox],#ap input[type=radio]{padding:0!important;max-width:none}
+#ap .btn,#lk .btn{padding:8px 16px;font-size:14px;border-radius:10px}
+.btn.rd{background:#fdecea;border-color:#c0392b;color:#b3261e}
+.btn.rd.go{background:#b3261e;color:#fff}
+#ap table{background:#fff;border-radius:8px}
+#ap .hs th{background:var(--escuro);color:#f3eee8}
+#lk{background:#f6f9fc;border:1.5px solid #d3dfeb;border-radius:16px}
+@media (max-width:700px){.barra{margin:14px 10px 0}.pill{padding:8px 14px;font-size:14px}#ap .sec{padding:16px}}
+#ap .lcx input{padding:5px 8px!important;font-size:13px!important;border-radius:6px!important}
+#ap .lcb .btn,#ap td .btn{padding:3px 8px;font-size:12px;border-radius:7px}
+#ap .lcx{border-radius:8px}
+#ap .sec .btn:not(.rd),#lk .btn{background:var(--escuro);border-color:var(--escuro);color:#fff}
+#ap .sec .btn:not(.rd):hover,#lk .btn:hover{background:#3a332c}
+#ap .lcb .btn:not(.rd),#ap td .btn:not(.rd),#ap h4 .btn:not(.rd),#ap .lad .btn{background:#fff;border-color:var(--azul);color:var(--azul)}
+.pgdl{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+<body>
+<header class="hd"><div><div class="hd1">Territórios</div><div class="hd2">Anciãos e Servos Ministeriais · Congregação Nagoya · Língua Portuguesa</div></div><span class="hdm" id="hdm"></span></header>
+<div id="msg" class="cx">Carregando…</div>
+<div id="login" class="cx" hidden><h2>Territórios – Anciãos e Servos Ministeriais</h2><input id="lge" type="email" placeholder="E-mail" autocomplete="username"><input id="lgs" type="password" placeholder="Senha" autocomplete="current-password"><button id="lgb">Entrar</button><p id="lgm" class="er"></p></div>
+<div id="imp" class="cx" hidden><h2>Primeira vez</h2><p>Escolha o arquivo <b>dados-iniciais.json</b> que está no seu computador. Ele é enviado só uma vez para o Firebase.</p><input type="file" id="impf" accept=".json,application/json"><p id="impm" class="er"></p></div>
+<div id="app" hidden>
+<nav class="nv"><button class="tb on" data-v="vp">Programação</button><button class="tb" data-v="vi">Territórios</button><button class="tb" data-v="vt" id="tbt">Território</button><button class="tb" data-v="va">Anciãos e Servos Ministeriais</button></nav>
+<div id="vi"></div>
+<div id="vp" hidden></div>
+<div id="vt" hidden>
+<div class="wrap">
+<table id="t">
+<colgroup><col class="a"><col class="b"><col class="c"><col class="d"><col class="e"><col class="f"><col class="g"><col class="h"><col class="i"><col class="j"></colgroup>
+<thead><tr class="top"><td colspan="2" class="ab">ABERTO</td><td id="tg" class="tg"></td><td colspan="4" class="ti" id="tt"></td><td></td><td></td><td></td></tr><tr><th class="l">DATA<br>(Dia/Mês)</th><th class="l" style="background:#d9d9d9">CONDIÇÃO</th><th class="l">Número do Território</th><th>📌</th><th>PRÉDIO</th><th>PORTA</th><th>ENDEREÇO</th><th>OBSERVAÇÕES</th><th>住所</th><th>建物名</th></tr></thead>
+<tbody id="b"></tbody>
+</table>
+</div>
+</div>
+<div id="va" hidden><h3>Anciãos e Servos Ministeriais</h3><div id="lk"></div><div id="ap" hidden></div></div>
+</div>
+<script id="main" type="text/plain">
+var TPL=(function(){function o(sel){var e=document.querySelector(sel);return e?e.outerHTML:"";}return o("nav.nv")+"\n"+o("#vi")+"\n"+o("#vp")+"\n"+o("#vt")+"\n"+o("#va");})();
+var SNAP=window.__BASE.SNAP||null;
+var PUBD=false;
+var L={NC:"NC",V:"VISITADO",J:"Japonês",VZ:"VAZIO"};
+var OPT=["","NC","CONVITE","VISITADO","VAZIO","Japonês","Tagalo","Nepalês","Outra língua","Não quer visita","Porta inexistente"];
+var CC={"NC":"NC","CONVITE":"CV","VISITADO":"V","VAZIO":"VZ","Japonês":"J","Tagalo":"J","Nepalês":"J","Outra língua":"J","Não quer visita":"NQ","Porta inexistente":"PI"};
+var CM={NC:["#fde3b4","#4a4a4a"],CV:["#cfe2f3","#1c4587"],V:["#d3e8c6","#2d7a32"],VZ:["#e3d3ee","#5b3a86"],J:["#e3d3ee","#5b3a86"],NQ:["#f4cccc","#990000"],PI:["#d9d9d9","#555"]};
+var MS=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+var RJ={"宮田荘":"Miyata-sō","吉井":"Yoshii","市営千音寺荘":"Shiei Sennonji-sō","伽羅山須":"Calasans","ｽﾀﾃﾞｨｵ":"Studio","ｼｬﾝﾋﾟｱ":"Shampia","ﾄｩｲﾝｸﾙ緑":"Twinkle Midori","レジデンス春栄":"Residence Harue","市営松下北荘":"Shiei Matsushita Kita-sō","市営松下荘":"Shiei Matsushita-sō","万場南荘":"Manba Minami-sō","花池マンション":"Hanaike Mansion","かの里住宅":"Kanosato Jūtaku","市営助光荘T-7":"Shiei Sukemitsu-sō T-7","前田ﾋﾞｭｰﾊｲﾂ":"Maeda View Heights","ドミールU":"Domil U","ｱﾌﾟﾘｺｯﾄﾋﾙ":"Apricot Hill","インペリアルコート":"Imperial Court","ﾐｷﾊｲﾂA":"Miki Haitsu A","ﾐｷﾊｲﾂB":"Miki Haitsu B","田中":"Tanaka","県営中川住宅":"Kenei Nakagawa Jūtaku","ﾚｼﾞﾃﾞﾝｽ中花":"Residence Nakahana","ﾌｧﾙｺﾝｶﾞﾚｰｼﾞ":"Falcon Garage","ﾚﾝﾀﾞｲｽｸｳｫｯﾀ":"Rendai Squatter","伊藤ﾊｲﾂ":"Itō Haitsu","パレス宝神":"Palace Hōjin","市営宝神荘":"Shiei Hōjin-sō","市営みなと荘":"Shiei Minato-sō","ｼﾃｨｰﾌｧﾐﾘｰ鴨浦":"City Family Kamoura","ﾎﾟﾚｽﾀｰ稲永":"Porester Inaei","市営新稲永荘":"Shiei Shin-Inaei-sō","中稲永荘":"Naka-Inaei-sō","市営港南荘":"Shiei Kōnan-sō","ｸﾞﾗﾝｺｰﾄ荒子川公園":"Grand Court Arakogawa Kōen","比嘉":"Higa","築地ｼﾃｨｰ住宅":"Tsukiji City Jūtaku","ﾊﾞﾝﾅｲ":"Bannai","宝ﾏﾝｼｮﾝ築地ｳｴｽﾄ参番館":"Takara Mansion Tsukiji West Sanbankan","市営新いろは荘":"Shiei Shin-Iroha-sō","ﾚｵﾊﾟﾚｽ港楽":"Leopalace Kōraku","市営宝来荘":"Shiei Hōrai-sō","市営港楽荘":"Shiei Kōraku-sō","ネオハイツ・久野":"Neo Heights Hisano","ｱﾈｯｸｽ船頭":"Annex Sendō","高井":"Takai","グランディールⅠ":"Grandir I","三宅":"Miyake","エスポワール坂野":"Espoir Banno","るり":"Ruri","リマーニ南陽":"Limarni Nanyō","高須":"Takasu","カーサKIMURA":"Casa Kimura","プリシェール原":"Pri Chel Hara","ブローテウエスト":"Brote West","ﾌﾟﾘﾍﾞｰﾙ":"Priver","グランソレイル":"Gran Soleil","グルピーノ３":"Gul Pino 3","佐藤オマル":"Satō Omaru","市営西茶屋荘":"Shiei Nishichaya-sō","平林":"Hirabayashi","フレンズブラジリアン柔術":"Friends Brazilian Jiu-Jitsu","山中":"Yamanaka","市営正保荘":"Shiei Shōho-sō","ガーデンヒルズ正保一番館":"Garden Hills Shōho Ichibankan","市営新土古荘 T6":"Shiei Shin-Donko-sō T6","市営新泰明荘":"Shiei Shin-Taimei-sō","公団九番団地":"Kōdan Kyūban Danchi","ﾋﾞﾚｯｼﾞﾊｳｽ木場ﾀﾜｰ":"Village House Kiba Tower","県営木場東住宅":"Kenei Kiba Higashi Jūtaku","公団木場団地":"Kōdan Kiba Danchi","県営木場南住宅":"Kenei Kiba Minami Jūtaku","市営南木場荘":"Shiei Minami Kiba-sō","ﾄﾗｽﾄ山王":"Trust Sannō","ｻﾝｼｬｲﾝ大須":"Sunshine Ōsu","大須土方ﾄﾞﾘｰﾑﾏﾝｼｮﾝ":"Ōsu Tsuchikata Dream Mansion","第三宮地ﾏﾝｼｮﾝ記念橋":"Dai-san Miyachi Mansion Kinenbashi","第二ｱﾘｽﾄﾏﾝｼｮﾝ":"Dai-ni Aristo Mansion","第二能楽ビル":"Dai-ni Nōgaku Biru","ハイレジデンス上園苑":"High Residence Uezono-en","公団豊成団地":"Kōdan Hōsei Danchi","Ｃｒｅｃｉａ五女子":"Crecia Gonyoshi","ｽﾍﾟﾘｱ山王":"Speria Sannō","一光ﾊｲﾂ山王B棟":"Ikkō Haitsu Sannō B","CASA松原":"Casa Matsubara","ジェンティールコート":"Gentile Court","県営清船南住宅":"Kenei Kiyofune Minami Jūtaku","ｾﾝﾁｭﾘｰ21":"Century 21","県営十一番町住宅":"Kenei Jūichiban-chō Jūtaku","ﾌﾞﾗｻﾞｰﾋﾞﾙ八幡":"Brother Biru Yawata","菱田":"Hishida","市営二番荘":"Shiei Niban-sō","野立ﾊｲﾂ":"Nodate Haitsu","桜田団地":"Sakurada Danchi","ﾊﾟｰｸｻｲﾄﾞﾚｼﾞﾃﾞﾝｽ神宮苑":"Park Side Residence Jingū-en","ﾄﾞｴﾙ白鳥":"Doeru Shirotori","アーバンドエル白鳥公園":"Urban Doeru Shirotori Kōen","市営一番荘":"Shiei Ichiban-sō","ﾆｭｰﾕｳﾁｸ":"New Yūchiku","黒鳥":"Kurotori","今村さんの隣":"ao lado do Imamura","ハイツサンルート":"Heights Sun Route","伊藤ビル":"Itō Biru","三条住宅":"Sanjō Jūtaku","市営第二大生荘":"Shiei Dai-ni Taisei-sō","宝生住宅A":"Hōshō Jūtaku A","市営宝生荘":"Shiei Hōshō-sō","北頭第二住宅":"Kitagashira Dai-ni Jūtaku","市営神松荘":"Shiei Kamimatsu-sō","神松荘 1 棟西":"Kamimatsu-sō 1 Nishi","市営神松荘 T":"Shiei Kamimatsu-sō T","市営神松荘1西棟":"Shiei Kamimatsu-sō 1 Nishi","市営柴田荘":"Shiei Shibata-sō","ﾌｧﾐｰﾙ柴田":"Famille Shibata","県営三吉住宅":"Kenei Miyoshi Jūtaku","市営丹後荘":"Shiei Tango-sō","ステラ星崎":"Stella Hoshizaki","シャトー芝":"Château Shiba","壽荘":"Kotobuki-sō","ﾘﾊﾞｰｻｲﾄﾞ235":"Riverside 235","星宮荘":"Hoshimiya-sō","ｺｰﾎﾟ星崎":"Kōpo Hoshizaki","ｸﾚｲﾝ":"Crane","愛知ﾌﾟﾛﾃｯｸ":"Aichi Pro Tech","ﾋﾞﾗ上浜":"Villa Kamihama","ﾋﾞﾚｯｼﾞﾊｳｽ笠寺ﾀﾜｰ":"Village House Kasadera Tower","市営元塩荘":"Shiei Motoshio-sō","県営元塩東住宅":"Kenei Motoshio Higashi Jūtaku","市営七番荘":"Shiei Shichiban-sō","ｼｬﾄﾚ愛松東海道":"Châtelet Aimatsu Tōkaidō","九番町ﾊｲﾂ":"Kyūban-chō Haitsu","ｱﾄﾚ東海通":"Atré Tōkai-dōri","現代ﾊｲﾂ南十一番":"Gendai Haitsu Minami Jūichiban","ｴｽﾎﾟｱ東海橋":"Espoir Tōkaibashi","市営丸池荘":"Shiei Maruike-sō","市営須成荘":"Shiei Sunari-sō","遠藤":"Endō","清野":"Kiyono","ﾒｿﾞﾝﾗﾌｫｰﾚ":"Maison Laforet","岩口":"Iwaguchi","アムールマージェス":"Amour Majesty","ﾙﾏﾝ柳原":"Roman Yanagihara","クレセール":"Crecer","エクセルコート美和Ⅱ":"Excel Court Miwa II","ファミール美和":"Famille Miwa","アーバンハイツ":"Urban Heights","エクセランパレ":"Excelan Palais","リヴィエール美和":"Riviere Miwa","ﾊﾟｽﾄﾗﾙﾊｲﾑ":"Pastoral Heim","サンヴィラ篠田A":"Sun Villa Shinoda A","小橋方ｺｰﾎﾟﾗｽA":"Kobashigata Coporas A","エスポワール美和":"Espoir Miwa","K's ｺｰﾄｿﾚｲﾕ":"K's Court Soleil","レオパレス新割":"Leopalace Shinwari","ﾚｵﾊﾟﾚｽ八原":"Leopalace Yahara","フォレストＫＭ５":"Forest KM5","シャローム":"Shalom","すわハイム２":"Suwa Heim 2","一番北側の部屋":"o quarto mais ao norte","ﾌﾛｰﾗﾊｲﾂ":"Flora Haitsu","上池さんの左隣":"à esquerda do Kamiike","秋桜":"Cosmos","ｼﾞｬﾙﾀﾞﾝ伊藤":"Jardin Itō","ﾗ･ﾌｫｰﾚ佐藤":"La Foret Satō","ｴｽﾎﾟﾜｰﾙ川平":"Espoir Kawahira","ビーライン服部2":"Be Line Hattori 2","ﾒｿﾞﾝM・A3":"Maison M・A3","ﾒｿﾞﾝM・A2":"Maison M・A2","ｸﾞﾚｲｽﾊﾟﾙ":"Grace Pal","ｾｼﾞｭｰﾙひまわりA":"Séjour Himawari A","ﾘﾊﾞｰｻｲﾄﾞ五明B":"Riverside Gomyō B","サンコーポ弥富":"Sun Corpo Yatomi","ラ・フォーレうさみ":"La Foret Usami","ｼｬﾙﾏﾝｶｰﾗ":"Charmant Kara","ﾒｿﾞﾝM・A":"Maison M・A","ｸﾞﾘｰﾝﾊｲﾂ":"Green Haitsu","サンパティB":"Sympathie B","ｾｻﾐﾊｲﾂ":"Sesami Haitsu","グランドシャトー藤栄":"Grand Château Fujiei","ｱｰﾙｲｰｽﾃｰｼﾞ蟹江":"R.E.Stage Kanie","加藤ｺｰﾎﾟ":"Katō Kōpo","ﾙﾐｴｰﾙY":"Lumière Y","丸庄ﾋﾞﾙ":"Marushō Biru","ライオンズニューシティ蟹江":"Lions New City Kanie","SOHO黒石ﾏﾝｼｮﾝ":"SOHO Kuroishi Mansion","ｴﾝｾﾞﾙﾊｳｽ":"Angel House","エンゼルハイツ":"Angel Heights","第3ﾏﾕﾐﾋﾞﾙ":"Dai-san Mayumi Biru","第一近藤ﾋﾞﾙ":"Dai-ichi Kondō Biru","第三近藤ﾋﾞﾙ":"Dai-san Kondō Biru","ハイツライム":"Heights Lime","富吉コーポ":"Tomiyoshi Kōpo","近鉄富吉第二ビル":"Kintetsu Tomiyoshi Dai-ni Biru","UR富吉団地":"UR Tomiyoshi Danchi","富吉グリーンハイツ":"Tomiyoshi Green Heights","ｷｬｯｽﾙ富吉3号棟":"Castle Tomiyoshi 3-gōtō","ﾘﾊﾞﾌﾟﾙﾔﾄﾐ":"Libapuru Yatomi","レジデンス林Ⅲ":"Residence Hayashi III","ﾋﾙｽﾞ紗愛":"Hills Sae","ﾌｨﾚﾝﾂｪ弥富Ⅰ":"Firenze Yatomi I","ﾌｨﾚﾝﾂｪ弥富Ⅱ":"Firenze Yatomi II","佐藤第3ﾋﾞﾙ":"Satō Dai-san Biru","佐藤第7ビル":"Satō Dai-nana Biru","ｽﾃｰｼｮﾝﾊｲﾑWA":"Station Heim WA","ｽﾃｰｼｮﾝﾊｲﾑWB":"Station Heim WB","ﾗﾌｨｰﾈ弥富":"Raffine Yatomi","ｽﾃｰｼｮﾝﾊｲﾑE":"Station Heim E","Casa弥富":"Casa Yatomi","ﾊｲﾑｱｻﾞﾚｱE":"Heim Azalea E","ﾃﾘｴA":"Terie A","ｾｲｽﾞｴﾀｰﾕ":"Seizu Etayu","カーサアウローラI":"Casa Aurora I","ﾚｵﾊﾟﾚｽｶﾒﾘｱ":"Leopalace Kameria","酒井":"Sakai","市営住宅西島団地":"Shiei Jūtaku Nishijima Danchi","いなぎく荘":"Inagiku-sō","山脇":"Yamawaki","公団国分団地":"Kōdan Kokubu Danchi","朝府住宅":"Asafu Jūtaku","第2松長ｺｰﾎﾟﾗｽ":"Dai-ni Matsunaga Coporas","ﾋﾞﾚｰｼﾞﾊｳｽ増田":"Village House Masuda","表記なし(神社の裏) 二階建":"sem nome (atrás do santuário), 2 andares","ｱﾙｶﾃﾞｨｱｵｸﾀﾞﾐﾅﾐ":"Arcadia Okuda Minami","ﾒｿﾞﾝ鈴木":"Maison Suzuki","神ノ木ﾊｲﾂ":"Kaminoki Haitsu","デュープレックス大塚B":"Duplex Ōtsuka B","菱電アパートファティリティ":"Ryōden Apartment Facility","ファティリティ稲沢":"Facility Inazawa","グリーンメゾン・ダコタ":"Green Maison Dakota","ﾙﾐﾅｽ三条":"Luminas Sanjō","ﾗｲｵﾝｽﾞｶﾞｰﾃﾞﾝ稲沢ｲｰｽﾄｳｨﾝｸﾞ":"Lions Garden Inazawa East Wing","ﾗｲｵﾝｽﾞｶﾞｰﾃﾞﾝ稲沢ｳｴｽﾄｳｨﾝｸﾞ":"Lions Garden Inazawa West Wing","公団井之口団地":"Kōdan Inokuchi Danchi","ﾆｭｰﾗｲﾌ宮重":"New Life Miyashige","ﾚｵﾊﾟﾚｽMTK":"Leopalace MTK","日彩ｺｰﾎﾟ":"Hissai Kōpo","ｹｰｽﾞｽﾀｲﾙ":"K's Style","ﾘｰｳﾞｧ美里":"Riva Misato","小崎荘":"Ozaki-sō","ｴﾗｰﾙ":"Éral","かすがﾀｳﾝ":"Kasuga Town","ﾆｭｰﾌﾟﾚｼﾞｵ春日":"New Predio Haruhi","ｱﾈｯｸｽｺｰﾄ":"Annex Court","溝口ﾋﾞﾙ":"Mizoguchi Biru","ﾒｿﾞﾝﾄﾞ・ｿﾚｲﾕⅡ":"Maison de Soleil II","第3服部ﾋﾞﾙ":"Dai-san Hattori Biru","サンヴィラキヨス":"Sun Villa Kiyosu","県営稲沢駅前住宅":"Kenei Inazawa Ekimae Jūtaku","あやめ荘":"Ayame-sō","精健ハイツ":"Seiken Haitsu","是枝":"Koreeda","ﾌﾟﾚｼｬｽﾒｿﾞﾝ":"Precious Maison","荒木":"Araki","ﾏﾒｿﾞﾝﾇｰｳﾞｫｰⅡ":"Ma Maison Nouveau II","公団津島団地":"Kōdan Tsushima Danchi","津島ｻﾝﾊｲﾂ":"Tsushima Sun Haitsu","パークサイド津島":"Park Side Tsushima","岡林":"Okabayashi","ｸﾞﾗﾝﾄﾞｰﾙｽｷﾞ":"Grand Doll Sugi","リバーサイドコーポ":"Riverside Kōpo","ｱﾈｯｸｽ津島":"Annex Tsushima","若松":"Wakamatsu","後藤ｺｰﾎﾟ":"Gotō Kōpo","ﾛｲﾔﾙﾌｫﾄ":"Royal Foto","ﾚｵﾈｸｽﾄSERENA":"Leonext Serena","ﾊｲﾂ長野":"Haitsu Nagano","KSﾊﾟｯｼｮﾝ":"KS Passion","ﾊﾟﾋﾟﾘｵﾝ松下":"Papillon Matsushita","コーポ松下":"Kōpo Matsushita","ｺｰﾎﾟ吉田":"Kōpo Yoshida","ﾒｿﾞﾝｽｶﾞﾜﾗ":"Maison Sugawara","サンハイツ小沢":"Sun Heights Kozawa","県営高御堂住宅":"Kenei Takamidō Jūtaku"};
+// linha: [data, condição, prédio, porta, endereço, observações, 住所, 建物名, marca, criado em, id]
+var TD=window.__BASE.TD;
+var TL=[
+["MINATO",[["7","NAKAGAWA Oeste","🔸","港１",["*Parque de Todagawa","Aeon de Nanyou","Feel Tomida 2F","*Valor Sennonjiten"]],["3","MINATO Sul","🔹","港２",["Parque de Arakogawa","*CAINZ de Minato 3F"]],["2","MINATO Oeste","🔸","港３",["Aeon de Nanyou","AEON de Chaya","Parque de Arakogawa","*CAINZ de Minato 3F"]],["5","KYUBAN","","港４",["Edion de minato 3F","MaxValu de Minato 2F"]]]],
+["DOUTOKU",[["6","KIBA","","道徳１",["Kanesue Kiba","DAISO de Kiba","*Super viva home 2F"]],["8","NAKAGAWA Leste","🔹","道徳２",["Edion de minato 3F","Max Value Shinoharabashi Higashi","*Yoshizuya Taiheitoriten 4F","*Edion Nagoya Honten 4F"]],["9","MINAMI Norte","🔸","道徳３",["Max Value Atsuta Chitose 2F","*Super viva home 2F","Apita Minami 1F","Super viva home 1F"]],["10","MINAMI Sul","","道徳４",["*Apita Minami 2F","*Super viva home 2F","Apita Minami 1F","Super viva home 1F"]],["4","MINATO Leste","🔸","道徳５",["Edion de minato 3F","MaxValu de Minato 2F","Parque de Arakogawa","Max Value Atsuta Chitose 2F"]]]],
+["NAKAGAWA",[["13","AMA e OHARU","🔸","中川１",["Aoki Super Oharu-minami","Piago Jimokujiten","*Nafco Tomida Shippo","*Valor Sennonjiten"]],["11","YATOMI Norte","🔸","中川２",["Aeon Yatomi","DONKI de Jyushiyama","*O segundo estacionamento de Paddy"]],["1","KANIE","","中川３",["Biblioteca de Kanie","*Aoki Tomiyoshi 2F"]],["12","YATOMI Sul","🔹","中川４",["Aeon Yatomi","DONKI de Jyushiyama","*O segundo estacionamento de Paddy"]]]],
+["INAZAWA",[["15","INAZAWA Oeste","🔸","稲沢１",["*Valor Inazawa Heiwaten","Pearl City","Yoshizuya Shin Inazawa"]],["17","INAZAWA Sul","🔸","稲沢２",["Pearl City","Piago Jimokujiten","*Acrossplaza Inazawa","Yoshizuya Kiyosuten 2F"]],["18","INAZAWA Leste","🔹","稲沢３",["Pearl City","Yoshizuya Kiyosuten 2F","Piago Jimokujiten"]],["14","AISAI e TSUSHIMA","","稲沢４",["YOSHIZUYA Tsushima","*FEEL Tsushima","*Sun Drug Kamimoriten","Piago Sayaten"]],["16","INAZAWA Norte","","稲沢５",["Pearl City","Yoshizuya Shin Inazawa","Acrossplaza Inazawa"]]]]
+];
+var NQ="Não quer visita",REM=["VAZIO","Japonês","Tagalo","Nepalês","Outra língua","Porta inexistente"];
+var S={},CUR="7",T=document.getElementById("b"),DB=null,cfg=null,gen=null,LAST={},PH=null,MK=null,RS=[],AREA=null,DL=["Massumi","Marlon","Katsunori","Williames","Juan","Rodrigo","Massao","Carlos","Amarildo","Machida"],LE=null,LW=null,ADM=false,RO=false,RC=0,ED="",GEO={};
+function pre(tid){return tid==="7"?"":"t"+tid;}
+function fix(tid){var g=S[tid].g;
+ if(tid==="7"&&g.length>1&&!g[0].n&&g[0].r[0]&&g[0].r[0][2]==="Miyata Sou"&&g[1].n==="1"){g[1].r=g[0].r.concat(g[1].r);g.splice(0,1);}
+ g.forEach(function(gr,gi){if(!gr.id)gr.id=pre(tid)+"G"+gi;if(tid==="7"&&!gr.n&&gr.r[0]&&gr.r[0][2]==="インペリアルコート")gr.n="4";
+  gr.r.forEach(function(x,i){if(x[8]==="r"&&!x[1])x[1]=NQ;if(!x[10])x[10]="m"+tid+"_"+gi+"_"+i+"_"+Date.now().toString(36);});});}
+function initT(tid){var g=JSON.parse(JSON.stringify(TD[tid].g));g.forEach(function(gr,gi){gr.id=pre(tid)+"G"+gi;gr.r.forEach(function(x,i){if(L[x[1]])x[1]=L[x[1]];x[10]=pre(tid)+"g"+gi+"r"+i;});});S[tid]={g:g,h:[],vh:{},ar:[]};fix(tid);}
+Object.keys(TD).forEach(initT);
+async function hash(p){try{var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("t7:"+p));return Array.from(new Uint8Array(b)).map(function(x){return("0"+x.toString(16)).slice(-2);}).join("");}catch(e){return"p"+btoa(unescape(encodeURIComponent("t7:"+p)));}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function un(s){var d=document.createElement("textarea");d.innerHTML=String(s==null?"":s).replace(/<br\s*\/?>/gi,"\n").replace(/<[^>]*>/g,"");return d.value;}
+function fd(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?(+m[3])+"/"+MS[+m[2]-1]+".":(s||"");}
+function iso(s){if(/^\d{4}-/.test(s))return s;var m=/^(\d+)\/(\w+)\.$/.exec(s||"");if(!m)return"";var i=MS.indexOf(m[2]);return i<0?"":"2026-"+("0"+(i+1)).slice(-2)+"-"+("0"+m[1]).slice(-2);}
+function cst(c){var m=CM[CC[c]];return m?"background:"+m[0]+";color:"+m[1]:"";}
+function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.test(q))q="愛知県名古屋市"+q;return q;}
+function pin(x){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
+function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
+function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v});else localStorage.setItem("t"+tid,v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveCfg(){try{if(cfg)cfg.set({pin:PH,master:MK});else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
+function load(tid,v){var o=JSON.parse(v),s=S[tid];
+ if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
+  if(tid==="7"&&!RS.length&&AREA===null&&((o.rs&&o.rs.length)||o.area!=null)){RS=o.rs||[];AREA=o.area!=null?o.area:null;saveGen();}}
+ fix(tid);}
+function logV(tid,x){var k=x[10],vh=S[tid].vh;(vh[k]=vh[k]||[]).push({t:Date.now(),d:x[0],c:x[1]});}
+function TIDS(){var a=[];TL.forEach(function(gr){gr[1].forEach(function(t){if(TD[t[0]])a.push(t[0]);});});Object.keys(TD).forEach(function(k){if(a.indexOf(k)<0)a.push(k);});return a;}
+function gname(tid,gi){return TD[tid].t+", grupo "+(un(S[tid].g[gi].n)||"sem número");}
+// ---------- página do território ----------
+function render(){
+ var s=S[CUR],G=s.g,h="";
+ document.getElementById("tt").textContent=TD[CUR].t;document.getElementById("tg").textContent=TD[CUR].tag||"";
+ document.getElementById("tbt").textContent="Território "+CUR;document.title="Território "+TD[CUR].t;
+ G.forEach(function(g,gi){
+  g.r.forEach(function(x,i){
+   var cl=(x[1]===NQ?"r":x[8]==="b"?"b":"")+(x[9]&&Date.now()-x[9]<2592e6?" new":""),id=gi+"_"+i;
+   h+='<tr class="'+cl+'"><td class="dt">'+(fd(x[0])||'<span class="ph">data</span>')+'<input type="date" data-k="'+id+'" value="'+iso(x[0])+'"'+(RO?' disabled':'')+'></td>';
+   h+='<td class="cd" style="'+cst(x[1])+'"><select class="cs" data-k="'+id+'"'+(RO?' disabled':'')+'>'+OPT.map(function(o){return'<option value="'+o+'"'+(o===x[1]?" selected":"")+'>'+(o||"—")+'</option>';}).join("")+'</select></td>';
+   if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
+   h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
+  });
+  h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
+  if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+ });
+ T.innerHTML=h;
+ if(ADM)renderAdm();
+}
+function openForm(gi){
+ var g=S[CUR].g[gi],seen={},o="";
+ g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;o+='<option value="'+i+'">'+x[2]+' — '+x[4]+'</option>';}});
+ document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button></span><span class="mg" id="m'+gi+'"></span>';
+}
+async function addDoor(gi){
+ var s=S[CUR],g=s.g[gi],v=+document.getElementById("s"+gi).value,po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
+ if(!po){m.textContent=" Digite a porta.";return;}
+ if(!by){m.textContent=" Digite seu nome.";return;}
+ if(!/^\d{4}$/.test(pn)){m.textContent=" Digite o PIN de 4 dígitos.";return;}
+ if(!PH){m.textContent=" Os responsáveis ainda não foram configurados. O responsável deve criar a chave mestra e o PIN na aba Anciãos e Servos Ministeriais.";return;}
+ var hh=await hash(pn);
+ if(PH!==hh){m.textContent=" PIN incorreto.";return;}
+ if(v<0){var q=function(i){return esc(document.getElementById(i+gi).value.trim());};if(!q("pr"))return;if(!inArea(q("jp"),q("en"))&&!m.dataset.ok){m.dataset.ok=1;m.textContent=" Atenção: esse endereço não pertence ao nosso território. Confira o endereço. Para colocar mesmo assim, clique em Adicionar de novo.";return;}n=["","",q("pr"),esc(po),q("en"),"",q("jp"),"","",ts,"n"+ts];g.r.push(n);}
+ else{var b=g.r[v],at=v;g.r.forEach(function(x,i){if(x[2]===b[2]&&x[4]===b[4])at=i;});n=["","",b[2],esc(po),b[4],"",b[6],b[7],"",ts,"n"+ts];g.r.splice(at+1,0,n);}
+ s.h.unshift({t:ts,by:by,n:g.n,pr:n[2],po:po});save(CUR);render();
+}
+T.onclick=function(e){var t=e.target;
+ if(t.type==="date"&&t.showPicker){try{t.showPicker();}catch(_){}}
+ if(t.dataset.add!==undefined)openForm(+t.dataset.add);
+ if(t.dataset.go!==undefined)addDoor(+t.dataset.go);
+};
+T.oninput=function(e){var m=/^(en|jp)(\d+)$/.exec(e.target.id);if(!m)return;var g=m[2],a=document.getElementById("mv"+g),q=mq(document.getElementById("jp"+g).value.trim(),document.getElementById("en"+g).value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");};
+T.onchange=function(e){var t=e.target;
+ if(t.classList.contains("sel")){document.getElementById("n"+t.id.slice(1)).hidden=t.value!=="-1";return;}
+ var k=t.dataset.k;if(!k)return;
+ var p=k.split("_"),x=S[CUR].g[p[0]].r[p[1]];
+ if(t.type==="date")x[0]=t.value;else x[1]=t.value;
+ logV(CUR,x);save(CUR);render();
+};
+// ---------- área e endereços ----------
+var AREA0="稲沢市 = Inazawa\n清須市 = Kiyosu\nあま市 = Ama\n大治町 = Oharu\n津島市 = Tsushima\n愛西市 = Aisai\n蟹江町 = Kanie\n弥富市 = Yatomi\n飛島村 = Tobishima\n中川区 = Nakagawa\n中村区 = Nakamura\n港区 = Minato\n南区 = Minami\n熱田区 = Atsuta\n中区 = Naka";
+function areaList(){return String(AREA==null?AREA0:AREA).split(/\n/).map(function(l){var p=l.split("=");return{jp:(p[0]||"").trim(),en:(p[1]||"").trim().toLowerCase().replace(/[^a-z]/g,"")};}).filter(function(a){return a.jp||a.en;});}
+function inArea(jp,en){var Z=areaList();if(!Z.length)return true;var j=toHalf(un(jp)).replace(/\s/g,"");if(j)return Z.some(function(a){return a.jp&&j.indexOf(a.jp)>=0;});var e=un(en).toLowerCase();if(e)return Z.some(function(a){return a.en&&new RegExp("(^|[^a-z])"+a.en+"([^a-z]|$)").test(e);});return true;}
+function toHalf(s){return String(s||"").replace(/[０-９]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-65248);});}
+function town(jp,en){var s=toHalf(un(jp)),i=s.indexOf("区");if(s&&i>=0){s=s.slice(i+1).replace(/[一二三四五六七八九十]+丁目.*/,"");var m=/^[^\d\-−]+/.exec(s);return m?m[0].replace(/丁目$/,""):"";}
+ s=un(en).toLowerCase().replace(/^[a-z]+-ku/,"").replace(/[^a-zāōū ]/g," ").replace(/\s+/g," ").trim();return s;}
+function ward(jp,en){var s=toHalf(un(jp)),m=/([^県市\d]+?[区町村])/.exec(s.replace(/^.*?県/,"").replace(/^[^市]*市/,""));if(s&&m)return m[1];var e=/([a-z]+)-ku/.exec(un(en).toLowerCase());return e?"@"+e[1]:"";}
+function cp(a,b){var n=0;while(n<a.length&&n<b.length&&a[n]===b[n])n++;return n;}
+async function geo(q){q=toHalf(un(q)).trim();if(!q)return null;if(GEO[q]!==undefined)return GEO[q];try{var r=await fetch("https://msearch.gsi.go.jp/address-search/AddressSearch?q="+encodeURIComponent(q));var j=await r.json();GEO[q]=j&&j[0]?[j[0].geometry.coordinates[1],j[0].geometry.coordinates[0]]:null;}catch(e){GEO[q]=null;throw e;}return GEO[q];}
+function km(a,b){var r=Math.PI/180,dl=(b[0]-a[0])*r,dg=(b[1]-a[1])*r,x=Math.pow(Math.sin(dl/2),2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.pow(Math.sin(dg/2),2);return 12742*Math.asin(Math.sqrt(x));}
+// ---------- administração ----------
+var VA=document.getElementById("va"),LK=document.getElementById("lk"),AP=document.getElementById("ap");
+function lockView(){
+ AP.hidden=true;AP.innerHTML="";LK.hidden=false;
+ LK.innerHTML=(MK?'<p class="hn">Para entrar, digite a chave mestra e o PIN.</p>':'<p class="hn">Primeira configuração: crie a chave mestra (mínimo 6 caracteres) e o PIN de 4 dígitos dos responsáveis. Guarde bem a chave mestra.</p>')
+ +'<div class="fm adm"><input id="ak" type="password" placeholder="'+(MK?'Chave mestra':'Nova chave mestra')+'"><input id="ap1" type="password" inputmode="numeric" maxlength="4" placeholder="PIN (4 dígitos)"><button class="btn" id="aent">'+(MK?'Entrar':'Criar e entrar')+'</button></div><p class="mg" id="am"></p>';
+}
+async function enter(){
+ var k=document.getElementById("ak").value,p=document.getElementById("ap1").value.trim(),m=document.getElementById("am");
+ if(k.length<6){m.textContent="A chave mestra precisa ter pelo menos 6 caracteres.";return;}
+ if(!/^\d{4}$/.test(p)){m.textContent="O PIN precisa ter 4 dígitos.";return;}
+ var kh=await hash("mk:"+k),ph=await hash(p);
+ if(MK){if(MK!==kh||PH!==ph){m.textContent="Chave mestra ou PIN incorreto.";return;}}
+ else{MK=kh;PH=ph;saveCfg();}
+ ADM=true;LW=null;LK.hidden=true;LK.innerHTML="";AP.hidden=false;renderAdm();
+}
+function lastV(tid,x){if(x[0])return{d:x[0],c:x[1]};var a=(S[tid].vh[x[10]]||[]).filter(function(e){return e.d;});return a.length?a[a.length-1]:null;}
+function hist(e){var w='Território '+e.tid+', grupo '+(e.n||"—");
+ if(e.k==="a")return'<b>Endereço novo</b> — '+w+(e.o?' (veio de '+esc(e.o)+')':'')+' — '+e.pr+', porta '+esc(e.po);
+ if(e.k==="v")return'<b>Porta voltou ao território</b> — '+w+' — '+e.pr+', porta '+esc(e.po);
+ if(e.k==="e")return'<b>Porta editada</b> — '+w+' — '+e.pr+', porta '+esc(e.po)+' (mudou: '+esc(e.ch)+')';
+ if(e.k==="t")return'<b>Grupo novo</b> — '+w+(e.o?' (veio de '+esc(e.o)+')':'')+' — primeira porta: '+e.pr+', '+esc(e.po);
+ return'Porta acrescentada — '+w+' — '+e.pr+', porta '+esc(e.po);}
+function tOpts(sel){return TIDS().map(function(tid){return'<option value="'+tid+'"'+(tid===sel?" selected":"")+'>'+esc(TD[tid].t)+'</option>';}).join("");}
+function edOpts(){return TIDS().map(function(tid){var o="";S[tid].g.forEach(function(g,gi){g.r.forEach(function(x,i){var k=tid+"|"+gi+"|"+i;o+='<option value="'+k+'"'+(k===ED?" selected":"")+'>Grupo '+esc(un(g.n)||"—")+' — '+esc(un(x[2]))+', porta '+esc(un(x[3]))+'</option>';});});return'<optgroup label="'+esc(TD[tid].t)+'">'+o+'</optgroup>';}).join("");}
+function lxSec(){if(!LW){LW={};TL.forEach(function(gr){gr[1].forEach(function(t){LW[t[0]]=JSON.parse(JSON.stringify(locs(t[0])));});});}
+ var h='<div class="sec"><h4>Locais de encontro</h4><p class="hn">Mesma divisão da página inicial. Em cada território você pode mudar o nome, colar o link do Google Maps do lugar, trocar a cor (azul ou rosa), apagar (×) ou acrescentar um local novo. Depois clique em Salvar locais de encontro.</p><div class="iw"><table class="lx">';
+ TL.forEach(function(gr){gr[1].forEach(function(t){var L=LW[t[0]]||[];
+  h+='<tr style="background:'+(GC[gr[0]]||"#fff")+'"><td class="lxn">'+t[0]+' '+t[1]+'<span class="lxg">'+gr[0]+'</span></td><td class="lxc">'
+  +L.map(function(o,i){var a=' data-lt="'+t[0]+'" data-li="'+i+'"';return'<div class="lcx '+(o.p?"pk":"bu")+'"><input'+a+' data-lf="n" value="'+esc(o.n)+'" placeholder="Nome do local"><input'+a+' data-lf="u" value="'+esc(o.u||"")+'" placeholder="Link do Google Maps (opcional)"><div class="lcb"><button class="btn"'+a+' data-lcol="1">'+(o.p?"Rosa":"Azul")+' (trocar)</button><a href="'+esc(lhref(o))+'" target="_blank" rel="noopener">ver no mapa</a><button class="btn rd"'+a+' data-ldel="1" title="Apagar">×</button></div></div>';}).join("")
+  +'<button class="btn lad" data-ladd="'+t[0]+'">+ Novo local</button></td></tr>';});});
+ return h+'</table></div><p><button class="btn" id="lsv">Salvar locais de encontro</button> <button class="btn" id="lrs">Desfazer alterações</button></p><p class="ok" id="lsm"></p></div>';}
+function renderAdm(){
+ var vr="",hs=[],ar=[];
+ TIDS().forEach(function(tid){var s=S[tid];
+  s.g.forEach(function(g){g.r.forEach(function(x){
+   var lv=lastV(tid,x),a=(s.vh[x[10]]||[]).slice().reverse();
+   vr+='<tr><td>'+(a.length?'<input type="checkbox" class="vhs" data-k="'+tid+'|'+x[10]+'">':'')+'</td><td>'+tid+'</td><td>'+(g.n||"—")+'</td><td>'+x[2]+'</td><td>'+x[3]+'</td><td>'+(lv?fd(lv.d):"")+'</td><td>'+(lv?esc(lv.c):"")+'</td><td>'+(a.length?'<details><summary>'+a.length+' registro'+(a.length>1?'s':'')+'</summary>'+a.map(function(e){return(e.r?'<b>Reset</b> ':'')+dmy(e.t)+': '+(fd(e.d)||'sem data')+' — '+(esc(e.c)||'sem condição');}).join('<br>')+'</details>':'')+'</td></tr>';
+  });});
+  s.h.forEach(function(e){var c=Object.assign({},e);c.tid=tid;hs.push(c);});
+  s.ar.forEach(function(a,i){ar.push({tid:tid,i:i,a:a});});
+ });
+ hs.sort(function(a,b){return b.t-a.t;});ar.sort(function(a,b){return b.a.t-a.a.t;});
+ var hh=hs.map(function(e){return'<tr><td>'+dmy(e.t)+'</td><td>'+esc(e.by)+'</td><td>'+hist(e)+'</td></tr>';}).join("");
+ AP.innerHTML='<p><button class="btn" id="aout">Sair desta área</button></p>'
+ +'<div class="sec"><h4>Trocar PIN e chave mestra</h4><div class="fm adm"><input id="np" type="password" inputmode="numeric" maxlength="4" placeholder="Novo PIN (4 dígitos)"><input id="nm" type="password" placeholder="Nova chave mestra (opcional)"><button class="btn" id="tps">Salvar</button></div><p class="mg" id="tpm"></p></div>'
+ +'<div class="sec"><h4>Reset dos territórios</h4><p class="hn">Apaga a data e a condição de todas as portas de todos os territórios. As portas marcadas como "Não quer visita" ficam como estão. O histórico de visitas não é apagado. As portas VAZIO, de outros idiomas e Porta inexistente saem do território e vão para Portas retiradas no reset, de onde podem voltar.'+(RS.length?' Último reset: '+dmy(RS[0])+'.':'')+'</p><button class="btn rd'+(RC?' go':'')+'" id="rst">'+(RC?'Confirmar: apagar datas e condições':'Resetar todos os territórios')+'</button>'+(RC?' <button class="btn" id="rcn">Cancelar</button>':'')+'<p class="ok" id="rsm"></p></div>'
+ +(function(){var L=PG.log||[];return'<div class="sec"><h4>Trocas de território'+(L.length?' <button class="btn rd" data-cf="tlsel">Apagar selecionadas</button><button class="btn rd" data-cf="tlall">Apagar tudo</button>':'')+'</h4><div id="cf-tl"></div><p class="hn">Quem trocou o território designado na Programação. Os nomes aparecem só aqui, para os anciãos e servos ministeriais.</p>'+(L.length?'<table class="hs"><tr><th><input type="checkbox" id="tlall2" title="Marcar todas"></th><th>Quando</th><th>Dia da programação</th><th>Linha</th><th>De</th><th>Para</th><th>Quem</th></tr>'+L.map(function(e,i){var d=e.k.split("-");return'<tr><td><input type="checkbox" class="tls" data-k="'+i+'"></td><td>'+dmy(e.t)+' '+new Date(e.t).toTimeString().slice(0,5)+'</td><td>'+(+d[2])+'/'+(+d[1])+'/'+d[0]+'</td><td>'+(e.s?'Domingo, '+capG(e.s):'Dia de semana')+'</td><td>'+esc(tlab(e.from))+'</td><td>'+esc(tlab(e.to))+'</td><td>'+(e.undo?'<i>Desfeita pelos anciãos e servos</i>':esc(e.by))+'</td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma troca ainda.</p>')+'</div>';})()
+ +'<div class="sec"><h4>Editar endereço de uma porta</h4><p class="hn">Escolha a porta, corrija o que estiver errado e salve. O pin 📌 passa a usar o endereço corrigido.</p><select id="eds"><option value="">Escolha a porta…</option>'+edOpts()+'</select><div id="edf"></div><p class="mg" id="edm"></p></div>'
+ +'<div class="sec"><h4>Acrescentar endereço novo</h4><p class="hn">Para endereços encontrados ou vindos de outra congregação. Preencha e clique em Procurar território mais perto: o site sugere o território e o grupo mais perto pelo endereço, e você confirma.</p><div class="adm2 fm"><input id="ntp" placeholder="Prédio (ou Casa)"><input id="ntd" placeholder="Porta"><input id="nte" placeholder="Endereço"><input id="ntj" placeholder="住所 (endereço em japonês)"><input id="ntk" placeholder="建物名 (nome do prédio em japonês, opcional)"><p class="hn" style="margin:0 0 6px"><a id="ntv" target="_blank" rel="noopener">Conferir o endereço no mapa</a></p><input id="ntx" placeholder="Observações (opcional)"><input id="nto" placeholder="Congregação de origem (opcional)"><input id="ntb" placeholder="Seu nome"><button class="btn" id="ntf">Procurar território mais perto</button></div><div id="nts"></div><p class="mg" id="ntm"></p></div>'
+ +lxSec()
+ +'<div class="sec"><h4>Lista de dirigentes</h4><p class="hn">Um nome por linha. Esses nomes aparecem para escolher na aba Programação.</p><div class="adm2"><textarea id="dll" rows="8" placeholder="Massumi&#10;Marlon&#10;Katsunori">'+esc(DL.join("\n"))+'</textarea><button class="btn" id="dls">Salvar lista</button></div><p class="ok" id="dlm"></p></div>'
+ +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
+ +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
+ +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)</h4>'+(hh?'<table class="hs"><tr><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>';
+ if(ED)fillEd();
+}
+async function setPin(){
+ var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
+ m.className="mg";
+ if(!/^\d{4}$/.test(np)){m.textContent="O novo PIN precisa ter 4 dígitos.";return;}
+ if(nm&&nm.length<6){m.textContent="A nova chave mestra precisa ter pelo menos 6 caracteres.";return;}
+ PH=await hash(np);if(nm)MK=await hash("mk:"+nm);saveCfg();
+ document.getElementById("np").value="";document.getElementById("nm").value="";
+ m.className="ok";m.textContent="Salvo. Passe o novo PIN aos responsáveis."+(nm?" A chave mestra também foi trocada.":"");
+}
+var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"]];
+function edX(){var p=ED.split("|"),s=S[p[0]],g=s&&s.g[p[1]];return g&&g.r[p[2]]?{tid:p[0],g:g,x:g.r[p[2]]}:null;}
+function edMap(){var a=document.getElementById("edv");if(!a)return;var q=mq(document.getElementById("ed6").value.trim(),document.getElementById("ed4").value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");}
+function fillEd(){var f=document.getElementById("edf"),o=ED&&edX(),em=document.getElementById("edm");em.textContent="";em.dataset.ok="";if(!o){f.innerHTML="";return;}var x=o.x;
+ f.innerHTML='<div class="adm2 fm">'+EF.map(function(e){return'<label class="hn">'+e[1]+'</label><input id="ed'+e[0]+'" value="'+esc(un(x[e[0]]))+'">';}).join("")+'<label class="hn">Observações</label><textarea id="ed5" rows="2">'+esc(un(x[5]))+'</textarea><p class="hn" style="margin:4px 0 6px"><a id="edv" target="_blank" rel="noopener">Conferir o endereço no mapa</a></p><input id="edb" placeholder="Seu nome"><button class="btn" id="edg">Salvar alterações</button></div>';
+ edMap();}
+function saveEd(){var o=edX(),m=document.getElementById("edm");if(!o)return;var x=o.x,by=document.getElementById("edb").value.trim(),ch=[],nv={};
+ m.className="mg";if(!by){m.textContent="Digite seu nome.";return;}
+ EF.forEach(function(e){var v=document.getElementById("ed"+e[0]).value.trim();if(v!==un(x[e[0]]).trim()){nv[e[0]]=esc(v);ch.push(e[1].split(" (")[0]);}});
+ var ob=document.getElementById("ed5").value.trim();if(ob!==un(x[5]).trim()){nv[5]=esc(ob).replace(/\n/g,"<br>");ch.push("Observações");}
+ if(!ch.length){m.textContent="Nada foi alterado.";return;}
+ if(nv[2]===""||nv[3]===""){m.textContent="O prédio e a porta não podem ficar vazios.";return;}
+ var nj=nv[6]!==undefined?nv[6]:x[6],ne=nv[4]!==undefined?nv[4]:x[4];if((nv[4]!==undefined||nv[6]!==undefined)&&!inArea(nj,ne)&&!m.dataset.ok){m.dataset.ok=1;m.textContent="Atenção: esse endereço não pertence ao nosso território. Para salvar mesmo assim, clique em Salvar de novo.";return;}
+ for(var k in nv)x[k]=nv[k];
+ S[o.tid].h.unshift({t:Date.now(),by:by,n:o.g.n,k:"e",pr:x[2],po:un(x[3]),ch:ch.join(", ")});
+ save(o.tid);render();
+ var m2=document.getElementById("edm");if(m2){m2.className="ok";m2.textContent="Alterações salvas. O pin 📌 já usa o endereço novo.";}}
+function restore(key){var p=key.split("|"),tid=p[0],i=+p[1],s=S[tid],a=s&&s.ar[i];if(!a)return;var g=s.g.filter(function(y){return y.id===a.gid;})[0],m=document.getElementById("arm");
+ if(!g){m.className="mg";m.textContent="O grupo dessa porta não existe mais.";return;}
+ var x=a.x,at=-1;x[0]="";x[1]="";g.r.forEach(function(y,j){if(y[2]===x[2]&&y[4]===x[4])at=j;});
+ if(at<0)g.r.push(x);else g.r.splice(at+1,0,x);
+ s.ar.splice(i,1);s.h.unshift({t:Date.now(),by:"Anciãos e Servos Ministeriais",n:g.n,k:"v",pr:x[2],po:un(x[3])});
+ save(tid);render();var m2=document.getElementById("arm");if(m2){m2.className="ok";m2.textContent="A porta voltou para o território "+tid+", grupo "+(un(g.n)||"sem número")+".";}}
+async function findNear(){
+ var v=function(i){return document.getElementById(i).value.trim();},m=document.getElementById("ntm"),box=document.getElementById("nts");
+ m.className="mg";m.textContent="";
+ if(!v("ntp")||!v("ntd")){m.textContent="Digite o prédio e a porta.";return;}
+ if(!v("nte")&&!v("ntj")){m.textContent="Digite o endereço (em português ou em japonês).";return;}
+ if(!v("ntb")){m.textContent="Digite seu nome.";return;}
+ box.innerHTML='<p class="hn">Procurando…</p>';
+ var q=mq(v("ntj"),v("nte")),rank=[],sc={},wy={},tie=false,how="",all=[];
+ TIDS().forEach(function(tid){S[tid].g.forEach(function(g,gi){g.r.forEach(function(x){all.push({k:tid+"|"+gi,x:x});});});});
+ function nm(k){var p=k.split("|");return gname(p[0],+p[1]);}
+ try{var me=await geo(q);if(me){var qs={};all.forEach(function(o){var k=mq(o.x[6],o.x[4]);if(k)qs[k]=1;});
+  await Promise.all(Object.keys(qs).map(function(k){return geo(k).catch(function(){return null;});}));
+  all.forEach(function(o){var p=GEO[toHalf(mq(o.x[6],o.x[4])).trim()];if(p){var d=km(me,p);if(sc[o.k]===undefined||d<sc[o.k]){sc[o.k]=d;wy[o.k]=un(o.x[2]);}}});
+  rank=Object.keys(sc).sort(function(a,b){return sc[a]-sc[b];});
+  if(rank.length){how="map";if(rank[1]!==undefined&&sc[rank[1]]-sc[rank[0]]<Math.max(0.15,sc[rank[0]]*0.25))tie=true;}}}catch(e){rank=[];}
+ if(!rank.length){sc={};var nj=town(v("ntj"),""),ne=town("",v("nte")),wj=ward(v("ntj"),v("nte"));
+  all.forEach(function(o){var x=o.x,s=0,tj=town(x[6],""),te=town("",x[4]);if(wj&&ward(x[6],x[4])!==wj)return;if(nj&&tj)s=cp(nj,tj);if(ne&&te)s=Math.max(s,cp(ne,te)/2);if(s>=2&&(sc[o.k]===undefined||s>sc[o.k])){sc[o.k]=s;wy[o.k]=un(x[2]);}});
+  rank=Object.keys(sc).sort(function(a,b){return sc[b]-sc[a];});
+  if(rank.length){how="nome";if(rank[1]!==undefined&&sc[rank[1]]===sc[rank[0]])tie=true;}}
+ function dist(k){return sc[k]<1?Math.round(sc[k]*1000)+" m":sc[k].toFixed(1)+" km";}
+ var best=rank.length&&!tie?rank[0]:"",msg,out=!inArea(v("ntj"),v("nte"));
+ if(!rank.length)msg='<p class="mg">Não consegui achar o território mais perto por esse endereço. Escolha o território na lista.</p>';
+ else if(tie){var t2=rank.filter(function(k){return how==="map"?sc[k]-sc[rank[0]]<Math.max(0.15,sc[rank[0]]*0.25):sc[k]===sc[rank[0]];});
+  msg='<p class="mg"><b>A distância é quase igual</b> entre '+t2.map(function(k){return'<b>'+esc(nm(k))+'</b>'+(how==="map"?' ('+dist(k)+', perto de '+esc(wy[k])+')':' (mesmo bairro que '+esc(wy[k])+')');}).join(' e ')+'. Escolha em qual vai colocar.</p>';}
+ else msg='<p class="ok">Sugestão: <b>'+esc(nm(best))+'</b> ('+(how==="map"?'pelo mapa, a porta mais perto ('+esc(wy[best])+') fica a '+dist(best):'pelo nome do bairro, igual ao de '+esc(wy[best]))+'). Confira e clique em Adicionar.</p>';
+ var o=(!best&&rank.length?'<option value="" selected>Escolha o território…</option>':'')+TIDS().map(function(tid){return'<optgroup label="'+esc(TD[tid].t)+'">'+S[tid].g.map(function(g,gi){var k=tid+"|"+gi;return'<option value="'+k+'"'+(k===best?" selected":"")+'>Grupo '+(un(g.n)||"sem número")+'</option>';}).join("")+'</optgroup>';}).join("");
+ box.innerHTML=(out?'<p class="mg"><b>Atenção: esse endereço não pertence ao nosso território.</b> Ele não fica em nenhuma das cidades ou bairros da área da congregação. Confira o endereço.</p>':'')+msg+(out?'<label class="mg"><input type="checkbox" id="ntw"> Adicionar mesmo assim</label>':'')
+ +'<div class="fm"><select id="ntg">'+o+'<option value="new"'+(!rank.length?" selected":"")+'>Criar grupo novo…</option></select><span id="ntnw"'+(!rank.length?'':' hidden')+'><select id="ntt">'+tOpts(CUR)+'</select><input id="ntn" placeholder="Número do grupo novo" size="14"></span><button class="btn" id="ntc">Adicionar</button></div>';
+}
+function newTerr(){
+ var v=function(i){var e=document.getElementById(i);return e?e.value.trim():"";},m=document.getElementById("ntm");
+ var pr=v("ntp"),po=v("ntd"),en=v("nte"),jp=v("ntj"),bk=v("ntk"),ob=v("ntx"),og=v("nto"),by=v("ntb"),sel=v("ntg"),ts=Date.now(),g,row,tid;
+ m.className="mg";
+ if(!pr||!po||(!en&&!jp)||!by){m.textContent="Preencha prédio, porta, endereço e seu nome.";return;}
+ if(!sel){m.textContent="Escolha o território na lista.";return;}
+ var w=document.getElementById("ntw");if(w&&!w.checked){m.textContent="Esse endereço não pertence ao nosso território. Marque Adicionar mesmo assim para continuar.";return;}
+ var obs=esc(ob);if(og)obs=(obs?obs+"<br>":"")+"Veio da congregação "+esc(og);
+ row=["","",esc(pr),esc(po),esc(en),obs,esc(jp),esc(bk),"",ts,"n"+ts];
+ if(sel==="new"){tid=v("ntt");var nu=v("ntn");if(!nu){m.textContent="Digite o número do grupo novo.";return;}if(S[tid].g.some(function(y){return y.n===esc(nu);})){m.textContent="Esse território já tem um grupo "+nu+".";return;}g={id:pre(tid)+"T"+ts,n:esc(nu),o:og,r:[row]};S[tid].g.push(g);}
+ else{var p=sel.split("|");tid=p[0];g=S[tid].g[+p[1]];if(!g)return;var at=-1;g.r.forEach(function(y,j){if(un(y[2])===pr&&((jp&&un(y[6])===jp)||(en&&un(y[4])===en)))at=j;});if(at<0)g.r.push(row);else g.r.splice(at+1,0,row);}
+ S[tid].h.unshift({t:ts,by:by,n:g.n,k:sel==="new"?"t":"a",o:og,pr:esc(pr),po:po});
+ save(tid);render();
+ var m2=document.getElementById("ntm");if(m2){m2.className="ok";m2.textContent="Endereço acrescentado no território "+TD[tid].t+", grupo "+(un(g.n)||"sem número")+". O pin 📌 já foi criado pelo endereço.";}
+}
+function doReset(){
+ var t=Date.now(),nr=0;
+ TIDS().forEach(function(tid){var s=S[tid];
+  s.g.forEach(function(g){g.r=g.r.filter(function(x){
+   if(x[1]===NQ)return true;
+   if(x[0]||x[1])(s.vh[x[10]]=s.vh[x[10]]||[]).push({t:t,d:x[0],c:x[1],r:1});
+   if(REM.indexOf(x[1])>=0){s.ar.unshift({t:t,gid:g.id,n:g.n,c:x[1],d:x[0],x:x});nr++;return false;}
+   x[0]="";x[1]="";return true;
+  });});
+  save(tid);});
+ RS.unshift(t);RC=0;saveGen();render();
+ var m=document.getElementById("rsm");if(m)m.textContent="Reset feito. Datas e condições apagadas, histórico guardado."+(nr?" "+nr+" porta(s) vazia(s), inexistente(s) ou de outro idioma foram para Portas retiradas no reset.":"");
+}
+var PA=null;
+function cfBox(t){return document.getElementById(t.indexOf("vh")===0?"cf-vh":t.indexOf("tl")===0?"cf-tl":"cf-ar");}
+function cfOpen(t){var keys=[];
+ if(t==="vhsel")document.querySelectorAll(".vhs:checked").forEach(function(c){keys.push(c.dataset.k);});
+ if(t==="tlsel")document.querySelectorAll(".tls:checked").forEach(function(c){keys.push(c.dataset.k);});
+ if(t==="arsel")document.querySelectorAll(".ars:checked").forEach(function(c){keys.push(c.dataset.k);});
+ if(t.indexOf("ar|")===0){keys=[t.slice(3)];t="arsel";}
+ document.querySelectorAll(".cfb").forEach(function(x){x.innerHTML="";});
+ var box=cfBox(t);box.className="cfb";
+ if((t==="vhsel"||t==="arsel"||t==="tlsel")&&!keys.length){PA=null;box.innerHTML='<p class="mg">Marque primeiro, na primeira coluna, o que quer apagar.</p>';return;}
+ PA={t:t,k:keys};
+ var txt=t==="tlall"?"Isso apaga todo o histórico de trocas de território.":t==="tlsel"?"Isso apaga "+keys.length+" registro(s) do histórico de trocas.":t==="vh"?"Isso apaga o histórico de visitas de todas as portas de todos os territórios.":t==="vhsel"?"Isso apaga o histórico de visitas de "+keys.length+" porta(s) marcada(s).":t==="arall"?"Isso apaga para sempre todas as portas retiradas no reset. Elas não poderão mais voltar ao território.":"Isso apaga para sempre "+keys.length+" porta(s) retirada(s). Elas não poderão mais voltar ao território.";
+ box.innerHTML='<div class="cfw"><p class="mg"><b>Atenção:</b> '+txt+' Não dá para desfazer. Para confirmar, digite as duas chaves.</p><div class="fm"><input id="cfk" type="password" placeholder="Chave mestra"><input id="cfp" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" id="cfo">Confirmar e apagar</button> <button class="btn" id="cfc">Cancelar</button></div><p class="mg" id="cfm"></p></div>';
+ document.getElementById("cfk").focus();}
+async function cfDo(){if(!PA)return;var m=document.getElementById("cfm"),k=document.getElementById("cfk").value,p=document.getElementById("cfp").value.trim();
+ if(!k||!/^\d{4}$/.test(p)){m.textContent="Digite a chave mestra e o PIN de 4 dígitos.";return;}
+ if(await hash("mk:"+k)!==MK||await hash(p)!==PH){m.textContent="Chave mestra ou PIN incorreto.";return;}
+ var a=PA,msg="",ch={};PA=null;
+ if(a.t==="tlall"||a.t==="tlsel"){if(a.t==="tlall")PG.log=[];else a.k.map(Number).sort(function(x,y){return y-x;}).forEach(function(i){(PG.log||[]).splice(i,1);});savePG();renderAdm();var bx=cfBox(a.t);if(bx)bx.innerHTML='<p class="ok">'+(a.t==="tlall"?"Histórico de trocas apagado.":a.k.length+" registro(s) apagado(s).")+'</p>';return;}
+ if(a.t==="vh"){TIDS().forEach(function(tid){S[tid].vh={};ch[tid]=1;});msg="Histórico de visitas apagado.";}
+ else if(a.t==="vhsel"){a.k.forEach(function(x){var q=x.split("|");if(S[q[0]]){delete S[q[0]].vh[q[1]];ch[q[0]]=1;}});msg="Histórico de "+a.k.length+" porta(s) apagado.";}
+ else if(a.t==="arall"){TIDS().forEach(function(tid){if(S[tid].ar.length){S[tid].ar=[];ch[tid]=1;}});msg="Todas as portas retiradas foram apagadas.";}
+ else{var by={};a.k.forEach(function(x){var q=x.split("|");(by[q[0]]=by[q[0]]||[]).push(+q[1]);});
+  Object.keys(by).forEach(function(tid){by[tid].sort(function(x,y){return y-x;}).forEach(function(i){S[tid].ar.splice(i,1);});ch[tid]=1;});msg=a.k.length+" porta(s) retirada(s) apagada(s).";}
+ Object.keys(ch).forEach(save);
+ renderAdm();var box=cfBox(a.t);if(box)box.innerHTML='<p class="ok">'+msg+'</p>';}
+VA.onclick=function(e){var id=e.target.id;
+ if(e.target.dataset.cf){cfOpen(e.target.dataset.cf);return;}
+ if(id==="cfo"){cfDo();return;}
+ if(id==="cfc"){PA=null;var o=document.querySelectorAll(".cfb");o.forEach(function(x){x.innerHTML="";});return;}
+ if(id==="aent")enter();
+ if(id==="aout"){ADM=false;RC=0;ED="";lockView();}
+ if(id==="tps")setPin();
+ if(id==="rst"){if(RC)doReset();else{RC=1;renderAdm();}}
+ if(id==="rcn"){RC=0;renderAdm();}
+ if(id==="ntc")newTerr();
+ if(id==="ntf")findNear();
+ if(id==="ars"){AREA=document.getElementById("arl").value;saveGen();render();var q=document.getElementById("arsm");if(q)q.textContent="Área salva.";}
+ if(id==="edg")saveEd();
+ var lt=e.target.dataset.lt,li=+e.target.dataset.li;
+ if(e.target.dataset.ladd){LW[e.target.dataset.ladd].push({n:"",p:false,u:""});renderAdm();var ins=document.querySelectorAll('[data-lt="'+e.target.dataset.ladd+'"][data-lf="n"]');if(ins.length)ins[ins.length-1].focus();}
+ if(lt&&e.target.dataset.lcol){LW[lt][li].p=!LW[lt][li].p;renderAdm();}
+ if(lt&&e.target.dataset.ldel){LW[lt].splice(li,1);renderAdm();}
+ if(id==="lrs"){LW=null;renderAdm();}
+ if(id==="lsv"){var bad="";var nl={};Object.keys(LW).forEach(function(k){nl[k]=LW[k].map(function(o){return{n:o.n.trim(),p:!!o.p,u:/^https?:\/\//i.test((o.u||"").trim())?o.u.trim():""};}).filter(function(o){return o.n;});LW[k].forEach(function(o){if(o.u&&!/^https?:\/\//i.test(o.u.trim()))bad=o.n;});});
+  LE=nl;LW=null;saveGen();renderIdx();renderAdm();var q=document.getElementById("lsm");if(q){q.className=bad?"mg":"ok";q.textContent="Locais de encontro salvos."+(bad?" O link de \""+bad+"\" não começa com https:// e foi ignorado.":"");}}
+ if(id==="dls"){DL=document.getElementById("dll").value.split(/\n/).map(function(x){return x.trim();}).filter(Boolean);saveGen();renderAdm();var q=document.getElementById("dlm");if(q)q.textContent="Lista salva. "+DL.length+" dirigente(s).";}
+ if(e.target.dataset.rb!==undefined)restore(e.target.dataset.rb);
+};
+VA.onchange=function(e){if(e.target.id==="vhall"||e.target.id==="arall2"||e.target.id==="tlall2"){var on=e.target.checked;document.querySelectorAll(e.target.id==="vhall"?".vhs":e.target.id==="tlall2"?".tls":".ars").forEach(function(c){c.checked=on;});return;}if(e.target.id==="ntg")document.getElementById("ntnw").hidden=e.target.value!=="new";if(e.target.id==="eds"){ED=e.target.value;fillEd();}};
+VA.oninput=function(e){var d=e.target.dataset;if(d.lt&&d.lf&&LW&&LW[d.lt]&&LW[d.lt][+d.li]){LW[d.lt][+d.li][d.lf]=e.target.value;return;}if(e.target.id==="ed4"||e.target.id==="ed6")edMap();if(e.target.id==="nte"||e.target.id==="ntj"){var a=document.getElementById("ntv"),q=mq(document.getElementById("ntj").value.trim(),document.getElementById("nte").value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");}};
+VA.onkeydown=function(e){if(e.key==="Enter"&&(e.target.id==="cfk"||e.target.id==="cfp")){cfDo();return;}if(e.key==="Enter"&&(e.target.id==="ak"||e.target.id==="ap1"))enter();};
+// ---------- programação ----------
+var PG={"2026-10": {"d": {"2026-10-01": {"dir": "Massumi", "hora": "19:00", "terr": "4", "loc": "Edion de minato 3F"}, "2026-10-03": {"dir": "Marlon", "hora": "10:00", "terr": "12", "loc": "Aeon Yatomi"}, "2026-10-04": {"sun": {"NAKAGAWA": "13", "MINATO": "2", "DOUTOKU": "6", "INAZAWA": "15"}}, "2026-10-09": {"dir": "Katsunori", "hora": "19:00", "terr": "10", "loc": "Apita Minami 1F"}, "2026-10-10": {"dir": "Williames", "hora": "10:00", "terr": "18", "loc": "Pearl City"}, "2026-10-11": {"sun": {"NAKAGAWA": "13", "MINATO": "2", "DOUTOKU": "6", "INAZAWA": "15"}}, "2026-10-15": {"dir": "Juan", "hora": "19:00", "terr": "6", "loc": "DAISO de Kiba"}, "2026-10-16": {"dir": "Rodrigo", "hora": "20:00", "terr": "zoom", "loc": "860 418 5501"}, "2026-10-17": {"dir": "Massao", "hora": "10:00", "terr": "8", "loc": "Edion Nagoya Honten 4F"}, "2026-10-18": {"sun": {"NAKAGAWA": "13", "MINATO": "2", "DOUTOKU": "9", "INAZAWA": "15"}}, "2026-10-23": {"dir": "Carlos", "hora": "19:00", "terr": "7", "loc": "Feel Tomida 2F"}, "2026-10-24": {"dir": "Amarildo", "hora": "10:00", "terr": "4", "loc": "Edion de minato 3F"}, "2026-10-25": {"sun": {"NAKAGAWA": "13", "MINATO": "2", "DOUTOKU": "9", "INAZAWA": "15"}}, "2026-10-29": {"dir": "Machida", "hora": "19:00", "terr": "17", "loc": "Pearl City"}}}},PM="",PE=false,pdoc=null,PMU=false;
+var WD=["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"],WC=["#fff","#fff","#00ffff","#00ff00","#ffff00","#ff0000","#a4c2f4"];
+var GRP=["NAKAGAWA","MINATO","DOUTOKU","INAZAWA"],MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+function ym(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2);}
+function pickPM(){var c=ym(new Date());if(PG[c])return c;var ks=Object.keys(PG).filter(function(x){return/^\d{4}-\d\d$/.test(x);}).sort();return ks.length?ks[ks.length-1]:c;}
+PM=pickPM();
+function tinfo(n){var r=null;TL.forEach(function(gr){gr[1].forEach(function(t){if(t[0]===n)r={g:gr[0],t:t};});});return r;}
+function mapq(n){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(n+" 愛知県");}
+function pmonth(){return PG[PM]=PG[PM]||{d:{}};}
+function savePG(){PUBD=true;var v=JSON.stringify(PG);LAST.pg=v;try{if(pdoc)pdoc.set({data:v});else localStorage.setItem("tprog",v);}catch(e){}}
+function tOptsAll(sel,grp){var o='<option value="">—</option>';TL.forEach(function(gr){if(grp&&gr[0]!==grp)return;o+='<optgroup label="'+gr[0]+'">'+gr[1].map(function(t){return'<option value="'+t[0]+'"'+(t[0]===sel?" selected":"")+'>'+t[0]+' '+t[1]+'</option>';}).join("")+'</optgroup>';});return o;}
+function tLink(n){var i=tinfo(n);if(!i)return"";var lab=n+" "+i.t[1];return TD[n]?'<button class="lk2" data-open="'+n+'">'+esc(lab)+'</button>':esc(lab);}
+function pkey(dd){return PM+"-"+("0"+dd).slice(-2);}
+function sundays(){var p=PM.split("-"),Y=+p[0],M=+p[1]-1,n=new Date(Y,M+1,0).getDate(),a=[];for(var d=1;d<=n;d++)if(new Date(Y,M,d).getDay()===0)a.push(pkey(d));return a;}
+function wkCell(k,e0,f){var e=e0;if(!PE&&e0.tr)e=Object.assign({},e0,{terr:e0.tr.terr,loc:e0.tr.loc,locx:!!e0.tr.locx,lurl:e0.tr.lurl||""});
+ if(f==="dir")return'<td class="pc">'+(PE?(function(){var dx=e.dirx||(e.dir&&DL.indexOf(e.dir)<0);return'<select class="pin2" data-pk="'+k+'" data-pf="dir"><option value="">—</option>'+DL.map(function(n){return'<option'+(!dx&&n===e.dir?" selected":"")+'>'+esc(n)+'</option>';}).join("")+'<option value="__outro"'+(dx?" selected":"")+'>Digitar outro nome…</option></select>'+(dx?'<input class="pin2" data-pk="'+k+'" data-pf="dirn" value="'+esc(e.dir||"")+'" placeholder="Nome do dirigente">':'');})():esc(e.dir||""))+'</td>';
+ if(f==="hora")return'<td class="pc'+(e.hora&&e.hora<"12"?" pam":"")+'">'+(PE?'<input type="time" class="pin2" data-pk="'+k+'" data-pf="hora" value="'+esc(e.hora||"")+'">':esc(e.hora||""))+'</td>';
+ if(f==="terr"){var i=tinfo(e.terr);return'<td class="pc" style="background:'+(i?GC[i.g]:"#fff")+'">'+(PE?(function(){var gs=e.terr==="zoom"?"zoom":(i?i.g:(e.grp||""));return'<select class="pin2" data-pk="'+k+'" data-pf="grp"><option value="">Grupo…</option>'+GRP.map(function(g){return'<option value="'+g+'"'+(g===gs?" selected":"")+'>'+g.charAt(0)+g.slice(1).toLowerCase()+'</option>';}).join("")+'<option value="zoom"'+(gs==="zoom"?" selected":"")+'>Zoom</option></select>'+(gs&&gs!=="zoom"?'<select class="pin2" data-pk="'+k+'" data-pf="terr">'+tOptsAll(e.terr,gs)+'</select>':'');})():(e.terr==="zoom"?'<span class="zm">Zoom</span>':tLink(e.terr))+trNote(k,e0,""))+(PE&&e0.tr?trNote(k,e0,""):"")+'</td>';}
+ var LS=(e.terr&&e.terr!=="zoom")?locs(e.terr):[],cur=e.loc||"",fo=LS.filter(function(o){return o.n===cur;})[0];
+ if(e.terr==="zoom")return'<td class="pc pl2 pz">'+(PE?'<input class="pin2" data-pk="'+k+'" data-pf="loc" value="'+esc(cur)+'" placeholder="ID da reunião">':(cur?'ID da reunião:<br>'+esc(cur):''))+'</td>';
+ var cx=e.locx||(cur&&!fo),href=cx?(e.lurl||mapq(cur)):(fo?lhref(fo):mapq(cur));
+ var opts='<option value="">—</option>'+LS.map(function(o){return'<option'+(!cx&&o.n===cur?" selected":"")+'>'+esc(o.n)+'</option>';}).join("")+'<option value="__outro"'+(cx?" selected":"")+'>Outro local…</option>';
+ return'<td class="pc pl2'+(cur?(cx?" px":fo&&fo.p?" pk":" bu"):"")+'">'+(PE?'<select class="pin2" data-pk="'+k+'" data-pf="loc">'+opts+'</select>'+(cx?'<input class="pin2" data-pk="'+k+'" data-pf="locn" value="'+esc(cur)+'" placeholder="Nome do local"><input class="pin2" data-pk="'+k+'" data-pf="lurl" value="'+esc(e.lurl||"")+'" placeholder="Link do Google Maps (opcional)">':''):(cur?'<a href="'+esc(href)+'" target="_blank" rel="noopener">'+esc(cur)+'</a>':""))+'</td>';
+}
+function capG(g){return g.charAt(0)+g.slice(1).toLowerCase();}
+function sunCell(k){var o=pmonth().d[k]||{},s=o.sun||{},sg=o.sung||{},st=o.str||{};
+ return'<table class="psu">'+GRP.map(function(g){var t=s[g]||"",i=tinfo(t),gs=sg[g]||(i?i.g:g);return'<tr><td class="psg">'+(PE?'<select class="pin2" data-pk="'+k+'" data-pf="sung" data-pg="'+g+'">'+GRP.map(function(x){return'<option value="'+x+'"'+(x===gs?" selected":"")+'>'+capG(x)+'</option>';}).join("")+'</select>':capG(gs))+'</td>'+(function(){var tv=(!PE&&st[g])?st[g].terr:t,iv=tinfo(tv);return'<td class="pst" style="background:'+(iv?GC[iv.g]:"#fff")+'">'+(PE?'<select class="pin2" data-pk="'+k+'" data-pf="sun" data-pg="'+g+'">'+tOptsAll(t,gs)+'</select>':tLink(tv))+trNote(k,o,g)+'</td>';})()+'</tr>';}).join("")+'</table>'+(PE?'<button class="btn" data-sall="'+k+'">Usar em todos os domingos do mês</button>':'');}
+function tlab(n){var i=tinfo(n);return i?n+" "+i.t[1]:(n==="zoom"?"Zoom":"");}
+function trNote(k,o,slot){var tr=slot?(o.str||{})[slot]:o.tr,orig=slot?(o.sun||{})[slot]:o.terr;
+ if(PE)return tr?'<span class="trn">trocado por '+esc(tr.by)+(orig?' (era '+esc(tlab(orig))+')':'')+'</span><button class="btn" data-utr="'+k+'|'+slot+'">Desfazer troca</button>':"";
+ if(RO||(!slot&&o.terr==="zoom"&&!tr))return"";
+ return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>':"";}
+function trLog(e){PG.log=PG.log||[];PG.log.unshift(e);if(PG.log.length>500)PG.log.length=500;}
+var PT=null;
+function trForm(){var b=document.getElementById("pgt");if(!b)return;if(!PT){b.innerHTML="";return;}var o=pmonth().d[PT.k]||{},orig=PT.s?(o.sun||{})[PT.s]:o.terr,d=PT.k.split("-");
+ var LS=PT.t?locs(PT.t):[];
+ b.innerHTML='<div class="cfw"><b>Trocar território — dia '+(+d[2])+'/'+(+d[1])+(PT.s?' ('+capG(PT.s)+')':'')+'</b><p class="hn">Designado pelo responsável: '+(orig?esc(tlab(orig)):'nenhum')+'. Escolha o território que o grupo vai trabalhar. Só os dirigentes da lista podem trocar.</p>'+(DL.length?'':'<p class="mg">A lista de dirigentes está vazia: o responsável precisa cadastrar os nomes na aba Anciãos e Servos Ministeriais.</p>')+'<div class="fm"><select id="trg"><option value="">Grupo…</option>'+GRP.map(function(g){return'<option value="'+g+'"'+(g===PT.g?" selected":"")+'>'+capG(g)+'</option>';}).join("")+'</select>'
+ +(PT.g?'<select id="trt">'+tOptsAll(PT.t,PT.g)+'</select>':'')
+ +(!PT.s&&LS.length?'<select id="trl">'+LS.map(function(x){return'<option'+(x.n===PT.l?" selected":"")+'>'+esc(x.n)+'</option>';}).join("")+'</select>':'')
+ +'<select id="trb"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option'+(n===PT.b?" selected":"")+'>'+esc(n)+'</option>';}).join("")+'</select><input id="trp" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" id="trok">Salvar troca</button> <button class="btn" id="trc">Cancelar</button></div><p class="mg" id="trm"></p></div>';}
+function renderProg(){
+ var p=PM.split("-"),Y=+p[0],M=+p[1]-1,m=pmonth(),last=new Date(Y,M+1,0).getDate(),off=(new Date(Y,M,1).getDay()+6)%7;
+ var h='<div class="pgh"><button class="btn" id="pgp">‹ Mês anterior</button> <input type="month" id="pgm" value="'+PM+'"> <button class="btn" id="pgn">Próximo mês ›</button> '+(PE?'<button class="btn rd go" id="pgx">Terminar edição</button><span class="ok"> Modo de edição: clique nas caixas para escolher. Tudo é salvo na hora.</span>'+(DL.length?'':'<span class="mg"> A lista de dirigentes está vazia: cadastre os nomes na aba Anciãos e Servos Ministeriais.</span>'):(RO?'':'<button class="btn" id="pge">Editar programação (anciãos)</button><span class="hn"> Responsável do grupo: use o botão Trocar na caixa do território.</span>'))+'<span class="pgdl"><button class="btn" id="pgimg">Baixar imagem</button><button class="btn" id="pgpdf">Baixar PDF</button><span id="pgdm"></span></span>'+'<span id="pgk"></span></div><div id="pgt"></div>';
+ h+='<div class="pgt1">PROGRAMAÇÃO DE SERVIÇO DE CAMPO</div><div class="pgt2">'+MESES[M]+' de '+Y+'</div>';
+ h+='<div class="iw"><table class="pg"><colgroup><col class="pcl">'+WD.map(function(w,i){return'<col class="'+(i===6?"pds":"pdw")+'">';}).join("")+'</colgroup>';
+ h+='<tr><td class="pl0"></td>'+WD.map(function(w,i){return'<th style="background:'+WC[i]+'">'+w+'</th>';}).join("")+'</tr>';
+ for(var day=1-off;day<=last;day+=7){
+  var cells=[];for(var i=0;i<7;i++){var dd=day+i;cells.push(dd>=1&&dd<=last?dd:0);}
+  h+='<tr class="pdr"><td class="plb">Dia</td>'+cells.map(function(dd,i){return'<td class="pdn" style="background:'+(dd?WC[i]:"#fff")+'">'+(dd||"")+'</td>';}).join("")+'</tr>';
+  [["dir","Dirigente"],["hora","Horário"],["terr","Território"],["loc","Local de encontro"]].forEach(function(r,ri){
+   h+='<tr'+(ri===3?' class="plr"':'')+'><td class="plb">'+r[1]+'</td>';
+   cells.forEach(function(dd,i){
+    if(i===6){if(ri===0)h+='<td class="psun" rowspan="4">'+(dd?sunCell(pkey(dd)):"")+'</td>';return;}
+    if(!dd){h+='<td class="pe"></td>';return;}
+    var k=pkey(dd);h+=wkCell(k,m.d[k]||{},r[0]);
+   });
+   h+='</tr>';});
+ }
+ document.getElementById("vp").innerHTML=h+'</table></div>';trForm();
+}
+var VP=document.getElementById("vp");
+function openPin(){var k=document.getElementById("pgk");if(!document.getElementById("pgpin"))k.innerHTML=' <span class="hn">Para editar a programação, digite as duas chaves do responsável:</span> <input id="pgmk" type="password" placeholder="Chave mestra" size="12"><input id="pgpin" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn" id="pgok">Entrar</button><span class="mg" id="pgm2">'+(PH?'':' O PIN ainda não foi criado: o responsável precisa criá-lo primeiro na aba Anciãos e Servos Ministeriais.')+'</span>';document.getElementById("pgmk").focus();window.scrollTo(0,0);}
+VP.onclick=async function(e){var t=e.target,id=t.id;
+ if(t.dataset.open){openT(t.dataset.open);return;}
+ if(id==="pgp"||id==="pgn"){PMU=true;var p=PM.split("-");PM=ym(new Date(+p[0],+p[1]-1+(id==="pgn"?1:-1),1));renderProg();}
+ if(id==="pge"){openPin();return;}
+ if(id==="pgimg"){dlProg("png");return;}if(id==="pgpdf"){dlProg("pdf");return;}
+ if(t.dataset.tr){var q=t.dataset.tr.split("|"),o=pmonth().d[q[0]]||{},cur=q[1]?(o.sun||{})[q[1]]:o.terr,ci=tinfo(cur);PT={k:q[0],s:q[1],g:ci?ci.g:(q[1]||""),t:"",l:"",b:""};trForm();document.getElementById("pgt").scrollIntoView({block:"center"});return;}
+ if(id==="trc"){PT=null;trForm();return;}
+ if(id==="trok"){var mm=document.getElementById("trm"),nm=document.getElementById("trb").value.trim(),pn=document.getElementById("trp").value.trim();
+  if(!PT.t){mm.textContent="Escolha o território.";return;}if(!nm||DL.indexOf(nm)<0){mm.textContent="Escolha seu nome na lista de dirigentes.";return;}
+  if(!PH){mm.textContent="O responsável ainda não criou o PIN.";return;}if(await hash(pn)!==PH){mm.textContent="PIN incorreto.";return;}
+  var m=pmonth(),od=m.d[PT.k]=m.d[PT.k]||{},prev=PT.s?((od.str||{})[PT.s]||{}).terr||(od.sun||{})[PT.s]:(od.tr||{}).terr||od.terr;
+  trLog({t:Date.now(),k:PT.k,s:PT.s||"",from:prev||"",to:PT.t,by:nm});
+  if(PT.s){od.str=od.str||{};od.str[PT.s]={terr:PT.t,by:nm,t:Date.now()};}
+  else{var L0=locs(PT.t);od.tr={terr:PT.t,loc:PT.l||(L0.length?L0[0].n:""),by:nm,t:Date.now()};}
+  PT=null;savePG();renderProg();return;}
+ if(t.dataset.utr){var q2=t.dataset.utr.split("|"),o2=pmonth().d[q2[0]];if(o2){var was=q2[1]?((o2.str||{})[q2[1]]||{}).terr:(o2.tr||{}).terr,back=q2[1]?(o2.sun||{})[q2[1]]:o2.terr;trLog({t:Date.now(),k:q2[0],s:q2[1]||"",from:was||"",to:back||"",by:"Anciãos e Servos Ministeriais",undo:1});if(q2[1]){if(o2.str)delete o2.str[q2[1]];}else delete o2.tr;savePG();renderProg();}return;}
+ if(id==="pgok"){var v=document.getElementById("pgpin").value.trim(),mk=document.getElementById("pgmk").value,mm=document.getElementById("pgm2");if(!PH||!MK){mm.textContent=" O responsável ainda não criou as chaves na aba Anciãos e Servos Ministeriais.";return;}if(await hash("mk:"+mk)!==MK||await hash(v)!==PH){mm.textContent=" Chave mestra ou PIN incorreto.";return;}PE=true;renderProg();}
+ if(id==="pgx"){PE=false;renderProg();}
+ if(t.dataset.sall){var m=pmonth(),src=(m.d[t.dataset.sall]||{}).sun||{};sundays().forEach(function(k){m.d[k]=m.d[k]||{};m.d[k].sun=Object.assign({},src);m.d[k].sung=Object.assign({},(m.d[t.dataset.sall]||{}).sung||{});});savePG();renderProg();}
+};
+VP.onkeydown=function(e){if(e.key!=="Enter")return;if(e.target.id==="pgpin"||e.target.id==="pgmk")document.getElementById("pgok").click();if(e.target.id==="trp")document.getElementById("trok").click();};
+VP.onchange=function(e){var t=e.target;
+ if(t.id==="trg"){PT.g=t.value;PT.t="";PT.l="";PT.b=document.getElementById("trb").value;trForm();return;}
+ if(t.id==="trt"){PT.t=t.value;var L0=locs(t.value);PT.l=L0.length?L0[0].n:"";PT.b=document.getElementById("trb").value;trForm();return;}
+ if(t.id==="trl"){PT.l=t.value;return;}
+ if(t.id==="trb"){PT.b=t.value;return;}if(t.id==="trp")return;
+ if(t.id==="pgm"){if(t.value){PMU=true;PM=t.value;renderProg();}return;}
+ var k=t.dataset.pk;if(!k)return;var m=pmonth(),o=m.d[k]=m.d[k]||{},f=t.dataset.pf;
+ if(f==="sun"){o.sun=o.sun||{};o.sun[t.dataset.pg]=t.value;if(o.str)delete o.str[t.dataset.pg];}
+ else if(f==="sung"){o.sung=o.sung||{};o.sun=o.sun||{};o.sung[t.dataset.pg]=t.value;var ti=tinfo(o.sun[t.dataset.pg]);if(!ti||ti.g!==t.value)o.sun[t.dataset.pg]="";}
+ else if(f==="grp"){delete o.tr;o.grp=t.value;if(t.value==="zoom"){o.terr="zoom";o.loc="";o.locx=false;o.lurl="";}else{var ti=tinfo(o.terr);if(!ti||ti.g!==t.value){o.terr="";o.loc="";o.locx=false;o.lurl="";}}}
+ else if(f==="dir"){if(t.value==="__outro"){o.dirx=true;o.dir="";}else{o.dirx=false;o.dir=t.value;}}
+ else if(f==="dirn"){o.dir=t.value.trim();}
+ else if(f==="loc"){if(t.value==="__outro"){o.locx=true;o.loc="";o.lurl="";}else{o.locx=false;o.loc=t.value;o.lurl="";}}
+ else if(f==="locn"){o.loc=t.value.trim();}
+ else if(f==="lurl"){var u=t.value.trim();o.lurl=/^https?:\/\//i.test(u)?u:"";}
+ else{o[f]=t.value;if(f==="terr"){delete o.tr;var i=tinfo(t.value);o.locx=false;o.lurl="";var L0=locs(t.value);o.loc=L0.length?L0[0].n:"";}}
+ savePG();renderProg();
+};
+// ---------- imagem / PDF da programação ----------
+function progCanvas(){
+ var p=PM.split("-"),Y=+p[0],M=+p[1]-1,m=pmonth(),last=new Date(Y,M+1,0).getDate(),off=(new Date(Y,M,1).getDay()+6)%7;
+ var LW=170,DW=190,SW=490,MX=24,W=LW+DW*6+SW+MX*2,RH=[38,36,36,46,58],WH=RH.reduce(function(a,b){return a+b;},0),weeks=Math.ceil((off+last)/7),H=150+42+weeks*WH+60;
+ var c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+ x.fillStyle="#fff";x.fillRect(0,0,W,H);x.textBaseline="middle";
+ function txt(t,cx,cy,w,size,color,bold,align){t=String(t||"");if(!t)return;x.fillStyle=color||"#000";x.font=(bold?"bold ":"")+size+"px Arial, sans-serif";x.textAlign=align||"center";
+  var words=t.split(/\s+/),lines=[],cur="";words.forEach(function(wd){var tst=cur?cur+" "+wd:wd;if(x.measureText(tst).width>w-10&&cur){lines.push(cur);cur=wd;}else cur=tst;});if(cur)lines.push(cur);
+  if(lines.length>3)lines=lines.slice(0,3);var lh=size*1.15,y0=cy-(lines.length-1)*lh/2,px=align==="left"?cx+6:cx;lines.forEach(function(l,i){x.fillText(l,px,y0+i*lh);});}
+ function box(bx,by,bw,bh,fill,lw){if(fill){x.fillStyle=fill;x.fillRect(bx,by,bw,bh);}x.strokeStyle=lw>1?"#000":"#9a9a9a";x.lineWidth=lw||1;x.strokeRect(bx+.5,by+.5,bw,bh);}
+ x.fillStyle="#000";x.font="26px Arial, sans-serif";x.textAlign="center";
+ var tt="PROGRAMAÇÃO DE SERVIÇO DE CAMPO".split("").join(String.fromCharCode(8202,8202));x.fillText(tt,W/2,50);
+ x.font="40px Arial, sans-serif";x.fillText(MESES[M]+" de "+Y,W/2,100);
+ var top=140,colX=function(i){return MX+LW+DW*i;};
+ WD.forEach(function(w,i){box(colX(i),top,i===6?SW:DW,42,WC[i],2);txt(w,colX(i)+(i===6?SW:DW)/2,top+21,i===6?SW:DW,20);});
+ var y=top+42,labs=["Dia","Dirigente","Horário","Território","Local de encontro"];
+ for(var day=1-off;day<=last;day+=7){
+  var ry=y;labs.forEach(function(l,ri){txt(l,MX,ry+RH[ri]/2,LW,19,"#000",false,"left");ry+=RH[ri];});
+  for(var i=0;i<7;i++){var dd=day+i,cx0=colX(i),cw=i===6?SW:DW,k=pkey(dd);
+   if(dd<1||dd>last){box(cx0,y,cw,RH[0],"#fff",2);if(i===6)box(cx0,y+RH[0],SW,WH-RH[0],"#fff",2);else{var yy=y+RH[0];for(var r=1;r<5;r++){box(cx0,yy,cw,RH[r],"#fff");yy+=RH[r];}}continue;}
+   box(cx0,y,cw,RH[0],WC[i],2);txt(dd,cx0+cw/2,y+RH[0]/2,cw,22);
+   var e0=m.d[k]||{};
+   if(i===6){var s=e0.sun||{},sg=e0.sung||{},st=e0.str||{},sy=y+RH[0],lh=(WH-RH[0])/4;box(cx0,sy,SW,WH-RH[0],"#fff",2);
+    GRP.forEach(function(g,gi){var tv=st[g]?st[g].terr:s[g],iv=tinfo(tv),gs=sg[g]||(iv?iv.g:g),yy2=sy+gi*lh;
+     txt(capG(gs),cx0,yy2+lh/2,130,19,"#000",false,"left");box(cx0+130,yy2,SW-130,lh,iv?GC[iv.g]:"#fff");txt(tlab(tv),cx0+130+(SW-130)/2,yy2+lh/2,SW-130,19,"#1155cc");});
+    continue;}
+   var e=e0.tr?Object.assign({},e0,{terr:e0.tr.terr,loc:e0.tr.loc,locx:!!e0.tr.locx}):e0,ti=tinfo(e.terr),LS=(e.terr&&e.terr!=="zoom")?locs(e.terr):[],fo=LS.filter(function(o){return o.n===e.loc;})[0];
+   var yy=y+RH[0];
+   box(cx0,yy,cw,RH[1],"#fff");txt(e.dir,cx0+cw/2,yy+RH[1]/2,cw,19);yy+=RH[1];
+   box(cx0,yy,cw,RH[2],e.hora&&e.hora<"12"?"#cfe2f3":"#fff");txt(e.hora,cx0+cw/2,yy+RH[2]/2,cw,19);yy+=RH[2];
+   box(cx0,yy,cw,RH[3],ti?GC[ti.g]:"#fff");txt(tlab(e.terr),cx0+cw/2,yy+RH[3]/2,cw,18,"#1155cc");yy+=RH[3];
+   var lf=e.terr==="zoom"?"#fff":!e.loc?"#fff":(e.locx||!fo)?"#fce5cd":fo.p?"#d5a6bd":"#9fc5e8";
+   box(cx0,yy,cw,RH[4],lf);txt(e.terr==="zoom"&&e.loc?"ID da reunião: "+e.loc:e.loc,cx0+cw/2,yy+RH[4]/2,cw,18,e.terr==="zoom"?"#000":"#1155cc");
+  }
+  y+=WH;
+ }
+ var now=new Date();x.font="15px Arial, sans-serif";x.textAlign="right";x.fillStyle="#777";x.fillText("Atualizado em "+dmy(now.getTime()),W-MX,H-25);
+ return c;}
+function pdfFromJpeg(jpg,iw,ih){var pw=842,ph=595,sc=Math.min((pw-40)/iw,(ph-40)/ih),dw=iw*sc,dh=ih*sc,dx=(pw-dw)/2,dy=(ph-dh)/2;
+ var enc=function(s){var u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i)&255;return u;};
+ var parts=[],len=0,offs=[];function add(u){parts.push(u);len+=u.length;}function obj(n,body){offs[n]=len;add(enc(n+" 0 obj\n"));if(typeof body==="string")add(enc(body));else body.forEach(add);add(enc("\nendobj\n"));}
+ add(enc("%PDF-1.4\n"));
+ obj(1,"<< /Type /Catalog /Pages 2 0 R >>");
+ obj(2,"<< /Type /Pages /Kids [3 0 R] /Count 1 >>");
+ obj(3,"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+pw+" "+ph+"] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>");
+ obj(4,[enc("<< /Type /XObject /Subtype /Image /Width "+iw+" /Height "+ih+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+jpg.length+" >>\nstream\n"),jpg,enc("\nendstream")]);
+ var cs="q "+dw.toFixed(2)+" 0 0 "+dh.toFixed(2)+" "+dx.toFixed(2)+" "+dy.toFixed(2)+" cm /Im0 Do Q";
+ obj(5,"<< /Length "+cs.length+" >>\nstream\n"+cs+"\nendstream");
+ var xref=len,x="xref\n0 6\n0000000000 65535 f \n";for(var n=1;n<=5;n++)x+=("0000000000"+offs[n]).slice(-10)+" 00000 n \n";
+ add(enc(x+"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF\n"));
+ var out=new Uint8Array(len),o=0;parts.forEach(function(u){out.set(u,o);o+=u.length;});return out;}
+async function saveFile(name,blob,msgEl){var d=null;try{if(window.claude&&claude.use)d=await claude.use("downloads");}catch(e){}
+ if(d){try{await d.save({filename:name,data:blob});if(msgEl){msgEl.className="ok";msgEl.textContent=" Arquivo pronto: "+name;}}catch(e){if(msgEl&&e&&e.code!=="declined"){msgEl.className="mg";msgEl.textContent=" Não foi possível baixar ("+(e.code||"erro")+").";}}return;}
+ var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},2000);
+ if(msgEl){msgEl.className="ok";msgEl.textContent=" Arquivo pronto: "+name;}}
+async function dlProg(kind){var msg=document.getElementById("pgdm"),c=progCanvas(),p=PM.split("-"),base="Programacao-"+MESES[+p[1]-1]+"-"+p[0];
+ if(kind==="png"){c.toBlob(function(b){saveFile(base+".png",b,msg);},"image/png");return;}
+ c.toBlob(function(b){b.arrayBuffer().then(function(ab){var pdf=pdfFromJpeg(new Uint8Array(ab),c.width,c.height);saveFile(base+".pdf",new Blob([pdf],{type:"application/pdf"}),msg);});},"image/jpeg",0.92);}
+// ---------- navegação e página inicial ----------
+function sv(v){
+ document.querySelectorAll(".tb").forEach(function(b){b.classList.toggle("on",b.dataset.v===v);});
+ document.getElementById("vi").hidden=v!=="vi";document.getElementById("vt").hidden=v!=="vt";VA.hidden=v!=="va";document.getElementById("vp").hidden=v!=="vp";if(v!=="vp")PE=false;else renderProg();
+ if(v==="va"&&!ADM)lockView();
+ if(v!=="va"){ADM=false;RC=0;ED="";AP.innerHTML="";AP.hidden=true;}
+ if(v==="vi")document.title="Territórios da congregação";
+ window.scrollTo(0,0);
+}
+function openT(tid){if(!TD[tid])return;CUR=tid;try{localStorage.setItem("tcur",tid);}catch(e){}render();sv("vt");}
+document.querySelector(".nv").onclick=function(e){var v=e.target.dataset.v;if(v)sv(v);};
+document.getElementById("vi").onclick=function(e){var v=e.target.dataset.open;if(v)openT(v);};
+function defLocs(tid){var r=[];TL.forEach(function(gr){gr[1].forEach(function(t){if(t[0]===tid)r=t[4].map(function(l){return{n:lname(l),p:l[0]==="*",u:""};});});});return r;}
+function locs(tid){return(LE&&LE[tid])?LE[tid]:defLocs(tid);}
+function lhref(o){return o.u||mapq(o.n);}
+var GC={MINATO:"#cfe2f3",DOUTOKU:"#fff2cc",NAKAGAWA:"#d9ead3",INAZAWA:"#f4cccc"};
+function lname(l){return l.replace(/^\*/,"");}
+function renderIdx(){var NC=4;TL.forEach(function(gr){gr[1].forEach(function(t){NC=Math.max(NC,locs(t[0]).length);});});
+ var h='<div class="iw"><table class="ix" style="width:'+(600+NC*100)+'px;min-width:'+(600+NC*100)+'px"><colgroup><col class="xa"><col class="xb"><col class="xc">'+new Array(NC+1).join('<col class="xd">')+'<col class="xh"></colgroup><tr><th class="x0"></th><th class="xt">TERRITÓRIO</th><th class="xg">GRUPO</th><th class="xl" colspan="'+NC+'">Local de encontro</th><th class="x0"></th></tr>';
+ TL.forEach(function(gr){var bg=GC[gr[0]]||"#fff";
+  gr[1].forEach(function(t){var ok=!!TD[t[0]],LS=locs(t[0]).slice();while(LS.length<NC)LS.push(null);
+   h+='<tr style="background:'+bg+'"><td class="xm">'+(t[2]?'<span class="dm '+(t[2]==="🔸"?"or":"bl")+'"></span>':'')+'</td>'
+   +'<td class="xn">'+(ok?'<button class="lk" data-open="'+t[0]+'">'+t[0]+' '+t[1]+'</button>':t[0]+' '+t[1])+'</td>'
+   +'<td class="xr">'+gr[0]+'</td>'
+   +LS.map(function(o){if(!o)return'<td class="xe"></td>';return'<td class="xe '+(o.p?"pk":"bu")+'"><a href="'+esc(lhref(o))+'" target="_blank" rel="noopener">'+esc(o.n)+'</a></td>';}).join("")
+   +'<td class="xk">'+t[3]+'</td></tr>';});});
+ document.getElementById("vi").innerHTML=h+'</table></div>';}
+try{var c0=localStorage.getItem("tcur");if(c0&&TD[c0])CUR=c0;}catch(e){}
+if(SNAP){if(SNAP.pg)PG=SNAP.pg;if(SNAP.le)LE=SNAP.le;Object.keys(SNAP.s||{}).forEach(function(tid){if(S[tid]){S[tid].g=SNAP.s[tid];fix(tid);}});PM=pickPM();}
+function snapHTML(){var pg=JSON.parse(JSON.stringify(PG));delete pg.log;Object.keys(pg).forEach(function(m){var d=(pg[m]||{}).d||{};Object.keys(d).forEach(function(k){if(d[k].tr)delete d[k].tr.by;if(d[k].str)Object.keys(d[k].str).forEach(function(g){delete d[k].str[g].by;});});});
+ var sn={v:Date.now(),pg:pg,le:LE,s:{}};TIDS().forEach(function(tid){sn.s[tid]=S[tid].g;});
+ var head='<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Territórios – Anciãos e Servos Ministeriais</title>\n<style id="css">'+document.getElementById("css").textContent+'</style>\n<script id="snap" type="application/json">'+JSON.stringify(sn).replace(/</g,"\\u003c")+'<\/script>';
+ return'<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n'+head+'\n</head>\n<body>\n'+TPL+'\n<script id="main" type="text/plain">'+document.getElementById("main").textContent+'<\/script>\n</body>\n</html>\n';}
+async function pubNow(msgEl){var a=null;try{a=await claude.use("artifact");}catch(e){}
+ if(!a){if(msgEl)msgEl.textContent=" Não foi possível publicar daqui.";return;}
+ if(msgEl){msgEl.className="ok";msgEl.textContent=" Publicando… a página vai recarregar.";}
+ try{await a.publish(snapHTML());PUBD=false;}catch(e){var c=e&&e.code;if(msgEl){msgEl.className="mg";msgEl.textContent=c==="not_writer"||c==="not_granted"?" Você não tem permissão para publicar. Peça ao responsável.":c==="conflict"?" Outra pessoa publicou ao mesmo tempo. Abra a página de novo e tente outra vez.":" Não foi possível publicar ("+(c||"erro")+").";}}}
+render();renderIdx();sv("vp");
+(function(){var d=window.FB_DB,adm=window.MODO==="admin";
+ if(!adm){RO=true;var ta=document.querySelector('.tb[data-v="va"]');if(ta)ta.hidden=true;render();renderProg();}
+ if(!d)return;
+ var g=d.doc("territorios/geral"),p=d.doc("territorios/prog"),erro=function(){};
+ if(adm){DB=d;gen=g;pdoc=p;cfg=d.doc("territorios/config");
+  cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(!ADM&&!VA.hidden)lockView();},erro);}
+ p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
+ g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;renderIdx();if(ADM)renderAdm();}},erro);
+ Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
+})();
+</script>
+<script>
+window.MODO="admin";
+(function(){
+ var M=document.getElementById("msg");
+ (function(){var n=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],d=new Date();document.getElementById("hdm").textContent=n[d.getMonth()]+" "+d.getFullYear();})();
+ function aviso(x){M.hidden=false;M.innerHTML=x;}
+ var db;
+ try{if(!window.FIREBASE_CONFIG||!FIREBASE_CONFIG.projectId||/COLE/.test(FIREBASE_CONFIG.apiKey))throw 0;firebase.initializeApp(FIREBASE_CONFIG);db=firebase.firestore();}
+ catch(e){aviso("Falta configurar o Firebase no arquivo <b>firebase-config.js</b>.");return;}
+ window.FB_DB=db;
+ var B=db.doc("territorios/base"),ok=false;
+ function iniciar(base){if(ok)return;ok=true;window.__BASE=base;M.hidden=true;document.getElementById("app").hidden=false;
+  var sc=document.createElement("script");sc.textContent=document.getElementById("main").textContent;document.body.appendChild(sc);
+  var br=document.createElement("div");br.className="barra";
+  if(window.MODO==="admin"){var b=document.createElement("button");b.className="pill cz";b.textContent="Sair da conta";b.onclick=function(){firebase.auth().signOut().then(function(){location.reload();});};br.appendChild(b);}
+  var st=document.createElement("span");br.appendChild(st);
+  function onl(){var on=navigator.onLine;st.className="pill "+(on?"on":"off");st.textContent="● "+(on?"Online":"Sem internet")+" – "+(window.MODO==="admin"?"Anciãos e Servos Ministeriais":"Visualização");}
+  onl();addEventListener("online",onl);addEventListener("offline",onl);
+  var nv=document.querySelector(".nv");nv.parentNode.insertBefore(br,nv);
+  if(window.MODO==="admin")abas();}
+ var ABA=0,NOMES=[["Trocar PIN","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
+ function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
+ function abas(){var ap=document.getElementById("ap");
+  function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
+   var bar=ap.querySelector(":scope>.stb");if(ABA>=ss.length)ABA=0;
+   if(!bar){bar=document.createElement("div");bar.className="stb";ss.forEach(function(sx,i){var bt=document.createElement("button");bt.type="button";bt.textContent=nome(sx.querySelector("h4"));bt.onclick=function(){ABA=i;aplicar();};bar.appendChild(bt);});ap.insertBefore(bar,ap.firstChild);}
+   Array.prototype.forEach.call(bar.children,function(bt,i){bt.classList.toggle("on",i===ABA);});
+   ss.forEach(function(sx,i){sx.hidden=i!==ABA;});}
+  new MutationObserver(function(){if(!ap.querySelector(":scope>.stb"))aplicar();}).observe(ap,{childList:true});}
+ function base(){aviso("Carregando…");B.get().then(function(sn){
+   if(sn.exists){iniciar(JSON.parse(sn.data().data));return;}
+   if(window.MODO==="admin"){M.hidden=true;document.getElementById("imp").hidden=false;}
+   else aviso("O site ainda está sendo preparado pelos responsáveis.");
+  }).catch(function(e){aviso("Não foi possível carregar ("+(e.code||e)+"). Verifique a internet e as regras do Firebase.");});}
+ if(window.MODO!=="admin"){base();return;}
+ var L=document.getElementById("login"),lm=document.getElementById("lgm");
+ firebase.auth().onAuthStateChanged(function(u){if(u){L.hidden=true;base();}else{M.hidden=true;L.hidden=false;}});
+ function entrar(){lm.textContent="";firebase.auth().signInWithEmailAndPassword(document.getElementById("lge").value.trim(),document.getElementById("lgs").value).catch(function(e){lm.textContent="E-mail ou senha incorretos ("+(e.code||"erro")+").";});}
+ document.getElementById("lgb").onclick=entrar;document.getElementById("lgs").onkeydown=function(e){if(e.key==="Enter")entrar();};
+ document.getElementById("impf").onchange=function(){var f=this.files[0],im=document.getElementById("impm");if(!f)return;im.textContent="Enviando…";
+  f.text().then(function(tx){var o=JSON.parse(tx);if(!o.TD||!o.SNAP)throw{code:"arquivo errado"};
+   return B.set({data:JSON.stringify(o)}).then(function(){document.getElementById("imp").hidden=true;iniciar(o);});
+  }).catch(function(e){im.textContent="Não foi possível enviar ("+(e.code||e.message||e)+").";});};
+})();
+</script>
+</body>
+</html>
