@@ -837,7 +837,7 @@ window.MODO="admin";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin"){abas();if(window.idioma)idioma();zoomBar();}apagar();}
+  if(window.MODO==="admin"){abas();if(window.idioma)idioma();zoomBar();if(window.protegeAdm)protegeAdm();}apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
  window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
@@ -962,6 +962,16 @@ window.MODO="admin";
  window.idioma=function(){var br=document.querySelector(".barra");if(!br||document.getElementById("lgbt"))return;var b=document.createElement("button");b.id="lgbt";b.className="pill lg";b.type="button";
   b.onclick=function(){LANG=LANG==="ja"?"pt":"ja";try{localStorage.setItem("tlang",LANG);}catch(e){}if(LANG==="pt"){location.reload();return;}tudo();};br.appendChild(b);
   var agd=0;new MutationObserver(function(){if(LANG!=="ja"||agd)return;agd=requestAnimationFrame(function(){agd=0;tudo();});}).observe(document.getElementById("app"),{childList:true,subtree:true});tudo();};
+ // ---------- não apagar o que está sendo digitado + salvar listas automaticamente ----------
+ window.protegeAdm=function(){if(window.__ra)return;window.__ra=renderAdm;var ult=0;
+  ["click","change","keydown"].forEach(function(ev){document.addEventListener(ev,function(){ult=Date.now();},true);});
+  renderAdm=function(){var a=document.activeElement,ap=document.getElementById("ap");
+   if(Date.now()-ult>1500&&a&&ap&&ap.contains(a)&&(a.tagName==="TEXTAREA"||(a.tagName==="INPUT"&&/^(text|search|password|url|)$/.test(a.type||"")))){window.__raPend=1;return;}
+   window.__raPend=0;__ra();};
+  document.addEventListener("focusout",function(e){var ap=document.getElementById("ap");if(!window.__raPend||!ap||!ap.contains(e.target))return;setTimeout(function(){var a=document.activeElement;if(!(a&&ap.contains(a)&&(a.tagName==="TEXTAREA"||a.tagName==="INPUT")))renderAdm();},80);});
+  var tm={};function auto(id,fn,msgId,msg){document.addEventListener("input",function(e){if(e.target.id!==id)return;clearTimeout(tm[id]);var m=document.getElementById(msgId);if(m)m.textContent="Salvando…";tm[id]=setTimeout(function(){fn(e.target.value);var m2=document.getElementById(msgId);if(m2)m2.textContent=msg();},1200);});}
+  auto("dll",function(v){DL=v.split(/\n/).map(function(x){return x.trim();}).filter(Boolean);saveGen();},"dlm",function(){return"✓ Salvo automaticamente — "+DL.length+" dirigente(s).";});
+  auto("arl",function(v){AREA=v;saveGen();},"arsm",function(){return"✓ Área salva automaticamente.";});};
 
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
