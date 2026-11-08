@@ -223,6 +223,11 @@ tr.add td{background:#f6f9fc}
 body.ver .nv .tb[data-v="vi"]{display:none}
 body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
 #pgt .cfw{border-radius:12px}
+.btn.voltar{margin:18px 28px 0;padding:9px 18px;font-size:15px;background:var(--escuro);border-color:var(--escuro);color:#fff;border-radius:10px}
+.btn.voltar:hover{background:#3a332c}
+.btn.voltar:has(+ #vt[hidden]){display:none}
+#vt>.wrap{margin-top:12px}
+@media (max-width:700px){.btn.voltar{margin:12px 10px 0}}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -284,7 +289,7 @@ function cst(c){var m=CM[CC[c]];return m?"background:"+m[0]+";color:"+m[1]:"";}
 function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.test(q))q="愛知県名古屋市"+q;return q;}
 function pin(x){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
-function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v});else localStorage.setItem("t"+tid,v);}catch(e){}}
+function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
 function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
@@ -302,8 +307,8 @@ function render(){
  G.forEach(function(g,gi){
   g.r.forEach(function(x,i){
    var cl=(x[1]===NQ?"r":x[8]==="b"?"b":"")+(x[9]&&Date.now()-x[9]<2592e6?" new":""),id=gi+"_"+i;
-   h+='<tr class="'+cl+'"><td class="dt">'+(fd(x[0])||'<span class="ph">data</span>')+'<input type="date" data-k="'+id+'" value="'+iso(x[0])+'"'+(RO?' disabled':'')+'></td>';
-   h+='<td class="cd" style="'+cst(x[1])+'"><select class="cs" data-k="'+id+'"'+(RO?' disabled':'')+'>'+OPT.map(function(o){return'<option value="'+o+'"'+(o===x[1]?" selected":"")+'>'+(o||"—")+'</option>';}).join("")+'</select></td>';
+   h+='<tr class="'+cl+'"><td class="dt">'+(fd(x[0])||'<span class="ph">data</span>')+'<input type="date" data-k="'+id+'" value="'+iso(x[0])+'"'+(RO&&!window.TRV?' disabled':'')+'></td>';
+   h+='<td class="cd" style="'+cst(x[1])+'"><select class="cs" data-k="'+id+'"'+(RO&&!window.TRV?' disabled':'')+'>'+OPT.map(function(o){return'<option value="'+o+'"'+(o===x[1]?" selected":"")+'>'+(o||"—")+'</option>';}).join("")+'</select></td>';
    if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
    h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
   });
@@ -758,7 +763,7 @@ render();renderIdx();sv("vp");
  if(adm){DB=d;gen=g;pdoc=p;cfg=d.doc("territorios/config");var pp=d.doc("territorios/pin"),pin0;
   pp.onSnapshot(function(sn){pin0=sn.exists?sn.data().pin||null:null;},erro);
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
- else{pdoc=p;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
+ else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
  g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;renderIdx();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
@@ -783,6 +788,7 @@ window.MODO="ver";
   function onl(){var on=navigator.onLine;st.className="pill "+(on?"on":"off");st.textContent="● "+(on?"Online":"Sem internet")+" – "+(window.MODO==="admin"?"Anciãos e Servos Ministeriais":"Visualização");}
   onl();addEventListener("online",onl);addEventListener("offline",onl);
   var nv=document.querySelector(".nv");nv.parentNode.insertBefore(br,nv);
+  var vt=document.getElementById("vt"),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};vt.parentNode.insertBefore(vb,vt);
   if(window.MODO==="admin")abas();}
  var ABA=0,NOMES=[["Trocar PIN","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
