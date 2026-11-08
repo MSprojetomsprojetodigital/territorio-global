@@ -228,6 +228,19 @@ body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
 #vi{padding-top:12px}
 #vt>.wrap{margin-top:12px}
 @media (max-width:700px){.btn.voltar{margin:12px 10px 0}}
+#vplista{padding:0 28px 40px}
+#vp[hidden]+#vplista{display:none}
+#vplista .vlt{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;font-weight:600;margin:10px 0 14px;padding-top:18px;border-top:1.5px solid var(--borda);max-width:1180px}
+@media (max-width:700px){#vplista{padding:0 10px 30px}}
+.btn.atr{margin-left:4px;font-size:11px;padding:1px 6px}
+.btn.dpb{margin-left:8px;font-size:11px;padding:1px 7px}
+.dpf .fm{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:center;margin-left:6px}
+.dpf select,.dpf input,.apx select,.apx input{border:1.5px solid var(--borda);border-radius:8px;padding:5px 8px;font-size:13px}
+.apx{background:#fdecea;border:1px solid #e6b8b3;border-radius:12px;padding:12px 14px}
+.apx .fm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.dpf{position:relative;display:inline-block}
+.dpf .apx{position:absolute;z-index:20;left:-60px;top:22px;width:max-content;max-width:300px;display:flex;flex-wrap:wrap;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.dpf .apx .apm{flex-basis:100%}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -310,7 +323,7 @@ function render(){
    h+='<tr class="'+cl+'"><td class="dt">'+(fd(x[0])||'<span class="ph">data</span>')+'<input type="date" data-k="'+id+'" value="'+iso(x[0])+'"'+(RO&&!window.TRV?' disabled':'')+'></td>';
    h+='<td class="cd" style="'+cst(x[1])+'"><select class="cs" data-k="'+id+'"'+(RO&&!window.TRV?' disabled':'')+'>'+OPT.map(function(o){return'<option value="'+o+'"'+(o===x[1]?" selected":"")+'>'+(o||"—")+'</option>';}).join("")+'</select></td>';
    if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
-   h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
+   h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+(x[9]&&!(RO&&!window.TRV)?'<button class="btn rd dpb" data-del="'+gi+'_'+i+'">Apagar</button><span class="dpf" id="dp'+gi+'_'+i+'"></span>':"")+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
   });
   h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO&&!window.TRV?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
   if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
@@ -590,7 +603,7 @@ function tlab(n){var i=tinfo(n);return i?n+" "+i.t[1]:(n==="zoom"?"Zoom":"");}
 function trNote(k,o,slot){var tr=slot?(o.str||{})[slot]:o.tr,orig=slot?(o.sun||{})[slot]:o.terr;
  if(PE)return tr?'<span class="trn">trocado por '+esc(tr.by)+(orig?' (era '+esc(tlab(orig))+')':'')+'</span><button class="btn" data-utr="'+k+'|'+slot+'">Desfazer troca</button>':"";
  if((RO&&!window.TRV)||(!slot&&o.terr==="zoom"&&!tr))return"";
- return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>':"";}
+ return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>'+(tr?'<button class="btn rd atr" data-atr="'+k+'|'+slot+'">Apagar troca</button>':""):"";}
 function trLog(e){PG.log=PG.log||[];PG.log.unshift(e);if(PG.log.length>500)PG.log.length=500;}
 var PT=null;
 function trForm(){var b=document.getElementById("pgt");if(!b)return;if(!PT){b.innerHTML="";return;}var o=pmonth().d[PT.k]||{},orig=PT.s?(o.sun||{})[PT.s]:o.terr,d=PT.k.split("-");
@@ -788,8 +801,30 @@ window.MODO="ver";
   function onl(){var on=navigator.onLine;st.className="pill "+(on?"on":"off");st.textContent="● "+(on?"Online":"Sem internet")+" – "+(window.MODO==="admin"?"Anciãos e Servos Ministeriais":"Visualização");}
   onl();addEventListener("online",onl);addEventListener("offline",onl);
   var nv=document.querySelector(".nv");nv.parentNode.insertBefore(br,nv);
+  (function(){var vp=document.getElementById("vp"),vi=document.getElementById("vi"),L=document.createElement("div");L.id="vplista";vp.parentNode.insertBefore(L,vp.nextSibling);
+   function copia(){var w=vi.querySelector(".iw");L.innerHTML='<h3 class="vlt">Todos os territórios</h3>'+(w?w.outerHTML:"");}
+   copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
+   L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin")abas();}
+  if(window.MODO==="admin")abas();apagar();}
+ function apagar(){
+  function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
+  async function pinOk(box){var nm=box.querySelector(".apn").value,pn=box.querySelector(".app").value.trim(),m=box.querySelector(".apm");
+   if(!nm){m.textContent=" Escolha seu nome.";return null;}if(!PH){m.textContent=" O responsável ainda não criou o PIN.";return null;}
+   if(await hash(pn)!==PH){m.textContent=" PIN incorreto.";return null;}return nm;}
+  document.addEventListener("click",async function(e){var t=e.target,d=t.dataset||{};
+   if(d.atr){e.stopPropagation();var q=d.atr.split("|"),o=pmonth().d[q[0]]||{},tr=q[1]?(o.str||{})[q[1]]:o.tr,orig=q[1]?(o.sun||{})[q[1]]:o.terr,dd=q[0].split("-");
+    var b=document.getElementById("pgt");PT=null;b.innerHTML='<div class="cfw apx"><b>Apagar troca — dia '+(+dd[2])+'/'+(+dd[1])+(q[1]?' ('+esc(q[1].charAt(0)+q[1].slice(1).toLowerCase())+')':'')+'</b><p class="hn">Apaga a troca para '+esc(tlab(tr&&tr.terr))+' e volta para o território designado'+(orig?': '+esc(tlab(orig)):'')+'.</p><div class="fm">'+nomes()+'<input class="app" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" data-atok="'+d.atr+'">Apagar troca</button> <button class="btn" data-apx="1">Cancelar</button></div><p class="mg apm"></p></div>';
+    b.scrollIntoView({block:"center"});return;}
+   if(d.atok){e.stopPropagation();var box=t.closest(".apx"),nm=await pinOk(box);if(!nm)return;var q2=d.atok.split("|"),o2=pmonth().d[q2[0]];
+    if(o2){var was=q2[1]?((o2.str||{})[q2[1]]||{}).terr:(o2.tr||{}).terr,back=q2[1]?(o2.sun||{})[q2[1]]:o2.terr;trLog({t:Date.now(),k:q2[0],s:q2[1]||"",from:was||"",to:back||"",by:nm,undo:1});if(q2[1]){if(o2.str)delete o2.str[q2[1]];}else delete o2.tr;savePG();}
+    document.getElementById("pgt").innerHTML="";renderProg();return;}
+   if(d.apx){e.stopPropagation();var bx=t.closest(".apx,.dpf");if(bx&&bx.classList.contains("dpf"))bx.innerHTML="";else document.getElementById("pgt").innerHTML="";return;}
+   if(d.del){e.stopPropagation();document.querySelectorAll(".dpf").forEach(function(x){x.innerHTML="";});var f=document.getElementById("dp"+d.del);
+    f.innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn rd go" data-delok="'+d.del+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
+   if(d.delok){e.stopPropagation();var bx2=t.closest(".apx"),nm2=await pinOk(bx2);if(!nm2)return;var p=d.delok.split("_"),s=S[CUR],g=s.g[+p[0]],x=g&&g.r[+p[1]];
+    if(x&&x[9]){g.r.splice(+p[1],1);s.h.unshift({t:Date.now(),by:nm2,n:g.n,pr:x[2],po:x[3]+" (apagada)"});save(CUR);}render();return;}
+  },true);}
  var ABA=0,NOMES=[["Trocar PIN","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
