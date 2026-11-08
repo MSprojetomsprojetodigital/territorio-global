@@ -268,6 +268,14 @@ tr.new td.cd{background:#fff8d9}
 .zbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--borda);border-radius:12px;padding:10px 14px;margin:0 0 12px;max-width:1180px;font-size:14px}
 .zbar input{border:1.5px solid var(--borda);border-radius:8px;padding:6px 10px;font-size:14px;width:150px}
 .rsf{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+#ap .pct{max-width:640px}#ap .pct td,#ap .pct th{font-size:15px;padding:8px 12px}
+.pcn{text-align:right;font-variant-numeric:tabular-nums}
+tr.pctot td{background:var(--escuro)!important;color:#fff}
+tr.pctot .hn{color:#ddd}
+.pch{font:600 18px "DM Sans",Arial,sans-serif;margin:22px 0 4px}
+#ap .pcm td{font-size:13px;text-align:center;white-space:nowrap}
+.pcp{color:#2e7d32;font-weight:600}.pcr{color:#b3261e;font-weight:600}
+tr.pctot .pcp{color:#9be29f}tr.pctot .pcr{color:#ffb4ab}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -333,7 +341,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[]});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[],pc:window.PC||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
@@ -458,8 +466,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>';
- if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>'+'<div class="sec"><h4>Total de portas</h4><div id="ptbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();if(window.pcRender)pcRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -809,7 +817,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -947,6 +955,7 @@ window.MODO="admin";
  "Importar portas":"戸の一括追加","Escolha o arquivo de importação (.json) que o Claude preparou. Antes de gravar, você confere tudo numa tabela e pode mudar o território e o grupo de cada porta.":"Claudeが用意した追加ファイル（.json）を選んでください。保存する前に表で全部確認でき、戸ごとに区域とグループを変えられます。","Importar marcadas":"チェックしたものを追加","Cancelar":"キャンセル","Confirmar":"確認","Tipo":"種類","Prédio / Porta":"建物 / 部屋番号","Observação":"備考","Mapa":"地図","Situação":"状況","Nova":"新規","Correção":"訂正",
  "Grupos dos territórios":"区域のグループ","Escolha em qual grupo de campo cada território fica. A mudança vale na lista de territórios e na programação (domingos) para todos, na hora.":"各区域をどの奉仕グループに入れるか選んでください。変更はすぐに区域一覧と予定表（日曜日）に反映されます。","Grupo de campo":"奉仕グループ","Código":"番号","Acrescentar grupo de campo novo":"新しい奉仕グループの追加","+ Acrescentar grupo":"＋ グループを追加","Grupos novos:":"新しいグループ：","Apagar grupo":"グループを削除","Para apagar, mude antes os territórios para outro grupo.":"削除するには、先に区域を別のグループへ移してください。",
  "Senha incorreta.":"パスワードが違います。","Chave mestra ou senha incorreta.":"マスターキーまたはパスワードが違います。","Nada foi alterado.":"変更はありません。","Digite seu nome.":"名前を入力してください。","Marque primeiro, na primeira coluna, o que quer apagar.":"まず最初の列で削除したいものにチェックしてください。","Nenhuma porta encontrada.":"戸が見つかりません。",
+ "📊 Total de portas":"📊 戸の合計","Total de portas":"戸の合計","Relatório dos últimos 6 meses":"過去6か月の報告","6 meses":"6か月","TOTAL (todos os grupos)":"合計（全グループ）","TOTAL":"合計","Contagem automática: muda sozinha quando portas são acrescentadas, apagadas, retiradas no reset ou mudadas de grupo.":"自動で数えます。戸の追加・削除・リセットでの取り外し・グループ変更で自動的に変わります。","Em cada mês: portas acrescentadas (+), retiradas ou apagadas (−) e o total no fim do mês (quando já registrado).":"各月：追加された戸（＋）、外した・削除した戸（−）、月末の合計（記録がある場合）。",
  "Online":"オンライン","Sem internet":"インターネットなし","Visualização":"閲覧"
  };
  var JP={"Nova chave mestra":"新しいマスターキー","Nova chave mestra (opcional)":"新しいマスターキー（任意）","Nova senha (mínimo 4 caracteres)":"新しいパスワード（4文字以上）","Senha (mínimo 4 caracteres)":"パスワード（4文字以上）","Senha":"パスワード","Chave mestra":"マスターキー","Seu nome":"名前","Porta":"部屋番号","Endereço":"住所（ローマ字）","Prédio (ou Casa)":"建物（または一戸建て）","住所 (endereço em japonês)":"住所","建物名 (nome do prédio em japonês, opcional)":"建物名（任意）","Observações (opcional)":"備考（任意）","Congregação de origem (opcional)":"元の会衆（任意）","Nome do local":"場所の名前","Link do Google Maps (opcional)":"Googleマップのリンク（任意）","🔍 Pesquisar endereço, prédio, porta ou 住所…":"🔍 住所・建物・部屋番号で検索…","Nome do grupo (ex.: KIYOSU)":"グループ名（例：KIYOSU）","Código (ex.: 清須)":"番号（例：清須）"};
@@ -972,6 +981,29 @@ window.MODO="admin";
   var tm={};function auto(id,fn,msgId,msg){document.addEventListener("input",function(e){if(e.target.id!==id)return;clearTimeout(tm[id]);var m=document.getElementById(msgId);if(m)m.textContent="Salvando…";tm[id]=setTimeout(function(){fn(e.target.value);var m2=document.getElementById(msgId);if(m2)m2.textContent=msg();},1200);});}
   auto("dll",function(v){DL=v.split(/\n/).map(function(x){return x.trim();}).filter(Boolean);saveGen();},"dlm",function(){return"✓ Salvo automaticamente — "+DL.length+" dirigente(s).";});
   auto("arl",function(v){AREA=v;saveGen();},"arsm",function(){return"✓ Área salva automaticamente.";});};
+ // ---------- total de portas por grupo + relatório de 6 meses ----------
+ window.PC=window.PC||{};
+ function grupoDe(){var m={};TL.forEach(function(g){g[1].forEach(function(t){m[t[0]]=g[0];});});return m;}
+ function contar(){var gm=grupoDe(),c={},tt={};TL.forEach(function(g){c[g[0]]=0;tt[g[0]]=0;});Object.keys(S).forEach(function(tid){var gr=gm[tid];if(!gr)return;tt[gr]++;S[tid].g.forEach(function(g){c[gr]+=g.r.length;});});return{c:c,t:tt};}
+ function mesK(t){var d=t?new Date(t):new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");}
+ var MES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+ window.pcRecord=function(){if(!window.__genLoaded||!ADM||!S||!Object.keys(S).length)return;var k=mesK(),c=contar().c;if(JSON.stringify(PC[k])===JSON.stringify(c))return;PC[k]=c;
+  var ks=Object.keys(PC).sort();while(ks.length>8)delete PC[ks.shift()];clearTimeout(window.__pcT);window.__pcT=setTimeout(saveGen,800);};
+ window.pcRender=function(){var b=document.getElementById("ptbox");if(!b)return;pcRecord();var r=contar(),gs=TL.map(function(g){return g[0];}),gm=grupoDe();
+  var T=0,TT=0,h='<p class="hn">Contagem automática: muda sozinha quando portas são acrescentadas, apagadas, retiradas no reset ou mudadas de grupo.</p><table class="hs pct"><tr><th>Grupo de campo</th><th>Territórios</th><th>Total de portas</th></tr>';
+  gs.forEach(function(g){T+=r.c[g];TT+=r.t[g];h+='<tr style="background:'+(GC[g]||"#fff")+'"><td><b>'+esc(g)+'</b></td><td>'+r.t[g]+'</td><td class="pcn">'+r.c[g]+' portas</td></tr>';});
+  h+='<tr class="pctot"><td><b>TOTAL (todos os grupos)</b></td><td>'+TT+'</td><td class="pcn"><b>'+T+' portas</b></td></tr></table>';
+  // últimos 6 meses
+  var meses=[],d=new Date();d.setDate(1);for(var i=5;i>=0;i--){var x=new Date(d.getFullYear(),d.getMonth()-i,1);meses.push(mesK(x.getTime()));}
+  var mov={};meses.forEach(function(m){mov[m]={};gs.forEach(function(g){mov[m][g]={a:0,r:0};});});
+  Object.keys(S).forEach(function(tid){var gr=gm[tid];if(!gr)return;(S[tid].h||[]).forEach(function(e){var m=mesK(e.t);if(!mov[m])return;if(!e.k||e.k==="a"||e.k==="v")mov[m][gr].a++;else if(e.k==="d")mov[m][gr].r++;});
+   (S[tid].ar||[]).forEach(function(e){var m=mesK(e.t);if(mov[m])mov[m][gr].r++;});});
+  h+='<h5 class="pch">Relatório dos últimos 6 meses</h5><p class="hn">Em cada mês: portas acrescentadas (+), retiradas ou apagadas (−) e o total no fim do mês (quando já registrado).</p><div class="iw"><table class="hs pcm"><tr><th>Grupo</th>'+meses.map(function(m){var p=m.split("-");return'<th>'+MES[+p[1]-1]+'/'+p[0].slice(2)+'</th>';}).join("")+'<th>6 meses</th></tr>';
+  var tot={};meses.forEach(function(m){tot[m]={a:0,r:0,n:0,tem:false};});var sa=0,sr=0;
+  gs.forEach(function(g){var ga=0,gr2=0;h+='<tr style="background:'+(GC[g]||"#fff")+'"><td><b>'+esc(g)+'</b></td>'+meses.map(function(m){var o=mov[m][g],n=PC[m]&&PC[m][g];ga+=o.a;gr2+=o.r;tot[m].a+=o.a;tot[m].r+=o.r;if(n!==undefined){tot[m].n+=n;tot[m].tem=true;}
+    return'<td><span class="pcp">+'+o.a+'</span> <span class="pcr">−'+o.r+'</span>'+(n!==undefined?'<br><span class="hn">'+n+' portas</span>':'')+'</td>';}).join("")+'<td><span class="pcp">+'+ga+'</span> <span class="pcr">−'+gr2+'</span><br><b>'+(ga-gr2>=0?'+':'')+(ga-gr2)+'</b></td></tr>';sa+=ga;sr+=gr2;});
+  h+='<tr class="pctot"><td><b>TOTAL</b></td>'+meses.map(function(m){var o=tot[m];return'<td><span class="pcp">+'+o.a+'</span> <span class="pcr">−'+o.r+'</span>'+(o.tem?'<br><b>'+o.n+' portas</b>':'')+'</td>';}).join("")+'<td><span class="pcp">+'+sa+'</span> <span class="pcr">−'+sr+'</span><br><b>'+(sa-sr>=0?'+':'')+(sa-sr)+'</b></td></tr></table></div>';
+  b.innerHTML=h;};
 
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
@@ -1008,7 +1040,7 @@ window.MODO="admin";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"],["Total de portas","📊 Total de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;

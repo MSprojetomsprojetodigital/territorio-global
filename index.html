@@ -268,6 +268,14 @@ tr.new td.cd{background:#fff8d9}
 .zbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--borda);border-radius:12px;padding:10px 14px;margin:0 0 12px;max-width:1180px;font-size:14px}
 .zbar input{border:1.5px solid var(--borda);border-radius:8px;padding:6px 10px;font-size:14px;width:150px}
 .rsf{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+#ap .pct{max-width:640px}#ap .pct td,#ap .pct th{font-size:15px;padding:8px 12px}
+.pcn{text-align:right;font-variant-numeric:tabular-nums}
+tr.pctot td{background:var(--escuro)!important;color:#fff}
+tr.pctot .hn{color:#ddd}
+.pch{font:600 18px "DM Sans",Arial,sans-serif;margin:22px 0 4px}
+#ap .pcm td{font-size:13px;text-align:center;white-space:nowrap}
+.pcp{color:#2e7d32;font-weight:600}.pcr{color:#b3261e;font-weight:600}
+tr.pctot .pcp{color:#9be29f}tr.pctot .pcr{color:#ffb4ab}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -330,7 +338,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[]});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[],pc:window.PC||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
@@ -455,8 +463,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>';
- if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>'+'<div class="sec"><h4>Total de portas</h4><div id="ptbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();if(window.pcRender)pcRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -806,7 +814,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -904,7 +912,7 @@ window.MODO="ver";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"],["Total de portas","📊 Total de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
