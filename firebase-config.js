@@ -1,11 +1,9 @@
 // Configuração do Firebase do site dos territórios.
-// No Firebase: ⚙️ Configurações do projeto > Seus apps > app Web.
-// Copie os valores que aparecem lá e cole aqui no lugar de COLE_AQUI.
 window.FIREBASE_CONFIG = {
-  apiKey: "COLE_AQUI",
-  authDomain: "COLE_AQUI",
-  projectId: "COLE_AQUI",
-  storageBucket: "COLE_AQUI",
-  messagingSenderId: "COLE_AQUI",
-  appId: "COLE_AQUI"
+  apiKey: "AIzaSyC0wbLVSgI2CBscVRS6em3Z3FDU7WPnqas",
+  authDomain: "territorio-global.firebaseapp.com",
+  projectId: "territorio-global",
+  storageBucket: "territorio-global.firebasestorage.app",
+  messagingSenderId: "460360691680",
+  appId: "1:460360691680:web:0b8edeb1f13901ab870585"
 };
