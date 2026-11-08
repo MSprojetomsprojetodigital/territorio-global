@@ -257,6 +257,7 @@ tr.new td.cd{background:#fff8d9}
 #ap .imt{min-width:1050px}
 #ap #impbox .iw{display:block;padding:8px}
 #ap #imp_s{max-width:220px}
+#ap .tgt select{max-width:200px}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -319,7 +320,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
@@ -444,8 +445,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>';
- if(ED)fillEd();if(window.impRender)impRender();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -460,19 +461,19 @@ var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japon
 function edX(){var p=ED.split("|"),s=S[p[0]],g=s&&s.g[p[1]];return g&&g.r[p[2]]?{tid:p[0],g:g,x:g.r[p[2]]}:null;}
 function edMap(){var a=document.getElementById("edv");if(!a)return;var q=mq(document.getElementById("ed6").value.trim(),document.getElementById("ed4").value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");}
 function fillEd(){var f=document.getElementById("edf"),o=ED&&edX(),em=document.getElementById("edm");em.textContent="";em.dataset.ok="";if(!o){f.innerHTML="";return;}var x=o.x;
- f.innerHTML='<div class="adm2 fm">'+EF.map(function(e){return'<label class="hn">'+e[1]+'</label><input id="ed'+e[0]+'" value="'+esc(un(x[e[0]]))+'">';}).join("")+'<label class="hn">Observações</label><textarea id="ed5" rows="2">'+esc(un(x[5]))+'</textarea><p class="hn" style="margin:4px 0 6px"><a id="edv" target="_blank" rel="noopener">Conferir o endereço no mapa</a></p><input id="edb" placeholder="Seu nome"><button class="btn" id="edg">Salvar alterações</button></div>';
+ f.innerHTML='<div class="adm2 fm">'+EF.map(function(e){return'<label class="hn">'+e[1]+'</label><input id="ed'+e[0]+'" value="'+esc(un(x[e[0]]))+'">';}).join("")+(window.mvSel?mvSel(o):"")+'<label class="hn">Observações</label><textarea id="ed5" rows="2">'+esc(un(x[5]))+'</textarea><p class="hn" style="margin:4px 0 6px"><a id="edv" target="_blank" rel="noopener">Conferir o endereço no mapa</a></p><input id="edb" placeholder="Seu nome"><button class="btn" id="edg">Salvar alterações</button></div>';
  edMap();}
 function saveEd(){var o=edX(),m=document.getElementById("edm");if(!o)return;var x=o.x,by=document.getElementById("edb").value.trim(),ch=[],nv={};
  m.className="mg";if(!by){m.textContent="Digite seu nome.";return;}
  EF.forEach(function(e){var v=document.getElementById("ed"+e[0]).value.trim();if(v!==un(x[e[0]]).trim()){nv[e[0]]=esc(v);ch.push(e[1].split(" (")[0]);}});
  var ob=document.getElementById("ed5").value.trim();if(ob!==un(x[5]).trim()){nv[5]=esc(ob).replace(/\n/g,"<br>");ch.push("Observações");}
- if(!ch.length){m.textContent="Nada foi alterado.";return;}
+ var mvv=document.getElementById("edmv"),mvTo=(mvv&&mvv.value!==o.tid+"|"+ED.split("|")[1])?mvv.value:"";if(mvTo)ch.push("Território/grupo");if(!ch.length){m.textContent="Nada foi alterado.";return;}
  if(nv[2]===""||nv[3]===""){m.textContent="O prédio e a porta não podem ficar vazios.";return;}
  var nj=nv[6]!==undefined?nv[6]:x[6],ne=nv[4]!==undefined?nv[4]:x[4];if((nv[4]!==undefined||nv[6]!==undefined)&&!inArea(nj,ne)&&!m.dataset.ok){m.dataset.ok=1;m.textContent="Atenção: esse endereço não pertence ao nosso território. Para salvar mesmo assim, clique em Salvar de novo.";return;}
- for(var k in nv)x[k]=nv[k];
+ for(var k in nv)x[k]=nv[k];if(mvTo){var mq2=mvTo.split("|"),tg=S[mq2[0]]&&S[mq2[0]].g[+mq2[1]];if(tg){var de=TD[o.tid].t+" grupo "+(o.g.n||"—"),pa=TD[mq2[0]].t+" grupo "+(tg.n||"—");o.g.r.splice(+ED.split("|")[2],1);var at=-1;tg.r.forEach(function(y,i){if(un(y[2])===un(x[2]))at=i;});if(at>=0)tg.r.splice(at+1,0,x);else tg.r.push(x);ch[ch.indexOf("Território/grupo")]="Território/grupo (de "+de+" para "+pa+")";if(mq2[0]!==o.tid){S[mq2[0]].h.unshift({t:Date.now(),by:by,n:tg.n,k:"e",pr:x[2],po:un(x[3]),ch:"Veio de "+de});save(mq2[0]);}ED=mq2[0]+"|"+mq2[1]+"|"+tg.r.indexOf(x);}}
  S[o.tid].h.unshift({t:Date.now(),by:by,n:o.g.n,k:"e",pr:x[2],po:un(x[3]),ch:ch.join(", ")});
  save(o.tid);render();
- var m2=document.getElementById("edm");if(m2){m2.className="ok";m2.textContent="Alterações salvas. O pin 📌 já usa o endereço novo.";}}
+ var m2=document.getElementById("edm");if(m2){m2.className="ok";m2.textContent="Alterações salvas. O marcador do mapa 📌 já usa o endereço novo.";}}
 function restore(key){var p=key.split("|"),tid=p[0],i=+p[1],s=S[tid],a=s&&s.ar[i];if(!a)return;var g=s.g.filter(function(y){return y.id===a.gid;})[0],m=document.getElementById("arm");
  if(!g){m.className="mg";m.textContent="O grupo dessa porta não existe mais.";return;}
  var x=a.x,at=-1;x[0]="";x[1]="";g.r.forEach(function(y,j){if(y[2]===x[2]&&y[4]===x[4])at=j;});
@@ -521,7 +522,7 @@ function newTerr(){
  else{var p=sel.split("|");tid=p[0];g=S[tid].g[+p[1]];if(!g)return;var at=-1;g.r.forEach(function(y,j){if(un(y[2])===pr&&((jp&&un(y[6])===jp)||(en&&un(y[4])===en)))at=j;});if(at<0)g.r.push(row);else g.r.splice(at+1,0,row);}
  S[tid].h.unshift({t:ts,by:by,n:g.n,k:sel==="new"?"t":"a",o:og,pr:esc(pr),po:po});
  save(tid);render();
- var m2=document.getElementById("ntm");if(m2){m2.className="ok";m2.textContent="Endereço acrescentado no território "+TD[tid].t+", grupo "+(un(g.n)||"sem número")+". O pin 📌 já foi criado pelo endereço.";}
+ var m2=document.getElementById("ntm");if(m2){m2.className="ok";m2.textContent="Endereço acrescentado no território "+TD[tid].t+", grupo "+(un(g.n)||"sem número")+". O marcador do mapa 📌 já foi criado pelo endereço.";}
 }
 function doReset(){
  var t=Date.now(),nr=0;
@@ -795,7 +796,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;renderIdx();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -824,6 +825,19 @@ window.MODO="ver";
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
   if(window.MODO==="admin")abas();apagar();}
+ window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
+ window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
+  var nw=TL0.map(function(g){return[g[0],[]];}),idx={};nw.forEach(function(g,i){idx[g[0]]=i;});
+  [false,true].forEach(function(mov){TL0.forEach(function(g){g[1].forEach(function(t){var d=TG[t[0]],m=!!(d&&ok[d]&&d!==g[0]);if(m!==mov)return;nw[idx[m?d:g[0]]][1].push(JSON.parse(JSON.stringify(t)));});});});
+  nw.forEach(function(g){g[1].forEach(function(t,i){t[3]=pre[g[0]]+String(i+1).replace(/[0-9]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+65248);});});});
+  TL.length=0;nw.forEach(function(g){TL.push(g);});};
+ window.tgRender=function(){var b=document.getElementById("tgbox");if(!b)return;tl0();var gs=TL0.map(function(g){return g[0];}),orig={};TL0.forEach(function(g){g[1].forEach(function(t){orig[t[0]]=g[0];});});
+  var h='<p class="hn">Escolha em qual grupo de campo cada território fica. A mudança vale na lista de territórios e na programação (domingos) para todos, na hora.</p><table class="hs tgt"><tr><th>Território</th><th>Grupo de campo</th><th>Código</th></tr>';
+  TL.forEach(function(g){g[1].forEach(function(t){h+='<tr style="background:'+(GC[g[0]]||"#fff")+'"><td><b>'+esc(t[0]+" "+t[1])+'</b></td><td><select data-tgt="'+t[0]+'">'+gs.map(function(x){return'<option'+(x===g[0]?" selected":"")+'>'+x+'</option>';}).join("")+'</select>'+(g[0]!==orig[t[0]]?' <span class="hn">(antes: '+orig[t[0]]+')</span>':'')+'</td><td>'+esc(t[3])+'</td></tr>';});});
+  b.innerHTML=h+'</table><p class="ok" id="tgm"></p>';};
+ document.addEventListener("change",function(e){var tid=e.target.dataset&&e.target.dataset.tgt;if(!tid)return;tl0();var orig="";TL0.forEach(function(g){g[1].forEach(function(t){if(t[0]===tid)orig=g[0];});});
+  if(e.target.value===orig)delete TG[tid];else TG[tid]=e.target.value;applyTG();saveGen();renderIdx();renderProg();renderAdm();var m=document.getElementById("tgm");if(m)m.textContent="Salvo: território "+tid+" agora está no grupo "+e.target.value+".";});
+ window.mvSel=function(o){var cur=o.tid+"|"+ED.split("|")[1];return'<label class="hn">Território e grupo (para mudar a porta de grupo ou de território)</label><select id="edmv">'+TIDS().map(function(tid){return'<optgroup label="'+esc(TD[tid].t)+'">'+S[tid].g.map(function(g,gi){var v=tid+"|"+gi;return'<option value="'+v+'"'+(v===cur?" selected":"")+'>'+esc(TD[tid].t)+' — Grupo '+esc(g.n||"—")+' ('+g.r.length+' portas)</option>';}).join("")+'</optgroup>';}).join("")+'</select>';};
  
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
@@ -860,7 +874,7 @@ window.MODO="ver";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
