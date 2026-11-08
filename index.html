@@ -248,6 +248,15 @@ tr.new td.cd{background:#fff8d9}
 #edr{display:flex;flex-direction:column;gap:4px;max-width:720px;margin-bottom:10px}
 .edri{text-align:left;background:#fff;border:1.5px solid var(--borda);border-radius:9px;padding:8px 12px;font:14px "DM Sans",Arial,sans-serif;cursor:pointer;color:var(--escuro)}
 .edri:hover{border-color:var(--azul);background:#eef3fb}
+.imt td,.imt th{font-size:12.5px;vertical-align:top}
+.imt select{max-width:150px;font-size:12px!important;padding:4px 6px!important}
+.imt tr.imw td{background:#fff8d9}
+.imt tr.imx td{color:#888}
+#impbox .iw{max-width:100%;overflow-x:auto}
+#ap .imt select{max-width:140px!important;font-size:12px!important;padding:3px 6px!important;border-radius:6px!important}
+#ap .imt{min-width:1050px}
+#ap #impbox .iw{display:block;padding:8px}
+#ap #imp_s{max-width:220px}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -307,7 +316,7 @@ function fd(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?(+m[3])+"/"+
 function iso(s){if(/^\d{4}-/.test(s))return s;var m=/^(\d+)\/(\w+)\.$/.exec(s||"");if(!m)return"";var i=MS.indexOf(m[2]);return i<0?"":"2026-"+("0"+(i+1)).slice(-2)+"-"+("0"+m[1]).slice(-2);}
 function cst(c){var m=CM[CC[c]];return m?"background:"+m[0]+";color:"+m[1]:"";}
 function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.test(q))q="愛知県名古屋市"+q;return q;}
-function pin(x){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
+function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
 function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
@@ -435,8 +444,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>';
- if(ED)fillEd();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -447,7 +456,7 @@ async function setPin(){
  document.getElementById("np").value="";document.getElementById("nm").value="";
  m.className="ok";m.textContent="Salvo. Passe a nova senha aos responsáveis."+(nm?" A chave mestra também foi trocada.":"");
 }
-var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"]];
+var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"],[11,"Link do Google Maps (opcional, deixa o 📌 exato)"]];
 function edX(){var p=ED.split("|"),s=S[p[0]],g=s&&s.g[p[1]];return g&&g.r[p[2]]?{tid:p[0],g:g,x:g.r[p[2]]}:null;}
 function edMap(){var a=document.getElementById("edv");if(!a)return;var q=mq(document.getElementById("ed6").value.trim(),document.getElementById("ed4").value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");}
 function fillEd(){var f=document.getElementById("edf"),o=ED&&edX(),em=document.getElementById("edm");em.textContent="";em.dataset.ok="";if(!o){f.innerHTML="";return;}var x=o.x;
@@ -815,6 +824,7 @@ window.MODO="ver";
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
   if(window.MODO==="admin")abas();apagar();}
+ 
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
   async function pinOk(box){var nm=box.querySelector(".apn").value,pn=box.querySelector(".app").value.trim(),m=box.querySelector(".apm");
@@ -850,7 +860,7 @@ window.MODO="ver";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;

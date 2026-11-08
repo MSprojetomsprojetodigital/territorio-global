@@ -248,6 +248,15 @@ tr.new td.cd{background:#fff8d9}
 #edr{display:flex;flex-direction:column;gap:4px;max-width:720px;margin-bottom:10px}
 .edri{text-align:left;background:#fff;border:1.5px solid var(--borda);border-radius:9px;padding:8px 12px;font:14px "DM Sans",Arial,sans-serif;cursor:pointer;color:var(--escuro)}
 .edri:hover{border-color:var(--azul);background:#eef3fb}
+.imt td,.imt th{font-size:12.5px;vertical-align:top}
+.imt select{max-width:150px;font-size:12px!important;padding:4px 6px!important}
+.imt tr.imw td{background:#fff8d9}
+.imt tr.imx td{color:#888}
+#impbox .iw{max-width:100%;overflow-x:auto}
+#ap .imt select{max-width:140px!important;font-size:12px!important;padding:3px 6px!important;border-radius:6px!important}
+#ap .imt{min-width:1050px}
+#ap #impbox .iw{display:block;padding:8px}
+#ap #imp_s{max-width:220px}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -310,7 +319,7 @@ function fd(s){var m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?(+m[3])+"/"+
 function iso(s){if(/^\d{4}-/.test(s))return s;var m=/^(\d+)\/(\w+)\.$/.exec(s||"");if(!m)return"";var i=MS.indexOf(m[2]);return i<0?"":"2026-"+("0"+(i+1)).slice(-2)+"-"+("0"+m[1]).slice(-2);}
 function cst(c){var m=CM[CC[c]];return m?"background:"+m[0]+";color:"+m[1]:"";}
 function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.test(q))q="愛知県名古屋市"+q;return q;}
-function pin(x){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
+function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
 function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
@@ -438,8 +447,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>';
- if(ED)fillEd();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -450,7 +459,7 @@ async function setPin(){
  document.getElementById("np").value="";document.getElementById("nm").value="";
  m.className="ok";m.textContent="Salvo. Passe a nova senha aos responsáveis."+(nm?" A chave mestra também foi trocada.":"");
 }
-var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"]];
+var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"],[11,"Link do Google Maps (opcional, deixa o 📌 exato)"]];
 function edX(){var p=ED.split("|"),s=S[p[0]],g=s&&s.g[p[1]];return g&&g.r[p[2]]?{tid:p[0],g:g,x:g.r[p[2]]}:null;}
 function edMap(){var a=document.getElementById("edv");if(!a)return;var q=mq(document.getElementById("ed6").value.trim(),document.getElementById("ed4").value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");}
 function fillEd(){var f=document.getElementById("edf"),o=ED&&edX(),em=document.getElementById("edm");em.textContent="";em.dataset.ok="";if(!o){f.innerHTML="";return;}var x=o.x;
@@ -818,6 +827,62 @@ window.MODO="admin";
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
   if(window.MODO==="admin")abas();apagar();}
+  // ---------- importar portas em lote ----------
+ window.IMP=null;
+ function inz(x){return String(x||"").toLowerCase().normalize("NFKC").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[\s\-ー－・,.()（）]/g,"");}
+ function tk(v){return un(v).toLowerCase().normalize("NFKC").split(/[^0-9a-z\u3040-\u9fff]+/).filter(Boolean);}
+ function portaIgual(a,b){var ta=tk(a),tb=tk(b);if(!tb.length)return true;return ta.length>=tb.length&&ta.slice(-tb.length).join("|")===tb.join("|");}
+ function acharPorta(tid,pr,po,en){var r=null;(S[tid]?S[tid].g:[]).forEach(function(g,gi){g.r.forEach(function(x,ri){if(r)return;var p2=inz(un(x[2])),q=inz(pr);
+   var okp=!q||p2.indexOf(q)>=0||(p2.length>3&&q.indexOf(p2)>=0);var oke=!en||(inz(un(x[4])).indexOf(inz(en))>=0)||(inz(un(x[4])).length>6&&inz(en).indexOf(inz(un(x[4])))>=0);
+   if(okp&&oke&&portaIgual(x[3],po))r={g:g,gi:gi,ri:ri,x:x};});});return r;}
+ function grupos(tid){return(S[tid]?S[tid].g:[]).map(function(g,gi){return{gi:gi,n:g.n};});}
+ function impCheca(){if(!IMP)return;IMP.itens.forEach(function(it){
+   if(it.tipo==="add"){var a=acharPorta(it.tid,it.pr,it.po,/\d/.test(it.po)?"":it.en);it.status=a?"Já existe no território "+it.tid+" (grupo "+(a.g.n||"—")+")":"";if(a&&it.marcar===undefined)it.marcar=false;}
+   else{var b=acharPorta(it.tid,it.achar.pr,it.achar.po,it.achar.en);
+    if(!b&&it.set.po){var b2=acharPorta(it.tid,it.achar.pr,it.set.po,it.achar.en);if(b2){it.alvo=null;it.status="Já aplicada";it.marcar=false;return;}}
+    it.alvo=b;it.status=b?"":"Porta não encontrada (pode já ter sido retirada)";if(!b){it.marcar=false;return;}
+    var x=b.x,st=it.set,muda=(st.po!==undefined&&un(x[3])!==st.po)||(st.pr!==undefined&&un(x[2])!==st.pr)||(st.obs&&un(x[5]).indexOf(st.obs)<0)||(st.cond&&x[1]!==st.cond)||(st.link&&x[11]!==st.link);
+    if(!muda){it.status="Já aplicada";it.marcar=false;return;}}
+   if(it.marcar===undefined)it.marcar=true;});}
+ window.impRender=function(){var bx=document.getElementById("impbox");if(!bx)return;
+  if(!IMP){bx.innerHTML='<p class="hn">Escolha o arquivo de importação (.json) que o Claude preparou. Antes de gravar, você confere tudo numa tabela e pode mudar o território e o grupo de cada porta.</p><input type="file" id="impj" accept=".json,application/json"><p class="mg" id="impm"></p>';return;}
+  var nAdd=0,nEd=0;IMP.itens.forEach(function(it){if(it.marcar){if(it.tipo==="add")nAdd++;else nEd++;}});
+  var h='<p class="hn"><b>'+esc(IMP.titulo||"Importação")+'</b> — '+IMP.itens.length+' itens. Marcados: '+nAdd+' porta(s) nova(s) e '+nEd+' correção(ões). As linhas com ⚠ precisam da sua conferência (território ou grupo incerto). Portas que já existem vêm desmarcadas.</p>';
+  h+='<div class="iw"><table class="hs imt"><tr><th><input type="checkbox" id="imall" title="Marcar todas"></th><th>Tipo</th><th>Território</th><th>Grupo</th><th>Prédio / Porta</th><th>Endereço</th><th>Observação</th><th>Mapa</th><th>Situação</th></tr>';
+  IMP.itens.forEach(function(it,i){var tsel='<select data-imt="'+i+'"'+(it.tipo!=="add"?" disabled":"")+'>'+Object.keys(TD).sort(function(a,b){return a-b;}).map(function(t){return'<option value="'+t+'"'+(t===it.tid?" selected":"")+'>'+esc(TD[t].t)+'</option>';}).join("")+'</select>';
+   var gsel=it.tipo==="add"?'<select data-img="'+i+'">'+grupos(it.tid).map(function(g){return'<option value="'+esc(g.n)+'"'+(String(g.n)===String(it.g)?" selected":"")+'>Grupo '+esc(g.n||"—")+'</option>';}).join("")+'</select>':(it.alvo?'Grupo '+esc(it.alvo.g.n||"—"):"—");
+   var desc=it.tipo==="add"?'<b>'+esc(it.pr)+'</b>, porta '+esc(it.po):'Corrigir <b>'+esc(it.alvo?un(it.alvo.x[2]):it.achar.pr)+'</b> '+esc(it.alvo?un(it.alvo.x[3]):it.achar.po)+': '+Object.keys(it.set).map(function(k){return({po:"porta → ",obs:"obs: ",cond:"condição → ",pr:"prédio → ",link:"mapa"})[k]+(k==="link"?"":esc(it.set[k]));}).join("; ");
+   h+='<tr class="'+(it.aviso?"imw":"")+(it.status?" imx":"")+'"><td><input type="checkbox" class="imc" data-imc="'+i+'"'+(it.marcar?" checked":"")+'></td><td>'+(it.tipo==="add"?"Nova":"Correção")+'</td><td>'+tsel+'</td><td>'+gsel+'</td><td>'+desc+'</td><td>'+esc(it.en||"")+(it.jp?'<br><span class="hn">'+esc(it.jp)+'</span>':'')+'</td><td>'+esc(it.obs||"")+'</td><td>'+((it.link||(it.set&&it.set.link))?'<a href="'+esc(it.link||it.set.link)+'" target="_blank" rel="noopener">📌 ver</a>':(it.jp||it.en?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(it.jp||it.en)+'" target="_blank" rel="noopener">📌 ver</a>':''))+'</td><td>'+(it.aviso?'<span class="mg">⚠ '+esc(it.aviso)+'</span><br>':'')+(it.status?'<span class="hn">'+esc(it.status)+'</span>':'')+'</td></tr>';});
+  h+='</table></div><div class="fm" style="margin-top:12px"><input id="imp_s" type="password" placeholder="Senha"><button class="btn" id="imp_ok">Importar marcadas</button> <button class="btn rd" id="imp_x">Cancelar</button></div><p class="mg" id="imp_m"></p>';
+  bx.innerHTML=h;};
+ document.addEventListener("change",function(e){var t=e.target,d=t.dataset||{};
+  if(t.id==="impj"){var f=t.files[0],m=document.getElementById("impm");if(!f)return;f.text().then(function(tx){var o=JSON.parse(tx);if(!o||!o.itens)throw 0;IMP=o;impCheca();impRender();}).catch(function(){m.textContent="Arquivo inválido.";});return;}
+  if(!IMP)return;
+  if(t.id==="imall"){IMP.itens.forEach(function(it){if(it.tipo==="add"||it.alvo)it.marcar=t.checked;});impRender();return;}
+  if(d.imc!==undefined){IMP.itens[+d.imc].marcar=t.checked;impRender();return;}
+  if(d.imt!==undefined){var it=IMP.itens[+d.imt];it.tid=t.value;var gs=grupos(it.tid);it.g=gs.length?gs[0].n:"";it.aviso="";it.marcar=true;impCheca();impRender();return;}
+  if(d.img!==undefined){IMP.itens[+d.img].g=t.value;IMP.itens[+d.img].aviso="";impRender();return;}});
+ document.addEventListener("click",async function(e){var id=e.target.id;
+  if(id==="imp_x"){IMP=null;impRender();return;}
+  if(id!=="imp_ok"||!IMP)return;var m=document.getElementById("imp_m"),pw=document.getElementById("imp_s").value.trim();
+  if(!PH||await hash(pw)!==PH){m.textContent=" Senha incorreta.";return;}
+  var ts=Date.now(),mud={},nA=0,nE=0;
+  IMP.itens.forEach(function(it,i){if(!it.marcar)return;
+   if(it.tipo==="add"){var s=S[it.tid];if(!s)return;var g=null;s.g.forEach(function(gg){if(String(gg.n)===String(it.g)&&!g)g=gg;});if(!g)g=s.g[s.g.length-1];
+    var n=["","",esc(it.pr),esc(it.po),esc(it.en||""),esc(it.obs||""),esc(it.jp||""),esc(it.jpn||""),"",ts,"n"+ts+"_"+i,it.link||""];
+    if(it.cond&&OPT.indexOf(it.cond)>=0)n[1]=it.cond;
+    var at=-1;g.r.forEach(function(x,ri){if(inz(un(x[2]))===inz(it.pr))at=ri;});if(at>=0)g.r.splice(at+1,0,n);else g.r.push(n);
+    s.h.unshift({t:ts,by:it.by||"Importação",n:g.n,pr:n[2],po:it.po});mud[it.tid]=1;nA++;}
+   else{var a=acharPorta(it.tid,it.achar.pr,it.achar.po,it.achar.en);if(!a)return;var x=a.x,ch=[];
+    if(it.set.po!==undefined){x[3]=esc(it.set.po);ch.push("Porta");}
+    if(it.set.pr!==undefined){x[2]=esc(it.set.pr);ch.push("Prédio");}
+    if(it.set.obs){var ob=un(x[5]).trim();if(ob.indexOf(it.set.obs)<0){x[5]=esc(ob?ob+" / "+it.set.obs:it.set.obs);ch.push("Observações");}}
+    if(it.set.cond&&OPT.indexOf(it.set.cond)>=0){x[1]=it.set.cond;ch.push("Condição");}
+    if(it.set.link){x[11]=it.set.link;ch.push("Mapa");}
+    if(ch.length){S[it.tid].h.unshift({t:ts,by:it.by||"Importação",n:a.g.n,k:"e",pr:x[2],po:un(x[3]),ch:ch.join(", ")});mud[it.tid]=1;nE++;}}});
+  Object.keys(mud).forEach(function(tid){save(tid);});IMP=null;render();renderAdm();
+  var bx=document.getElementById("impbox");if(bx)bx.insertAdjacentHTML("afterbegin",'<p class="ok">Importação concluída: '+nA+' porta(s) nova(s) e '+nE+' correção(ões) gravadas.</p>');});
+
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
   async function pinOk(box){var nm=box.querySelector(".apn").value,pn=box.querySelector(".app").value.trim(),m=box.querySelector(".apm");
@@ -853,7 +918,7 @@ window.MODO="admin";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
