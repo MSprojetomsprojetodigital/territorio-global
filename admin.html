@@ -219,6 +219,10 @@ tr.add td{background:#f6f9fc}
 #ap .sec .btn:not(.rd):hover,#lk .btn:hover{background:#3a332c}
 #ap .lcb .btn:not(.rd),#ap td .btn:not(.rd),#ap h4 .btn:not(.rd),#ap .lad .btn{background:#fff;border-color:var(--azul);color:var(--azul)}
 .pgdl{display:none!important}
+/* visualização: só a Programação; o território aparece só quando é aberto */
+body.ver .nv .tb[data-v="vi"]{display:none}
+body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
+#pgt .cfw{border-radius:12px}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -285,7 +289,7 @@ function pin(x){return"https://www.google.com/maps/search/?api=1&query="+encodeU
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v});else localStorage.setItem("t"+tid,v);}catch(e){}}
 function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
-function saveCfg(){try{if(cfg)cfg.set({pin:PH,master:MK});else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
+function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
   if(tid==="7"&&!RS.length&&AREA===null&&((o.rs&&o.rs.length)||o.area!=null)){RS=o.rs||[];AREA=o.area!=null?o.area:null;saveGen();}}
@@ -562,7 +566,7 @@ PM=pickPM();
 function tinfo(n){var r=null;TL.forEach(function(gr){gr[1].forEach(function(t){if(t[0]===n)r={g:gr[0],t:t};});});return r;}
 function mapq(n){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(n+" 愛知県");}
 function pmonth(){return PG[PM]=PG[PM]||{d:{}};}
-function savePG(){PUBD=true;var v=JSON.stringify(PG);LAST.pg=v;try{if(pdoc)pdoc.set({data:v});else localStorage.setItem("tprog",v);}catch(e){}}
+function savePG(){PUBD=true;var v=JSON.stringify(PG);LAST.pg=v;try{if(pdoc)pdoc.set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("tprog",v);}catch(e){}}
 function tOptsAll(sel,grp){var o='<option value="">—</option>';TL.forEach(function(gr){if(grp&&gr[0]!==grp)return;o+='<optgroup label="'+gr[0]+'">'+gr[1].map(function(t){return'<option value="'+t[0]+'"'+(t[0]===sel?" selected":"")+'>'+t[0]+' '+t[1]+'</option>';}).join("")+'</optgroup>';});return o;}
 function tLink(n){var i=tinfo(n);if(!i)return"";var lab=n+" "+i.t[1];return TD[n]?'<button class="lk2" data-open="'+n+'">'+esc(lab)+'</button>':esc(lab);}
 function pkey(dd){return PM+"-"+("0"+dd).slice(-2);}
@@ -583,7 +587,7 @@ function sunCell(k){var o=pmonth().d[k]||{},s=o.sun||{},sg=o.sung||{},st=o.str||
 function tlab(n){var i=tinfo(n);return i?n+" "+i.t[1]:(n==="zoom"?"Zoom":"");}
 function trNote(k,o,slot){var tr=slot?(o.str||{})[slot]:o.tr,orig=slot?(o.sun||{})[slot]:o.terr;
  if(PE)return tr?'<span class="trn">trocado por '+esc(tr.by)+(orig?' (era '+esc(tlab(orig))+')':'')+'</span><button class="btn" data-utr="'+k+'|'+slot+'">Desfazer troca</button>':"";
- if(RO||(!slot&&o.terr==="zoom"&&!tr))return"";
+ if((RO&&!window.TRV)||(!slot&&o.terr==="zoom"&&!tr))return"";
  return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>':"";}
 function trLog(e){PG.log=PG.log||[];PG.log.unshift(e);if(PG.log.length>500)PG.log.length=500;}
 var PT=null;
@@ -751,11 +755,13 @@ async function pubNow(msgEl){var a=null;try{a=await claude.use("artifact");}catc
  try{await a.publish(snapHTML());PUBD=false;}catch(e){var c=e&&e.code;if(msgEl){msgEl.className="mg";msgEl.textContent=c==="not_writer"||c==="not_granted"?" Você não tem permissão para publicar. Peça ao responsável.":c==="conflict"?" Outra pessoa publicou ao mesmo tempo. Abra a página de novo e tente outra vez.":" Não foi possível publicar ("+(c||"erro")+").";}}}
 render();renderIdx();sv("vp");
 (function(){var d=window.FB_DB,adm=window.MODO==="admin";
- if(!adm){RO=true;var ta=document.querySelector('.tb[data-v="va"]');if(ta)ta.hidden=true;render();renderProg();}
+ if(!adm){RO=true;window.TRV=true;document.body.classList.add("ver");var ta=document.querySelector('.tb[data-v="va"]');if(ta)ta.hidden=true;render();renderProg();}
  if(!d)return;
  var g=d.doc("territorios/geral"),p=d.doc("territorios/prog"),erro=function(){};
- if(adm){DB=d;gen=g;pdoc=p;cfg=d.doc("territorios/config");
-  cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(!ADM&&!VA.hidden)lockView();},erro);}
+ if(adm){DB=d;gen=g;pdoc=p;cfg=d.doc("territorios/config");var pp=d.doc("territorios/pin"),pin0;
+  pp.onSnapshot(function(sn){pin0=sn.exists?sn.data().pin||null:null;},erro);
+  cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
+ else{pdoc=p;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
  g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;renderIdx();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
