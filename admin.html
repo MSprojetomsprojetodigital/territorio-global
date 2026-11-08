@@ -220,12 +220,12 @@ tr.add td{background:#f6f9fc}
 #ap .lcb .btn:not(.rd),#ap td .btn:not(.rd),#ap h4 .btn:not(.rd),#ap .lad .btn{background:#fff;border-color:var(--azul);color:var(--azul)}
 .pgdl{display:none!important}
 /* visualização: só a Programação; o território aparece só quando é aberto */
-body.ver .nv .tb[data-v="vi"]{display:none}
 body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
 #pgt .cfw{border-radius:12px}
 .btn.voltar{margin:18px 28px 0;padding:9px 18px;font-size:15px;background:var(--escuro);border-color:var(--escuro);color:#fff;border-radius:10px}
 .btn.voltar:hover{background:#3a332c}
-.btn.voltar:has(+ #vt[hidden]){display:none}
+.btn.voltar:has(+ #vt[hidden]),.btn.voltar:has(+ #vi[hidden]){display:none}
+#vi{padding-top:12px}
 #vt>.wrap{margin-top:12px}
 @media (max-width:700px){.btn.voltar{margin:12px 10px 0}}
 </style>
@@ -315,7 +315,7 @@ function render(){
    if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
    h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
   });
-  h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
+  h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO&&!window.TRV?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
   if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
  });
  T.innerHTML=h;
@@ -791,7 +791,7 @@ window.MODO="admin";
   function onl(){var on=navigator.onLine;st.className="pill "+(on?"on":"off");st.textContent="● "+(on?"Online":"Sem internet")+" – "+(window.MODO==="admin"?"Anciãos e Servos Ministeriais":"Visualização");}
   onl();addEventListener("online",onl);addEventListener("offline",onl);
   var nv=document.querySelector(".nv");nv.parentNode.insertBefore(br,nv);
-  var vt=document.getElementById("vt"),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};vt.parentNode.insertBefore(vb,vt);
+  ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
   if(window.MODO==="admin")abas();}
  var ABA=0,NOMES=[["Trocar PIN","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
