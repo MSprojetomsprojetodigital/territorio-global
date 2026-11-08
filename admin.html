@@ -241,6 +241,7 @@ body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
 .dpf{position:relative;display:inline-block}
 .dpf .apx{position:absolute;z-index:20;left:-60px;top:22px;width:max-content;max-width:300px;display:flex;flex-wrap:wrap;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .dpf .apx .apm{flex-basis:100%}
+#ap .hs th:has(>input[type=checkbox]),#ap .hs td:has(>input[type=checkbox]){width:38px;text-align:center}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -337,16 +338,16 @@ function render(){
 function openForm(gi){
  var g=S[CUR].g[gi],seen={},o="";
  g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;o+='<option value="'+i+'">'+x[2]+' — '+x[4]+'</option>';}});
- document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button></span><span class="mg" id="m'+gi+'"></span>';
+ document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button></span><span class="mg" id="m'+gi+'"></span>';
 }
 async function addDoor(gi){
  var s=S[CUR],g=s.g[gi],v=+document.getElementById("s"+gi).value,po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
  if(!po){m.textContent=" Digite a porta.";return;}
  if(!by){m.textContent=" Digite seu nome.";return;}
- if(!/^\d{4}$/.test(pn)){m.textContent=" Digite o PIN de 4 dígitos.";return;}
- if(!PH){m.textContent=" Os responsáveis ainda não foram configurados. O responsável deve criar a chave mestra e o PIN na aba Anciãos e Servos Ministeriais.";return;}
+ if(!/^.{4,}$/.test(pn)){m.textContent=" Digite a senha (mínimo 4 caracteres).";return;}
+ if(!PH){m.textContent=" Os responsáveis ainda não foram configurados. O responsável deve criar a chave mestra e a senha na aba Anciãos e Servos Ministeriais.";return;}
  var hh=await hash(pn);
- if(PH!==hh){m.textContent=" PIN incorreto.";return;}
+ if(PH!==hh){m.textContent=" Senha incorreta.";return;}
  if(v<0){var q=function(i){return esc(document.getElementById(i+gi).value.trim());};if(!q("pr"))return;if(!inArea(q("jp"),q("en"))&&!m.dataset.ok){m.dataset.ok=1;m.textContent=" Atenção: esse endereço não pertence ao nosso território. Confira o endereço. Para colocar mesmo assim, clique em Adicionar de novo.";return;}n=["","",q("pr"),esc(po),q("en"),"",q("jp"),"","",ts,"n"+ts];g.r.push(n);}
  else{var b=g.r[v],at=v;g.r.forEach(function(x,i){if(x[2]===b[2]&&x[4]===b[4])at=i;});n=["","",b[2],esc(po),b[4],"",b[6],b[7],"",ts,"n"+ts];g.r.splice(at+1,0,n);}
  s.h.unshift({t:ts,by:by,n:g.n,pr:n[2],po:po});save(CUR);render();
@@ -379,15 +380,15 @@ function km(a,b){var r=Math.PI/180,dl=(b[0]-a[0])*r,dg=(b[1]-a[1])*r,x=Math.pow(
 var VA=document.getElementById("va"),LK=document.getElementById("lk"),AP=document.getElementById("ap");
 function lockView(){
  AP.hidden=true;AP.innerHTML="";LK.hidden=false;
- LK.innerHTML=(MK?'<p class="hn">Para entrar, digite a chave mestra e o PIN.</p>':'<p class="hn">Primeira configuração: crie a chave mestra (mínimo 6 caracteres) e o PIN de 4 dígitos dos responsáveis. Guarde bem a chave mestra.</p>')
- +'<div class="fm adm"><input id="ak" type="password" placeholder="'+(MK?'Chave mestra':'Nova chave mestra')+'"><input id="ap1" type="password" inputmode="numeric" maxlength="4" placeholder="PIN (4 dígitos)"><button class="btn" id="aent">'+(MK?'Entrar':'Criar e entrar')+'</button></div><p class="mg" id="am"></p>';
+ LK.innerHTML=(MK?'<p class="hn">Para entrar, digite a chave mestra e a senha.</p>':'<p class="hn">Primeira configuração: crie a chave mestra (mínimo 6 caracteres) e a senha dos responsáveis (mínimo 4 caracteres). Guarde bem a chave mestra.</p>')
+ +'<div class="fm adm"><input id="ak" type="password" placeholder="'+(MK?'Chave mestra':'Nova chave mestra')+'"><input id="ap1" type="password" placeholder="Senha (mínimo 4 caracteres)"><button class="btn" id="aent">'+(MK?'Entrar':'Criar e entrar')+'</button></div><p class="mg" id="am"></p>';
 }
 async function enter(){
  var k=document.getElementById("ak").value,p=document.getElementById("ap1").value.trim(),m=document.getElementById("am");
  if(k.length<6){m.textContent="A chave mestra precisa ter pelo menos 6 caracteres.";return;}
- if(!/^\d{4}$/.test(p)){m.textContent="O PIN precisa ter 4 dígitos.";return;}
+ if(!/^.{4,}$/.test(p)){m.textContent="A senha precisa ter pelo menos 4 caracteres.";return;}
  var kh=await hash("mk:"+k),ph=await hash(p);
- if(MK){if(MK!==kh||PH!==ph){m.textContent="Chave mestra ou PIN incorreto.";return;}}
+ if(MK){if(MK!==kh||PH!==ph){m.textContent="Chave mestra ou senha incorreta.";return;}}
  else{MK=kh;PH=ph;saveCfg();}
  ADM=true;LW=null;LK.hidden=true;LK.innerHTML="";AP.hidden=false;renderAdm();
 }
@@ -397,6 +398,7 @@ function hist(e){var w='Território '+e.tid+', grupo '+(e.n||"—");
  if(e.k==="v")return'<b>Porta voltou ao território</b> — '+w+' — '+e.pr+', porta '+esc(e.po);
  if(e.k==="e")return'<b>Porta editada</b> — '+w+' — '+e.pr+', porta '+esc(e.po)+' (mudou: '+esc(e.ch)+')';
  if(e.k==="t")return'<b>Grupo novo</b> — '+w+(e.o?' (veio de '+esc(e.o)+')':'')+' — primeira porta: '+e.pr+', '+esc(e.po);
+ if(e.k==="d")return'<b>Porta apagada</b> — '+w+' — '+e.pr+', porta '+esc(e.po);
  return'Porta acrescentada — '+w+' — '+e.pr+', porta '+esc(e.po);}
 function tOpts(sel){return TIDS().map(function(tid){return'<option value="'+tid+'"'+(tid===sel?" selected":"")+'>'+esc(TD[tid].t)+'</option>';}).join("");}
 function edOpts(){return TIDS().map(function(tid){var o="";S[tid].g.forEach(function(g,gi){g.r.forEach(function(x,i){var k=tid+"|"+gi+"|"+i;o+='<option value="'+k+'"'+(k===ED?" selected":"")+'>Grupo '+esc(un(g.n)||"—")+' — '+esc(un(x[2]))+', porta '+esc(un(x[3]))+'</option>';});});return'<optgroup label="'+esc(TD[tid].t)+'">'+o+'</optgroup>';}).join("");}
@@ -418,9 +420,9 @@ function renderAdm(){
   s.ar.forEach(function(a,i){ar.push({tid:tid,i:i,a:a});});
  });
  hs.sort(function(a,b){return b.t-a.t;});ar.sort(function(a,b){return b.a.t-a.a.t;});
- var hh=hs.map(function(e){return'<tr><td>'+dmy(e.t)+'</td><td>'+esc(e.by)+'</td><td>'+hist(e)+'</td></tr>';}).join("");
+ var hh=hs.map(function(e){return'<tr><td><input type="checkbox" class="hps" data-k="'+e.tid+'|'+e.t+'"></td><td>'+dmy(e.t)+'</td><td>'+esc(e.by)+'</td><td>'+hist(e)+'</td></tr>';}).join("");
  AP.innerHTML='<p><button class="btn" id="aout">Sair desta área</button></p>'
- +'<div class="sec"><h4>Trocar PIN e chave mestra</h4><div class="fm adm"><input id="np" type="password" inputmode="numeric" maxlength="4" placeholder="Novo PIN (4 dígitos)"><input id="nm" type="password" placeholder="Nova chave mestra (opcional)"><button class="btn" id="tps">Salvar</button></div><p class="mg" id="tpm"></p></div>'
+ +'<div class="sec"><h4>Trocar senha e chave mestra</h4><div class="fm adm"><input id="np" type="password" placeholder="Nova senha (mínimo 4 caracteres)"><input id="nm" type="password" placeholder="Nova chave mestra (opcional)"><button class="btn" id="tps">Salvar</button></div><p class="mg" id="tpm"></p></div>'
  +'<div class="sec"><h4>Reset dos territórios</h4><p class="hn">Apaga a data e a condição de todas as portas de todos os territórios. As portas marcadas como "Não quer visita" ficam como estão. O histórico de visitas não é apagado. As portas VAZIO, de outros idiomas e Porta inexistente saem do território e vão para Portas retiradas no reset, de onde podem voltar.'+(RS.length?' Último reset: '+dmy(RS[0])+'.':'')+'</p><button class="btn rd'+(RC?' go':'')+'" id="rst">'+(RC?'Confirmar: apagar datas e condições':'Resetar todos os territórios')+'</button>'+(RC?' <button class="btn" id="rcn">Cancelar</button>':'')+'<p class="ok" id="rsm"></p></div>'
  +(function(){var L=PG.log||[];return'<div class="sec"><h4>Trocas de território'+(L.length?' <button class="btn rd" data-cf="tlsel">Apagar selecionadas</button><button class="btn rd" data-cf="tlall">Apagar tudo</button>':'')+'</h4><div id="cf-tl"></div><p class="hn">Quem trocou o território designado na Programação. Os nomes aparecem só aqui, para os anciãos e servos ministeriais.</p>'+(L.length?'<table class="hs"><tr><th><input type="checkbox" id="tlall2" title="Marcar todas"></th><th>Quando</th><th>Dia da programação</th><th>Linha</th><th>De</th><th>Para</th><th>Quem</th></tr>'+L.map(function(e,i){var d=e.k.split("-");return'<tr><td><input type="checkbox" class="tls" data-k="'+i+'"></td><td>'+dmy(e.t)+' '+new Date(e.t).toTimeString().slice(0,5)+'</td><td>'+(+d[2])+'/'+(+d[1])+'/'+d[0]+'</td><td>'+(e.s?'Domingo, '+capG(e.s):'Dia de semana')+'</td><td>'+esc(tlab(e.from))+'</td><td>'+esc(tlab(e.to))+'</td><td>'+(e.undo?'<i>Desfeita pelos anciãos e servos</i>':esc(e.by))+'</td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma troca ainda.</p>')+'</div>';})()
  +'<div class="sec"><h4>Editar endereço de uma porta</h4><p class="hn">Escolha a porta, corrija o que estiver errado e salve. O pin 📌 passa a usar o endereço corrigido.</p><select id="eds"><option value="">Escolha a porta…</option>'+edOpts()+'</select><div id="edf"></div><p class="mg" id="edm"></p></div>'
@@ -430,17 +432,17 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)</h4>'+(hh?'<table class="hs"><tr><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>';
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>';
  if(ED)fillEd();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
  m.className="mg";
- if(!/^\d{4}$/.test(np)){m.textContent="O novo PIN precisa ter 4 dígitos.";return;}
+ if(!/^.{4,}$/.test(np)){m.textContent="A nova senha precisa ter pelo menos 4 caracteres.";return;}
  if(nm&&nm.length<6){m.textContent="A nova chave mestra precisa ter pelo menos 6 caracteres.";return;}
  PH=await hash(np);if(nm)MK=await hash("mk:"+nm);saveCfg();
  document.getElementById("np").value="";document.getElementById("nm").value="";
- m.className="ok";m.textContent="Salvo. Passe o novo PIN aos responsáveis."+(nm?" A chave mestra também foi trocada.":"");
+ m.className="ok";m.textContent="Salvo. Passe a nova senha aos responsáveis."+(nm?" A chave mestra também foi trocada.":"");
 }
 var EF=[[2,"Prédio"],[3,"Porta"],[4,"Endereço"],[6,"住所 (endereço em japonês)"],[7,"建物名 (nome do prédio em japonês)"]];
 function edX(){var p=ED.split("|"),s=S[p[0]],g=s&&s.g[p[1]];return g&&g.r[p[2]]?{tid:p[0],g:g,x:g.r[p[2]]}:null;}
@@ -534,11 +536,11 @@ function cfOpen(t){var keys=[];
  if((t==="vhsel"||t==="arsel"||t==="tlsel")&&!keys.length){PA=null;box.innerHTML='<p class="mg">Marque primeiro, na primeira coluna, o que quer apagar.</p>';return;}
  PA={t:t,k:keys};
  var txt=t==="tlall"?"Isso apaga todo o histórico de trocas de território.":t==="tlsel"?"Isso apaga "+keys.length+" registro(s) do histórico de trocas.":t==="vh"?"Isso apaga o histórico de visitas de todas as portas de todos os territórios.":t==="vhsel"?"Isso apaga o histórico de visitas de "+keys.length+" porta(s) marcada(s).":t==="arall"?"Isso apaga para sempre todas as portas retiradas no reset. Elas não poderão mais voltar ao território.":"Isso apaga para sempre "+keys.length+" porta(s) retirada(s). Elas não poderão mais voltar ao território.";
- box.innerHTML='<div class="cfw"><p class="mg"><b>Atenção:</b> '+txt+' Não dá para desfazer. Para confirmar, digite as duas chaves.</p><div class="fm"><input id="cfk" type="password" placeholder="Chave mestra"><input id="cfp" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" id="cfo">Confirmar e apagar</button> <button class="btn" id="cfc">Cancelar</button></div><p class="mg" id="cfm"></p></div>';
+ box.innerHTML='<div class="cfw"><p class="mg"><b>Atenção:</b> '+txt+' Não dá para desfazer. Para confirmar, digite as duas chaves.</p><div class="fm"><input id="cfk" type="password" placeholder="Chave mestra"><input id="cfp" type="password" placeholder="Senha" size="6"><button class="btn rd go" id="cfo">Confirmar e apagar</button> <button class="btn" id="cfc">Cancelar</button></div><p class="mg" id="cfm"></p></div>';
  document.getElementById("cfk").focus();}
 async function cfDo(){if(!PA)return;var m=document.getElementById("cfm"),k=document.getElementById("cfk").value,p=document.getElementById("cfp").value.trim();
- if(!k||!/^\d{4}$/.test(p)){m.textContent="Digite a chave mestra e o PIN de 4 dígitos.";return;}
- if(await hash("mk:"+k)!==MK||await hash(p)!==PH){m.textContent="Chave mestra ou PIN incorreto.";return;}
+ if(!k||!/^.{4,}$/.test(p)){m.textContent="Digite a chave mestra e a senha.";return;}
+ if(await hash("mk:"+k)!==MK||await hash(p)!==PH){m.textContent="Chave mestra ou senha incorreta.";return;}
  var a=PA,msg="",ch={};PA=null;
  if(a.t==="tlall"||a.t==="tlsel"){if(a.t==="tlall")PG.log=[];else a.k.map(Number).sort(function(x,y){return y-x;}).forEach(function(i){(PG.log||[]).splice(i,1);});savePG();renderAdm();var bx=cfBox(a.t);if(bx)bx.innerHTML='<p class="ok">'+(a.t==="tlall"?"Histórico de trocas apagado.":a.k.length+" registro(s) apagado(s).")+'</p>';return;}
  if(a.t==="vh"){TIDS().forEach(function(tid){S[tid].vh={};ch[tid]=1;});msg="Histórico de visitas apagado.";}
@@ -614,7 +616,7 @@ function trForm(){var b=document.getElementById("pgt");if(!b)return;if(!PT){b.in
  b.innerHTML='<div class="cfw"><b>Trocar território — dia '+(+d[2])+'/'+(+d[1])+(PT.s?' ('+capG(PT.s)+')':'')+'</b><p class="hn">Designado pelo responsável: '+(orig?esc(tlab(orig)):'nenhum')+'. Escolha o território que o grupo vai trabalhar. Só os dirigentes da lista podem trocar.</p>'+(DL.length?'':'<p class="mg">A lista de dirigentes está vazia: o responsável precisa cadastrar os nomes na aba Anciãos e Servos Ministeriais.</p>')+'<div class="fm"><select id="trg"><option value="">Grupo…</option>'+GRP.map(function(g){return'<option value="'+g+'"'+(g===PT.g?" selected":"")+'>'+capG(g)+'</option>';}).join("")+'</select>'
  +(PT.g?'<select id="trt">'+tOptsAll(PT.t,PT.g)+'</select>':'')
  +(!PT.s&&LS.length?'<select id="trl">'+LS.map(function(x){return'<option'+(x.n===PT.l?" selected":"")+'>'+esc(x.n)+'</option>';}).join("")+'</select>':'')
- +'<select id="trb"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option'+(n===PT.b?" selected":"")+'>'+esc(n)+'</option>';}).join("")+'</select><input id="trp" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" id="trok">Salvar troca</button> <button class="btn" id="trc">Cancelar</button></div><p class="mg" id="trm"></p></div>';}
+ +'<select id="trb"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option'+(n===PT.b?" selected":"")+'>'+esc(n)+'</option>';}).join("")+'</select><input id="trp" type="password" placeholder="Senha" size="6"><button class="btn rd go" id="trok">Salvar troca</button> <button class="btn" id="trc">Cancelar</button></div><p class="mg" id="trm"></p></div>';}
 function renderProg(){
  var p=PM.split("-"),Y=+p[0],M=+p[1]-1,m=pmonth(),last=new Date(Y,M+1,0).getDate(),off=(new Date(Y,M,1).getDay()+6)%7;
  var h='<div class="pgh"><button class="btn" id="pgp">‹ Mês anterior</button> <input type="month" id="pgm" value="'+PM+'"> <button class="btn" id="pgn">Próximo mês ›</button> '+(PE?'<button class="btn rd go" id="pgx">Terminar edição</button><span class="ok"> Modo de edição: clique nas caixas para escolher. Tudo é salvo na hora.</span>'+(DL.length?'':'<span class="mg"> A lista de dirigentes está vazia: cadastre os nomes na aba Anciãos e Servos Ministeriais.</span>'):(RO?'':'<button class="btn" id="pge">Editar programação (anciãos)</button><span class="hn"> Responsável do grupo: use o botão Trocar na caixa do território.</span>'))+'<span class="pgdl"><button class="btn" id="pgimg">Baixar imagem</button><button class="btn" id="pgpdf">Baixar PDF</button><span id="pgdm"></span></span>'+'<span id="pgk"></span></div><div id="pgt"></div>';
@@ -636,7 +638,7 @@ function renderProg(){
  document.getElementById("vp").innerHTML=h+'</table></div>';trForm();
 }
 var VP=document.getElementById("vp");
-function openPin(){var k=document.getElementById("pgk");if(!document.getElementById("pgpin"))k.innerHTML=' <span class="hn">Para editar a programação, digite as duas chaves do responsável:</span> <input id="pgmk" type="password" placeholder="Chave mestra" size="12"><input id="pgpin" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn" id="pgok">Entrar</button><span class="mg" id="pgm2">'+(PH?'':' O PIN ainda não foi criado: o responsável precisa criá-lo primeiro na aba Anciãos e Servos Ministeriais.')+'</span>';document.getElementById("pgmk").focus();window.scrollTo(0,0);}
+function openPin(){var k=document.getElementById("pgk");if(!document.getElementById("pgpin"))k.innerHTML=' <span class="hn">Para editar a programação, digite as duas chaves do responsável:</span> <input id="pgmk" type="password" placeholder="Chave mestra" size="12"><input id="pgpin" type="password" placeholder="Senha" size="5"><button class="btn" id="pgok">Entrar</button><span class="mg" id="pgm2">'+(PH?'':' A senha ainda não foi criada: o responsável precisa criá-lo primeiro na aba Anciãos e Servos Ministeriais.')+'</span>';document.getElementById("pgmk").focus();window.scrollTo(0,0);}
 VP.onclick=async function(e){var t=e.target,id=t.id;
  if(t.dataset.open){openT(t.dataset.open);return;}
  if(id==="pgp"||id==="pgn"){PMU=true;var p=PM.split("-");PM=ym(new Date(+p[0],+p[1]-1+(id==="pgn"?1:-1),1));renderProg();}
@@ -646,14 +648,14 @@ VP.onclick=async function(e){var t=e.target,id=t.id;
  if(id==="trc"){PT=null;trForm();return;}
  if(id==="trok"){var mm=document.getElementById("trm"),nm=document.getElementById("trb").value.trim(),pn=document.getElementById("trp").value.trim();
   if(!PT.t){mm.textContent="Escolha o território.";return;}if(!nm||DL.indexOf(nm)<0){mm.textContent="Escolha seu nome na lista de dirigentes.";return;}
-  if(!PH){mm.textContent="O responsável ainda não criou o PIN.";return;}if(await hash(pn)!==PH){mm.textContent="PIN incorreto.";return;}
+  if(!PH){mm.textContent="O responsável ainda não criou a senha.";return;}if(await hash(pn)!==PH){mm.textContent="Senha incorreta.";return;}
   var m=pmonth(),od=m.d[PT.k]=m.d[PT.k]||{},prev=PT.s?((od.str||{})[PT.s]||{}).terr||(od.sun||{})[PT.s]:(od.tr||{}).terr||od.terr;
   trLog({t:Date.now(),k:PT.k,s:PT.s||"",from:prev||"",to:PT.t,by:nm});
   if(PT.s){od.str=od.str||{};od.str[PT.s]={terr:PT.t,by:nm,t:Date.now()};}
   else{var L0=locs(PT.t);od.tr={terr:PT.t,loc:PT.l||(L0.length?L0[0].n:""),by:nm,t:Date.now()};}
   PT=null;savePG();renderProg();return;}
  if(t.dataset.utr){var q2=t.dataset.utr.split("|"),o2=pmonth().d[q2[0]];if(o2){var was=q2[1]?((o2.str||{})[q2[1]]||{}).terr:(o2.tr||{}).terr,back=q2[1]?(o2.sun||{})[q2[1]]:o2.terr;trLog({t:Date.now(),k:q2[0],s:q2[1]||"",from:was||"",to:back||"",by:"Anciãos e Servos Ministeriais",undo:1});if(q2[1]){if(o2.str)delete o2.str[q2[1]];}else delete o2.tr;savePG();renderProg();}return;}
- if(id==="pgok"){var v=document.getElementById("pgpin").value.trim(),mk=document.getElementById("pgmk").value,mm=document.getElementById("pgm2");if(!PH||!MK){mm.textContent=" O responsável ainda não criou as chaves na aba Anciãos e Servos Ministeriais.";return;}if(await hash("mk:"+mk)!==MK||await hash(v)!==PH){mm.textContent=" Chave mestra ou PIN incorreto.";return;}PE=true;renderProg();}
+ if(id==="pgok"){var v=document.getElementById("pgpin").value.trim(),mk=document.getElementById("pgmk").value,mm=document.getElementById("pgm2");if(!PH||!MK){mm.textContent=" O responsável ainda não criou as chaves na aba Anciãos e Servos Ministeriais.";return;}if(await hash("mk:"+mk)!==MK||await hash(v)!==PH){mm.textContent=" Chave mestra ou senha incorreta.";return;}PE=true;renderProg();}
  if(id==="pgx"){PE=false;renderProg();}
  if(t.dataset.sall){var m=pmonth(),src=(m.d[t.dataset.sall]||{}).sun||{};sundays().forEach(function(k){m.d[k]=m.d[k]||{};m.d[k].sun=Object.assign({},src);m.d[k].sung=Object.assign({},(m.d[t.dataset.sall]||{}).sung||{});});savePG();renderProg();}
 };
@@ -813,22 +815,32 @@ window.MODO="admin";
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
   async function pinOk(box){var nm=box.querySelector(".apn").value,pn=box.querySelector(".app").value.trim(),m=box.querySelector(".apm");
-   if(!nm){m.textContent=" Escolha seu nome.";return null;}if(!PH){m.textContent=" O responsável ainda não criou o PIN.";return null;}
-   if(await hash(pn)!==PH){m.textContent=" PIN incorreto.";return null;}return nm;}
+   if(!nm){m.textContent=" Escolha seu nome.";return null;}if(!PH){m.textContent=" O responsável ainda não criou a senha.";return null;}
+   if(await hash(pn)!==PH){m.textContent=" Senha incorreta.";return null;}return nm;}
   document.addEventListener("click",async function(e){var t=e.target,d=t.dataset||{};
    if(d.atr){e.stopPropagation();var q=d.atr.split("|"),o=pmonth().d[q[0]]||{},tr=q[1]?(o.str||{})[q[1]]:o.tr,orig=q[1]?(o.sun||{})[q[1]]:o.terr,dd=q[0].split("-");
-    var b=document.getElementById("pgt");PT=null;b.innerHTML='<div class="cfw apx"><b>Apagar troca — dia '+(+dd[2])+'/'+(+dd[1])+(q[1]?' ('+esc(q[1].charAt(0)+q[1].slice(1).toLowerCase())+')':'')+'</b><p class="hn">Apaga a troca para '+esc(tlab(tr&&tr.terr))+' e volta para o território designado'+(orig?': '+esc(tlab(orig)):'')+'.</p><div class="fm">'+nomes()+'<input class="app" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="6"><button class="btn rd go" data-atok="'+d.atr+'">Apagar troca</button> <button class="btn" data-apx="1">Cancelar</button></div><p class="mg apm"></p></div>';
+    var b=document.getElementById("pgt");PT=null;b.innerHTML='<div class="cfw apx"><b>Apagar troca — dia '+(+dd[2])+'/'+(+dd[1])+(q[1]?' ('+esc(q[1].charAt(0)+q[1].slice(1).toLowerCase())+')':'')+'</b><p class="hn">Apaga a troca para '+esc(tlab(tr&&tr.terr))+' e volta para o território designado'+(orig?': '+esc(tlab(orig)):'')+'.</p><div class="fm">'+nomes()+'<input class="app" type="password" placeholder="Senha" size="6"><button class="btn rd go" data-atok="'+d.atr+'">Apagar troca</button> <button class="btn" data-apx="1">Cancelar</button></div><p class="mg apm"></p></div>';
     b.scrollIntoView({block:"center"});return;}
    if(d.atok){e.stopPropagation();var box=t.closest(".apx"),nm=await pinOk(box);if(!nm)return;var q2=d.atok.split("|"),o2=pmonth().d[q2[0]];
     if(o2){var was=q2[1]?((o2.str||{})[q2[1]]||{}).terr:(o2.tr||{}).terr,back=q2[1]?(o2.sun||{})[q2[1]]:o2.terr;trLog({t:Date.now(),k:q2[0],s:q2[1]||"",from:was||"",to:back||"",by:nm,undo:1});if(q2[1]){if(o2.str)delete o2.str[q2[1]];}else delete o2.tr;savePG();}
     document.getElementById("pgt").innerHTML="";renderProg();return;}
    if(d.apx){e.stopPropagation();var bx=t.closest(".apx,.dpf");if(bx&&bx.classList.contains("dpf"))bx.innerHTML="";else document.getElementById("pgt").innerHTML="";return;}
    if(d.del){e.stopPropagation();document.querySelectorAll(".dpf").forEach(function(x){x.innerHTML="";});var f=document.getElementById("dp"+d.del);
-    f.innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" size="5"><button class="btn rd go" data-delok="'+d.del+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
+    f.innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" placeholder="Senha" size="5"><button class="btn rd go" data-delok="'+d.del+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
    if(d.delok){e.stopPropagation();var bx2=t.closest(".apx"),nm2=await pinOk(bx2);if(!nm2)return;var p=d.delok.split("_"),s=S[CUR],g=s.g[+p[0]],x=g&&g.r[+p[1]];
-    if(x&&x[9]){g.r.splice(+p[1],1);s.h.unshift({t:Date.now(),by:nm2,n:g.n,pr:x[2],po:x[3]+" (apagada)"});save(CUR);}render();return;}
-  },true);}
- var ABA=0,NOMES=[["Trocar PIN","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
+    if(x&&x[9]){g.r.splice(+p[1],1);s.h.unshift({t:Date.now(),k:"d",by:nm2,n:g.n,pr:x[2],po:x[3]});save(CUR);}render();return;}
+   if(d.hpd){e.stopPropagation();var sel=d.hpd==="sel",ks=Array.prototype.map.call(document.querySelectorAll(".hps:checked"),function(c){return c.dataset.k;}),bx3=document.getElementById("cf-hp");
+    if(sel&&!ks.length){bx3.innerHTML='<p class="mg">Marque primeiro, na primeira coluna, o que quer apagar.</p>';return;}
+    bx3.innerHTML='<div class="apx"><b>'+(sel?'Apagar '+ks.length+' registro(s) do histórico':'Apagar todo o histórico de portas e territórios')+'</b><p class="hn">As portas continuam nos territórios; só o registro do histórico é apagado.</p><div class="fm"><input class="app" type="password" placeholder="Senha" size="6"><button class="btn rd go" data-hpok="'+(sel?ks.join(","):"*")+'">Confirmar</button> <button class="btn" data-hpx="1">Cancelar</button></div><p class="mg apm"></p></div>';return;}
+   if(d.hpx){e.stopPropagation();document.getElementById("cf-hp").innerHTML="";return;}
+   if(d.hpok){e.stopPropagation();var bx4=t.closest(".apx"),pn=bx4.querySelector(".app").value.trim();
+    if(!PH||await hash(pn)!==PH){bx4.querySelector(".apm").textContent=" Senha incorreta.";return;}
+    var tudo=d.hpok==="*",set={};if(!tudo)d.hpok.split(",").forEach(function(k){set[k]=1;});
+    Object.keys(S).forEach(function(tid){var h=S[tid].h||[],nh=tudo?[]:h.filter(function(x){return!set[tid+"|"+x.t];});if(nh.length!==h.length){S[tid].h=nh;save(tid);}});
+    renderAdm();return;}
+  },true);
+  document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
