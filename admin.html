@@ -242,6 +242,8 @@ body.ver .nv .tb[data-v="vt"]:not(.on){display:none}
 .dpf .apx{position:absolute;z-index:20;left:-60px;top:22px;width:max-content;max-width:300px;display:flex;flex-wrap:wrap;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .dpf .apx .apm{flex-basis:100%}
 #ap .hs th:has(>input[type=checkbox]),#ap .hs td:has(>input[type=checkbox]){width:38px;text-align:center}
+tr.new td:not(.cd):not(.n){background:#fff8d9!important}
+tr.new td.cd{background:#fff8d9}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -327,7 +329,7 @@ function render(){
    h+='<tr class="'+cl+'"><td class="dt">'+(fd(x[0])||'<span class="ph">data</span>')+'<input type="date" data-k="'+id+'" value="'+iso(x[0])+'"'+(RO&&!window.TRV?' disabled':'')+'></td>';
    h+='<td class="cd" style="'+cst(x[1])+'"><select class="cs" data-k="'+id+'"'+(RO&&!window.TRV?' disabled':'')+'>'+OPT.map(function(o){return'<option value="'+o+'"'+(o===x[1]?" selected":"")+'>'+(o||"—")+'</option>';}).join("")+'</select></td>';
    if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
-   h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+(x[9]&&!(RO&&!window.TRV)?'<button class="btn rd dpb" data-del="'+gi+'_'+i+'">Apagar</button><span class="dpf" id="dp'+gi+'_'+i+'"></span>':"")+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
+   h+='<td class="pin"><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+(x[9]&&Date.now()-x[9]<2592e6&&!(RO&&!window.TRV)?'<button class="btn rd dpb" data-del="'+gi+'_'+i+'">Apagar</button><span class="dpf" id="dp'+gi+'_'+i+'"></span>':"")+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
   });
   h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO&&!window.TRV?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
   if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
@@ -608,7 +610,7 @@ function tlab(n){var i=tinfo(n);return i?n+" "+i.t[1]:(n==="zoom"?"Zoom":"");}
 function trNote(k,o,slot){var tr=slot?(o.str||{})[slot]:o.tr,orig=slot?(o.sun||{})[slot]:o.terr;
  if(PE)return tr?'<span class="trn">trocado por '+esc(tr.by)+(orig?' (era '+esc(tlab(orig))+')':'')+'</span><button class="btn" data-utr="'+k+'|'+slot+'">Desfazer troca</button>':"";
  if((RO&&!window.TRV)||(!slot&&o.terr==="zoom"&&!tr))return"";
- return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>'+(tr?'<button class="btn rd atr" data-atr="'+k+'|'+slot+'">Apagar troca</button>':""):"";}
+ return(orig||slot||tr)?'<button class="btn trb" data-tr="'+k+'|'+slot+'">Trocar</button>'+(tr&&(!tr.t||Date.now()-tr.t<2592e6)?'<button class="btn rd atr" data-atr="'+k+'|'+slot+'">Apagar troca</button>':""):"";}
 function trLog(e){PG.log=PG.log||[];PG.log.unshift(e);if(PG.log.length>500)PG.log.length=500;}
 var PT=null;
 function trForm(){var b=document.getElementById("pgt");if(!b)return;if(!PT){b.innerHTML="";return;}var o=pmonth().d[PT.k]||{},orig=PT.s?(o.sun||{})[PT.s]:o.terr,d=PT.k.split("-");
