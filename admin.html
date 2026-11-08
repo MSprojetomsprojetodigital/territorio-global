@@ -985,7 +985,7 @@ window.MODO="admin";
    if(d.atok){e.stopPropagation();var box=t.closest(".apx"),nm=await pinOk(box);if(!nm)return;var q2=d.atok.split("|"),o2=pmonth().d[q2[0]];
     if(o2){var was=q2[1]?((o2.str||{})[q2[1]]||{}).terr:(o2.tr||{}).terr,back=q2[1]?(o2.sun||{})[q2[1]]:o2.terr;trLog({t:Date.now(),k:q2[0],s:q2[1]||"",from:was||"",to:back||"",by:nm,undo:1});if(q2[1]){if(o2.str)delete o2.str[q2[1]];}else delete o2.tr;savePG();}
     document.getElementById("pgt").innerHTML="";renderProg();return;}
-   if(d.apx){e.stopPropagation();var bx=t.closest(".apx,.dpf");if(bx&&bx.classList.contains("dpf"))bx.innerHTML="";else document.getElementById("pgt").innerHTML="";return;}
+   if(d.apx){e.stopPropagation();var bx=t.closest(".dpf");if(bx)bx.innerHTML="";else{var pg=document.getElementById("pgt");if(pg)pg.innerHTML="";}return;}
    if(d.del){e.stopPropagation();document.querySelectorAll(".dpf").forEach(function(x){x.innerHTML="";});var f=document.getElementById("dp"+d.del);
     f.innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" placeholder="Senha" size="5"><button class="btn rd go" data-delok="'+d.del+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
    if(d.delok){e.stopPropagation();var bx2=t.closest(".apx"),nm2=await pinOk(bx2);if(!nm2)return;var p=d.delok.split("_"),s=S[CUR],g=s.g[+p[0]],x=g&&g.r[+p[1]];
