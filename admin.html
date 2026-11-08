@@ -265,6 +265,8 @@ tr.new td.cd{background:#fff8d9}
 .tgx{border-radius:10px;padding:8px 12px;margin:6px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .pill.lg{background:#fff;color:var(--escuro);border:1.5px solid var(--borda);margin-left:auto}
 .pill.lg:hover{border-color:var(--ouro)}
+.zbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:#fff;border:1.5px solid var(--borda);border-radius:12px;padding:10px 14px;margin:0 0 12px;max-width:1180px;font-size:14px}
+.zbar input{border:1.5px solid var(--borda);border-radius:8px;padding:6px 10px;font-size:14px;width:150px}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -330,7 +332,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[]});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501"});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
@@ -692,7 +694,7 @@ VP.onchange=function(e){var t=e.target;
  var k=t.dataset.pk;if(!k)return;var m=pmonth(),o=m.d[k]=m.d[k]||{},f=t.dataset.pf;
  if(f==="sun"){o.sun=o.sun||{};o.sun[t.dataset.pg]=t.value;if(o.str)delete o.str[t.dataset.pg];}
  else if(f==="sung"){o.sung=o.sung||{};o.sun=o.sun||{};o.sung[t.dataset.pg]=t.value;var ti=tinfo(o.sun[t.dataset.pg]);if(!ti||ti.g!==t.value)o.sun[t.dataset.pg]="";}
- else if(f==="grp"){delete o.tr;o.grp=t.value;if(t.value==="zoom"){o.terr="zoom";o.loc="";o.locx=false;o.lurl="";}else{var ti=tinfo(o.terr);if(!ti||ti.g!==t.value){o.terr="";o.loc="";o.locx=false;o.lurl="";}}}
+ else if(f==="grp"){delete o.tr;o.grp=t.value;if(t.value==="zoom"){o.terr="zoom";o.loc=window.ZID||"860 418 5501";o.locx=false;o.lurl="";}else{var ti=tinfo(o.terr);if(!ti||ti.g!==t.value){o.terr="";o.loc="";o.locx=false;o.lurl="";}}}
  else if(f==="dir"){if(t.value==="__outro"){o.dirx=true;o.dir="";}else{o.dirx=false;o.dir=t.value;}}
  else if(f==="dirn"){o.dir=t.value.trim();}
  else if(f==="loc"){if(t.value==="__outro"){o.locx=true;o.loc="";o.lurl="";}else{o.locx=false;o.loc=t.value;o.lurl="";}}
@@ -806,7 +808,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -834,7 +836,7 @@ window.MODO="admin";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin"){abas();if(window.idioma)idioma();}apagar();}
+  if(window.MODO==="admin"){abas();if(window.idioma)idioma();zoomBar();}apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
  window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
@@ -859,6 +861,11 @@ window.MODO="admin";
   if(dl!==undefined){var x=GX[+dl];if(!x)return;if(TL.some(function(g){return g[0]===x.n&&g[1].length;}))return;GX.splice(+dl,1);Object.keys(TG).forEach(function(k){if(TG[k]===x.n)delete TG[k];});applyTG();saveGen();renderIdx();renderProg();renderAdm();}});
  document.addEventListener("change",function(e){var tid=e.target.dataset&&e.target.dataset.tgt;if(!tid)return;tl0();var orig="";TL0.forEach(function(g){g[1].forEach(function(t){if(t[0]===tid)orig=g[0];});});
   if(e.target.value===orig)delete TG[tid];else TG[tid]=e.target.value;applyTG();saveGen();renderIdx();renderProg();renderAdm();var m=document.getElementById("tgm");if(m)m.textContent="Salvo: território "+tid+" agora está no grupo "+e.target.value+".";});
+ window.ZID=window.ZID||"860 418 5501";
+ window.zoomBar=function(){var vp=document.getElementById("vp");if(!vp)return;var fz=function(){if(!PE||!ADM&&window.MODO!=="admin"){var o=document.getElementById("zbar");if(o)o.remove();return;}if(document.getElementById("zbar"))return;var h=vp.querySelector(".pgh");if(!h)return;
+   var d=document.createElement("div");d.id="zbar";d.className="zbar";d.innerHTML='🎥 ID padrão do Zoom: <input id="zbid" value="'+esc(ZID)+'"> <button class="btn" id="zbok" type="button">Salvar ID</button> <span class="hn">Ao escolher Zoom num dia, esse ID entra sozinho (pode mudar no próprio dia).</span><span class="ok" id="zbm"></span>';h.parentNode.insertBefore(d,h.nextSibling);};
+  new MutationObserver(fz).observe(vp,{childList:true});fz();
+  document.addEventListener("click",function(e){if(e.target.id!=="zbok")return;var v=document.getElementById("zbid").value.trim();if(!v)return;ZID=v;saveGen();var m=document.getElementById("zbm");if(m)m.textContent=" Salvo.";});};
  window.mvSel=function(o){var cur=o.tid+"|"+ED.split("|")[1];return'<label class="hn">Território e grupo (para mudar a porta de grupo ou de território)</label><select id="edmv">'+TIDS().map(function(tid){return'<optgroup label="'+esc(TD[tid].t)+'">'+S[tid].g.map(function(g,gi){var v=tid+"|"+gi;return'<option value="'+v+'"'+(v===cur?" selected":"")+'>'+esc(TD[tid].t)+' — Grupo '+esc(g.n||"—")+' ('+g.r.length+' portas)</option>';}).join("")+'</optgroup>';}).join("")+'</select>';};
   // ---------- importar portas em lote ----------
  window.IMP=null;
