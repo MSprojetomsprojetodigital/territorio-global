@@ -258,6 +258,13 @@ tr.new td.cd{background:#fff8d9}
 #ap #impbox .iw{display:block;padding:8px}
 #ap #imp_s{max-width:220px}
 #ap .tgt select{max-width:200px}
+.tgn{margin-top:18px;padding-top:12px;border-top:1.5px solid var(--borda)}
+.tgn h5{font:600 16px "DM Sans",Arial,sans-serif;margin:0 0 8px}
+.tgn .fm{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#ap .tgn input{max-width:240px}
+.tgx{border-radius:10px;padding:8px 12px;margin:6px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill.lg{background:#fff;color:var(--escuro);border:1.5px solid var(--borda);margin-left:auto}
+.pill.lg:hover{border-color:var(--ouro)}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -320,7 +327,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[]});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
@@ -796,7 +803,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -824,17 +831,29 @@ window.MODO="ver";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin")abas();apagar();}
+  if(window.MODO==="admin"){abas();if(window.idioma)idioma();}apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
+ window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
-  var nw=TL0.map(function(g){return[g[0],[]];}),idx={};nw.forEach(function(g,i){idx[g[0]]=i;});
+  var nw=TL0.map(function(g){return[g[0],[]];}),idx={};
+  (window.GX||[]).forEach(function(x){if(!x||!x.n||ok[x.n])return;ok[x.n]=1;pre[x.n]=x.p||x.n.slice(0,2);GC[x.n]=x.c||"#eee";nw.push([x.n,[]]);});
+  nw.forEach(function(g,i){idx[g[0]]=i;});
+  if(!window.GRP0)window.GRP0=GRP.slice();GRP.length=0;GRP0.forEach(function(x){GRP.push(x);});(window.GX||[]).forEach(function(x){if(x&&x.n&&GRP.indexOf(x.n)<0)GRP.push(x.n);});
   [false,true].forEach(function(mov){TL0.forEach(function(g){g[1].forEach(function(t){var d=TG[t[0]],m=!!(d&&ok[d]&&d!==g[0]);if(m!==mov)return;nw[idx[m?d:g[0]]][1].push(JSON.parse(JSON.stringify(t)));});});});
   nw.forEach(function(g){g[1].forEach(function(t,i){t[3]=pre[g[0]]+String(i+1).replace(/[0-9]/g,function(c){return String.fromCharCode(c.charCodeAt(0)+65248);});});});
   TL.length=0;nw.forEach(function(g){TL.push(g);});};
- window.tgRender=function(){var b=document.getElementById("tgbox");if(!b)return;tl0();var gs=TL0.map(function(g){return g[0];}),orig={};TL0.forEach(function(g){g[1].forEach(function(t){orig[t[0]]=g[0];});});
+ window.tgRender=function(){var b=document.getElementById("tgbox");if(!b)return;tl0();var gs=TL.map(function(g){return g[0];}),orig={};TL0.forEach(function(g){g[1].forEach(function(t){orig[t[0]]=g[0];});});
   var h='<p class="hn">Escolha em qual grupo de campo cada território fica. A mudança vale na lista de territórios e na programação (domingos) para todos, na hora.</p><table class="hs tgt"><tr><th>Território</th><th>Grupo de campo</th><th>Código</th></tr>';
   TL.forEach(function(g){g[1].forEach(function(t){h+='<tr style="background:'+(GC[g[0]]||"#fff")+'"><td><b>'+esc(t[0]+" "+t[1])+'</b></td><td><select data-tgt="'+t[0]+'">'+gs.map(function(x){return'<option'+(x===g[0]?" selected":"")+'>'+x+'</option>';}).join("")+'</select>'+(g[0]!==orig[t[0]]?' <span class="hn">(antes: '+orig[t[0]]+')</span>':'')+'</td><td>'+esc(t[3])+'</td></tr>';});});
-  b.innerHTML=h+'</table><p class="ok" id="tgm"></p>';};
+  var PAL=["#e6d5f5","#fde2cf","#d0f0ef","#f9d9e8","#e2e8c8","#dfe3ea"];
+  h+='</table><div class="tgn"><h5>Acrescentar grupo de campo novo</h5><div class="fm"><input id="tgnn" placeholder="Nome do grupo (ex.: KIYOSU)"><input id="tgnp" placeholder="Código (ex.: 清須)" size="10"><select id="tgnc">'+PAL.map(function(c,i){return'<option value="'+c+'" style="background:'+c+'">Cor '+(i+1)+'</option>';}).join("")+'</select><button class="btn" id="tgnok">+ Acrescentar grupo</button></div>';
+  if((window.GX||[]).length){h+='<p class="hn">Grupos novos:</p>'+GX.map(function(x,i){var n=0;TL.forEach(function(g){if(g[0]===x.n)n=g[1].length;});return'<div class="tgx" style="background:'+esc(x.c)+'"><b>'+esc(x.n)+'</b> ('+esc(x.p)+') — '+n+' território(s) '+(n?'<span class="hn">Para apagar, mude antes os territórios para outro grupo.</span>':'<button class="btn rd" data-tgdel="'+i+'">Apagar grupo</button>')+'</div>';}).join("");}
+  b.innerHTML=h+'<p class="mg" id="tgnm"></p></div><p class="ok" id="tgm"></p>';};
+ document.addEventListener("click",function(e){var id=e.target.id,dl=e.target.dataset&&e.target.dataset.tgdel;
+  if(id==="tgnok"){var n=document.getElementById("tgnn").value.trim().toUpperCase(),p=document.getElementById("tgnp").value.trim(),c=document.getElementById("tgnc").value,m=document.getElementById("tgnm");
+   if(!n){m.textContent="Digite o nome do grupo.";return;}if(TL.some(function(g){return g[0]===n;})){m.textContent="Já existe um grupo com esse nome.";return;}
+   GX.push({n:n,p:p||n.slice(0,2),c:c});applyTG();saveGen();renderIdx();renderProg();renderAdm();var m2=document.getElementById("tgm");if(m2)m2.textContent="Grupo "+n+" criado. Agora escolha os territórios que vão para ele.";return;}
+  if(dl!==undefined){var x=GX[+dl];if(!x)return;if(TL.some(function(g){return g[0]===x.n&&g[1].length;}))return;GX.splice(+dl,1);Object.keys(TG).forEach(function(k){if(TG[k]===x.n)delete TG[k];});applyTG();saveGen();renderIdx();renderProg();renderAdm();}});
  document.addEventListener("change",function(e){var tid=e.target.dataset&&e.target.dataset.tgt;if(!tid)return;tl0();var orig="";TL0.forEach(function(g){g[1].forEach(function(t){if(t[0]===tid)orig=g[0];});});
   if(e.target.value===orig)delete TG[tid];else TG[tid]=e.target.value;applyTG();saveGen();renderIdx();renderProg();renderAdm();var m=document.getElementById("tgm");if(m)m.textContent="Salvo: território "+tid+" agora está no grupo "+e.target.value+".";});
  window.mvSel=function(o){var cur=o.tid+"|"+ED.split("|")[1];return'<label class="hn">Território e grupo (para mudar a porta de grupo ou de território)</label><select id="edmv">'+TIDS().map(function(tid){return'<optgroup label="'+esc(TD[tid].t)+'">'+S[tid].g.map(function(g,gi){var v=tid+"|"+gi;return'<option value="'+v+'"'+(v===cur?" selected":"")+'>'+esc(TD[tid].t)+' — Grupo '+esc(g.n||"—")+' ('+g.r.length+' portas)</option>';}).join("")+'</optgroup>';}).join("")+'</select>';};
