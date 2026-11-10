@@ -276,6 +276,13 @@ tr.pctot .hn{color:#ddd}
 #ap .pcm td{font-size:13px;text-align:center;white-space:nowrap}
 .pcp{color:#2e7d32;font-weight:600}.pcr{color:#b3261e;font-weight:600}
 tr.pctot .pcp{color:#9be29f}tr.pctot .pcr{color:#ffb4ab}
+.usc{background:#fff;border:1.5px solid var(--borda);border-radius:12px;padding:10px 14px;margin:10px 0}
+.ush{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.usb{border-radius:999px;padding:3px 10px;font-size:13px;background:#eee}.usb.on{background:#dff0d8;color:#2e7d32;font-weight:600}
+#ap .ust td{font-size:13px;vertical-align:top}.usl{margin:6px 0 0 16px;padding:0;font-size:12.5px;max-height:220px;overflow:auto;text-align:left}
+#ap .ush .btn{padding:4px 10px;font-size:12.5px}
+#ap .usr{max-width:560px;margin-bottom:8px}#ap .usr td{font-size:13.5px}
+.usn{margin:2px 0 8px;font-size:13.5px}.usn summary{cursor:pointer;color:#b3261e}
 </style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -329,7 +336,7 @@ function fix(tid){var g=S[tid].g;
  if(tid==="7"&&g.length>1&&!g[0].n&&g[0].r[0]&&g[0].r[0][2]==="Miyata Sou"&&g[1].n==="1"){g[1].r=g[0].r.concat(g[1].r);g.splice(0,1);}
  g.forEach(function(gr,gi){if(!gr.id)gr.id=pre(tid)+"G"+gi;if(tid==="7"&&!gr.n&&gr.r[0]&&gr.r[0][2]==="インペリアルコート")gr.n="4";
   gr.r.forEach(function(x,i){if(x[8]==="r"&&!x[1])x[1]=NQ;if(!x[10])x[10]="m"+tid+"_"+gi+"_"+i+"_"+Date.now().toString(36);});});}
-function initT(tid){var g=JSON.parse(JSON.stringify(TD[tid].g));g.forEach(function(gr,gi){gr.id=pre(tid)+"G"+gi;gr.r.forEach(function(x,i){if(L[x[1]])x[1]=L[x[1]];x[10]=pre(tid)+"g"+gi+"r"+i;});});S[tid]={g:g,h:[],vh:{},ar:[]};fix(tid);}
+function initT(tid){var g=JSON.parse(JSON.stringify(TD[tid].g));g.forEach(function(gr,gi){gr.id=pre(tid)+"G"+gi;gr.r.forEach(function(x,i){if(L[x[1]])x[1]=L[x[1]];x[10]=pre(tid)+"g"+gi+"r"+i;});});S[tid]={g:g,h:[],vh:{},ar:[],u:[]};fix(tid);}
 Object.keys(TD).forEach(initT);
 async function hash(p){try{var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("t7:"+p));return Array.from(new Uint8Array(b)).map(function(x){return("0"+x.toString(16)).slice(-2);}).join("");}catch(e){return"p"+btoa(unescape(encodeURIComponent("t7:"+p)));}}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -340,11 +347,11 @@ function cst(c){var m=CM[CC[c]];return m?"background:"+m[0]+";color:"+m[1]:"";}
 function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.test(q))q="愛知県名古屋市"+q;return q;}
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
-function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
+function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar,u:s.u||[]});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
 function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[],pc:window.PC||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
- if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];
+ if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];s.u=o.u||[];
   if(tid==="7"&&!RS.length&&AREA===null&&((o.rs&&o.rs.length)||o.area!=null)){RS=o.rs||[];AREA=o.area!=null?o.area:null;saveGen();}}
  fix(tid);}
 function logV(tid,x){var k=x[10],vh=S[tid].vh;(vh[k]=vh[k]||[]).push({t:Date.now(),d:x[0],c:x[1]});}
@@ -466,8 +473,8 @@ function renderAdm(){
  +'<div class="sec"><h4>Área do território da congregação</h4><p class="hn">Cidades e bairros que fazem parte do nosso território, um por linha, no formato 日本語 = Romaji. Endereços fora desta lista recebem o aviso "esse endereço não pertence ao nosso território".</p><div class="adm2"><textarea id="arl" rows="8">'+esc(AREA==null?AREA0:AREA)+'</textarea><button class="btn" id="ars">Salvar área</button></div><p class="ok" id="arsm"></p></div>'
  +'<div class="sec"><h4>Portas retiradas no reset '+(ar.length?'<button class="btn rd" data-cf="arsel">Apagar selecionadas</button><button class="btn rd" data-cf="arall">Apagar todas</button>':'')+'</h4><div id="cf-ar"></div><p class="hn">No reset, as portas marcadas como VAZIO, Porta inexistente ou de outro idioma (Japonês, Tagalo, Nepalês, Outra língua) saem do território e ficam guardadas aqui.</p>'+(ar.length?'<table class="hs"><tr><th><input type="checkbox" id="arall2" title="Marcar todas"></th><th>Reset em</th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Condição</th><th>Última data</th><th></th></tr>'+ar.map(function(o){var a=o.a;return'<tr><td><input type="checkbox" class="ars" data-k="'+o.tid+'|'+o.i+'"></td><td>'+dmy(a.t)+'</td><td>'+o.tid+'</td><td>'+(a.n||"—")+'</td><td>'+a.x[2]+'</td><td>'+a.x[3]+'</td><td>'+esc(a.c)+'</td><td>'+fd(a.d)+'</td><td class="nw"><button class="btn" data-rb="'+o.tid+'|'+o.i+'">Voltar ao território</button> <button class="btn rd" data-cf="ar|'+o.tid+'|'+o.i+'">Apagar</button></td></tr>';}).join("")+'</table>':'<p class="hn">Nenhuma porta retirada.</p>')+'<p class="mg" id="arm"></p></div>'
  +'<div class="sec"><h4>Histórico de visitas <button class="btn rd" data-cf="vhsel">Apagar selecionados</button><button class="btn rd" data-cf="vh">Apagar tudo</button></h4><div id="cf-vh"></div><table class="hs"><tr><th><input type="checkbox" id="vhall" title="Marcar todos"></th><th>Território</th><th>Grupo</th><th>Prédio</th><th>Porta</th><th>Última data</th><th>Condição</th><th>Todos os registros</th></tr>'+vr+'</table></div>'
- +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>'+'<div class="sec"><h4>Total de portas</h4><div id="ptbox"></div></div>';
- if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();if(window.pcRender)pcRender();
+ +'<div class="sec"><h4>Histórico de portas e territórios (acrescentados e editados)'+(hh?' <button class="btn rd" data-hpd="sel">Apagar selecionados</button><button class="btn rd" data-hpd="all">Apagar tudo</button>':'')+'</h4><div id="cf-hp"></div>'+(hh?'<table class="hs"><tr><th><input type="checkbox" id="hpall2" title="Marcar todos"></th><th>Data</th><th>Publicador</th><th>O que foi feito</th></tr>'+hh+'</table>':'<p class="hn">Nada acrescentado ainda.</p>')+'</div>'+'<div class="sec"><h4>Importar portas</h4><div id="impbox"></div></div>'+'<div class="sec"><h4>Grupos dos territórios</h4><div id="tgbox"></div></div>'+'<div class="sec"><h4>Total de portas</h4><div id="ptbox"></div></div>'+'<div class="sec"><h4>Uso dos territórios</h4><div id="usbox"></div></div>';
+ if(ED)fillEd();if(window.impRender)impRender();if(window.tgRender)tgRender();if(window.pcRender)pcRender();if(window.usRender)usRender();
 }
 async function setPin(){
  var m=document.getElementById("tpm"),np=document.getElementById("np").value.trim(),nm=document.getElementById("nm").value;
@@ -845,7 +852,7 @@ window.MODO="admin";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.idioma)idioma();apagar();}
+  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.idioma)idioma();if(window.usoHooks)usoHooks();apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
  window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
@@ -877,7 +884,7 @@ window.MODO="admin";
   document.addEventListener("click",function(e){if(e.target.id!=="zbok")return;var v=document.getElementById("zbid").value.trim();if(!v)return;ZID=v;saveGen();var m=document.getElementById("zbm");if(m)m.textContent=" Salvo.";});};
  document.addEventListener("click",async function(e){if(e.target.id!=="rst"||!RC)return;e.stopPropagation();var m=document.getElementById("rsm"),nm=(document.getElementById("rsn")||{}).value,pw=((document.getElementById("rsp")||{}).value||"").trim();
   if(!nm){m.className="mg";m.textContent="Escolha seu nome.";return;}if(!PH||await hash(pw)!==PH){m.className="mg";m.textContent="Senha incorreta.";return;}
-  window.RSN=window.RSN||[];doReset();RSN.unshift({t:RS[0],by:nm});if(RSN.length>50)RSN.length=50;saveGen();renderAdm();var m2=document.getElementById("rsm");if(m2){m2.className="ok";m2.textContent="Reset feito por "+nm+". Datas e condições apagadas, histórico guardado.";}},true);
+  window.RSN=window.RSN||[];if(window.usFechaTodosReset)usFechaTodosReset(nm);doReset();RSN.unshift({t:RS[0],by:nm});if(RSN.length>50)RSN.length=50;saveGen();renderAdm();var m2=document.getElementById("rsm");if(m2){m2.className="ok";m2.textContent="Reset feito por "+nm+". Datas e condições apagadas, histórico guardado.";}},true);
  window.mvSel=function(o){var cur=o.tid+"|"+ED.split("|")[1];return'<label class="hn">Território e grupo (para mudar a porta de grupo ou de território)</label><select id="edmv">'+TIDS().map(function(tid){return'<optgroup label="'+esc(TD[tid].t)+'">'+S[tid].g.map(function(g,gi){var v=tid+"|"+gi;return'<option value="'+v+'"'+(v===cur?" selected":"")+'>'+esc(TD[tid].t)+' — Grupo '+esc(g.n||"—")+' ('+g.r.length+' portas)</option>';}).join("")+'</optgroup>';}).join("")+'</select>';};
   // ---------- importar portas em lote ----------
  window.IMP=null;
@@ -960,6 +967,8 @@ window.MODO="admin";
  "Dia":"日","Dirigente":"司会者","Horário":"時間","Local de encontro":"集合場所","Trocar":"交換","Apagar troca":"交換を取り消す","Nakagawa":"中川","Minato":"港","Doutoku":"道徳","Inazawa":"稲沢",
  "Todos os territórios":"すべての区域","‹ Voltar à programação":"‹ 予定表に戻る","TERRITÓRIO":"区域","GRUPO":"グループ","DATA":"日付","(Dia/Mês)":"（日/月）","CONDIÇÃO":"状態","Número do Território":"区域番号","PRÉDIO":"建物","PORTA":"部屋番号","ENDEREÇO":"住所（ローマ字）","OBSERVAÇÕES":"備考","+ Acrescentar nova porta":"＋ 新しい戸を追加","ABERTO":"開放中","data":"日付",
  "Salvar troca":"交換を保存","Adicionar":"追加","Conferir no mapa":"地図で確認","Novo endereço…":"新しい住所…","Não quer visita":"訪問を望まない","VISITADO":"訪問済み","NC":"不在","VAZIO":"空き家","Japonês":"日本人","Tagalo":"タガログ語","Nepalês":"ネパール語","Outra língua":"他の言語","Porta inexistente":"存在しない戸","CONVITE":"招待状","Grupo…":"グループ…","Seu nome…":"名前…","Trocar território":"区域の交換","Editar programação":"予定表の編集","Sair do modo de edição":"編集を終える","Concluir edição":"編集を終える",
+ "🚫 Portas nunca feitas":"🚫 一度も回っていない戸","Períodos de uso":"使用期間","Nunca feitas":"未訪問","Portas":"戸数",
+ "📒 Uso dos territórios":"📒 区域の使用履歴","Uso dos territórios":"区域の使用履歴","Início":"開始","Fim":"終了","Dias":"日数","Como terminou":"終了の理由","Portas não feitas":"回っていない戸","Livre":"空き","Começar hoje":"今日から開始","Encerrar hoje":"今日で終了","Todas feitas":"全部完了","Nenhum período terminado ainda.":"終了した期間はまだありません。","Primeira porta marcada":"最初の戸を記録","Reset dos territórios":"区域のリセット","Concluído — todas as portas feitas":"完了 — 全ての戸を訪問","Começado manualmente":"手動で開始","Encerrado manualmente":"手動で終了",
  "📊 Total de portas":"📊 戸の合計","Total de portas":"戸の合計","Relatório dos últimos 6 meses":"過去6か月の報告","6 meses":"6か月","TOTAL (todos os grupos)":"合計（全グループ）","TOTAL":"合計","Contagem automática: muda sozinha quando portas são acrescentadas, apagadas, retiradas no reset ou mudadas de grupo.":"自動で数えます。戸の追加・削除・リセットでの取り外し・グループ変更で自動的に変わります。","Em cada mês: portas acrescentadas (+), retiradas ou apagadas (−) e o total no fim do mês (quando já registrado).":"各月：追加された戸（＋）、外した・削除した戸（−）、月末の合計（記録がある場合）。",
  "Online":"オンライン","Sem internet":"インターネットなし","Visualização":"閲覧"
  };
@@ -1012,6 +1021,39 @@ window.MODO="admin";
     return'<td><span class="pcp">+'+o.a+'</span> <span class="pcr">−'+o.r+'</span>'+(n!==undefined?'<br><span class="hn">'+n+' portas</span>':'')+'</td>';}).join("")+'<td><span class="pcp">+'+ga+'</span> <span class="pcr">−'+gr2+'</span><br><b>'+(ga-gr2>=0?'+':'')+(ga-gr2)+'</b></td></tr>';sa+=ga;sr+=gr2;});
   h+='<tr class="pctot"><td><b>TOTAL</b></td>'+meses.map(function(m){var o=tot[m];return'<td><span class="pcp">+'+o.a+'</span> <span class="pcr">−'+o.r+'</span>'+(o.tem?'<br><b>'+o.n+' portas</b>':'')+'</td>';}).join("")+'<td><span class="pcp">+'+sa+'</span> <span class="pcr">−'+sr+'</span><br><b>'+(sa-sr>=0?'+':'')+(sa-sr)+'</b></td></tr></table></div>';
   b.innerHTML=h;};
+ // ---------- histórico de uso dos territórios ----------
+ function hojeISO(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+ function fdt(s){if(!s)return"—";var p=String(s).split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:s;}
+ function pendentes(tid){var p=[],tot=0;(S[tid]?S[tid].g:[]).forEach(function(g){g.r.forEach(function(x){tot++;if(!x[0]&&!x[1])p.push((g.n?"Grupo "+g.n+" — ":"")+un(x[2])+", porta "+un(x[3])+" — "+un(x[4]));});});return{p:p,tot:tot};}
+ function nunca(tid){var s=S[tid],r=[],tot=0;if(!s)return{p:r,tot:0};s.g.forEach(function(g){g.r.forEach(function(x){tot++;if(x[0]||x[1])return;var h=(s.vh||{})[x[10]]||[];if(h.some(function(e){return e.d||e.c;}))return;r.push((g.n?"Grupo "+g.n+" — ":"")+un(x[2])+", porta "+un(x[3])+" — "+un(x[4])+(x[9]&&Date.now()-x[9]<2592e6?" (porta nova)":""));});});return{p:r,tot:tot};}
+ function usAberto(tid){var u=S[tid]&&S[tid].u;return u&&u[0]&&!u[0].f?u[0]:null;}
+ function usAbre(tid,ini,por,mot){var s=S[tid];if(!s)return false;s.u=s.u||[];if(usAberto(tid))return false;s.u.unshift({i:ini||hojeISO(),by:por||"",mi:mot||""});if(s.u.length>60)s.u.length=60;return true;}
+ function usFecha(tid,fim,mot,por){var s=S[tid];if(!s)return false;s.u=s.u||[];var a=usAberto(tid),pe=pendentes(tid);if(!a){a={i:"",mi:"(início não registrado)"};s.u.unshift(a);}
+  a.f=fim||hojeISO();a.mf=mot||"";a.bf=por||"";a.n=pe.p.length;a.tot=pe.tot;a.p=pe.p.slice(0,300);return true;}
+ window.usoHooks=function(){if(window.__usoH)return;window.__usoH=1;
+  var _tl=trLog;trLog=function(e){_tl(e);try{var f=e.from,t=e.to,k=e.k;
+   if(e.undo){var sf=S[f],st=S[t],mud={};if(sf&&sf.u&&sf.u[0]&&!sf.u[0].f&&sf.u[0].i===k){sf.u.shift();mud[f]=1;}
+    if(st&&st.u&&st.u[0]&&st.u[0].f===k&&!usAberto(t)){var u=st.u[0];delete u.f;delete u.mf;delete u.bf;delete u.n;delete u.tot;delete u.p;mud[t]=1;}Object.keys(mud).forEach(save);return;}
+   var m={};if(f&&S[f]&&f!==t){var ab=usAberto(f),fim=(ab&&ab.i&&k<ab.i)?hojeISO():k;usFecha(f,fim,"Trocado para "+tlab(t),e.by);m[f]=1;}if(t&&S[t]&&f!==t&&usAbre(t,k,e.by,"Troca de "+(f?tlab(f):"—")))m[t]=1;Object.keys(m).forEach(save);}catch(er){}};
+  document.addEventListener("change",function(e){var el=e.target;if(!el.dataset||!el.dataset.k||!CUR||!S[CUR])return;if(!(el.classList.contains("cs")||el.closest&&el.closest("td.dt")))return;
+   setTimeout(function(){var tid=CUR,mud=false,pe=pendentes(tid);if(!usAberto(tid)&&pe.p.length<pe.tot){var d=hojeISO();mud=usAbre(tid,d,"","Primeira porta marcada")||mud;}
+    if(usAberto(tid)&&pe.p.length===0){mud=usFecha(tid,hojeISO(),"Concluído — todas as portas feitas","")||mud;}if(mud)save(tid);},50);});};
+ window.usFechaTodosReset=function(por){Object.keys(S).forEach(function(tid){if(usAberto(tid)){usFecha(tid,hojeISO(),"Reset dos territórios",por);}});};
+ window.usRender=function(){var b=document.getElementById("usbox");if(!b)return;
+  var h='<p class="hn">Começa sozinho quando a primeira porta é marcada ou quando o território entra numa troca. Termina sozinho quando todas as portas são feitas, quando o território é trocado por outro ou no reset. Ao terminar, guarda a lista das portas que não foram feitas.</p>';
+  var resumo='<table class="hs usr"><tr><th>Território</th><th>Portas</th><th>Nunca feitas</th></tr>',tN=0,tT=0;
+  TL.forEach(function(gr){gr[1].forEach(function(t){var nv=nunca(t[0]);tN+=nv.p.length;tT+=nv.tot;resumo+='<tr style="background:'+(GC[gr[0]]||"#fff")+'"><td>'+esc(t[0]+" "+t[1])+'</td><td>'+nv.tot+'</td><td><b>'+nv.p.length+'</b></td></tr>';});});
+  h+='<h5 class="pch">🚫 Portas nunca feitas</h5><p class="hn">Portas que não receberam nenhuma data nem condição desde que começaram a ser registradas no site (nenhuma vez em todos os períodos). A lista de cada território está no cartão dele, abaixo.</p>'+resumo+'<tr class="pctot"><td><b>TOTAL</b></td><td>'+tT+'</td><td><b>'+tN+'</b></td></tr></table><h5 class="pch">Períodos de uso</h5>';
+  TL.forEach(function(gr){gr[1].forEach(function(t){var tid=t[0],s=S[tid];if(!s)return;var a=usAberto(tid),pe=pendentes(tid),u=(s.u||[]);
+   h+='<div class="usc" style="border-left:6px solid '+(GC[gr[0]]||"#ccc")+'"><div class="ush"><b>'+esc(tid+" "+t[1])+'</b> <span class="hn">'+esc(gr[0])+'</span> '+(a?'<span class="usb on">Em uso desde '+fdt(a.i)+' — '+(pe.tot-pe.p.length)+' de '+pe.tot+' portas feitas</span> <button class="btn" data-usf="'+tid+'">Encerrar hoje</button>':'<span class="usb">Livre</span> <button class="btn" data-usi="'+tid+'">Começar hoje</button>')+'</div>';
+   var nv=nunca(tid);h+='<div class="usn">'+(nv.p.length?'<details><summary>🚫 <b>'+nv.p.length+'</b> de '+nv.tot+' portas nunca feitas</summary><ul class="usl">'+nv.p.map(function(p){return'<li>'+esc(p)+'</li>';}).join("")+'</ul></details>':'<span class="pcp">✓ Todas as portas já foram feitas pelo menos uma vez</span>')+'</div>';
+   var fechados=u.filter(function(x){return x.f;});
+   if(fechados.length){h+='<table class="hs ust"><tr><th>Início</th><th>Fim</th><th>Dias</th><th>Como terminou</th><th>Portas não feitas</th></tr>'+fechados.slice(0,12).map(function(x){var dias=(x.i&&x.f)?Math.round((new Date(x.f)-new Date(x.i))/864e5):"—";
+     return'<tr><td>'+fdt(x.i)+(x.mi?'<br><span class="hn">'+esc(x.mi)+'</span>':'')+'</td><td>'+fdt(x.f)+'</td><td>'+dias+'</td><td>'+esc(x.mf||"")+(x.bf?'<br><span class="hn">por '+esc(x.bf)+'</span>':'')+'</td><td>'+(x.n?'<details><summary><b>'+x.n+'</b> de '+(x.tot||"?")+'</summary><ul class="usl">'+(x.p||[]).map(function(p){return'<li>'+esc(p)+'</li>';}).join("")+'</ul></details>':'<span class="pcp">Todas feitas</span>')+'</td></tr>';}).join("")+'</table>';}
+   else h+='<p class="hn">Nenhum período terminado ainda.</p>';h+='</div>';});});
+  b.innerHTML=h;};
+ document.addEventListener("click",function(e){var d=e.target.dataset||{};if(d.usi){if(usAbre(d.usi,hojeISO(),"","Começado manualmente")){save(d.usi);renderAdm();}}
+  if(d.usf){if(usFecha(d.usf,hojeISO(),"Encerrado manualmente","")){save(d.usf);renderAdm();}}});
 
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
@@ -1048,7 +1090,7 @@ window.MODO="admin";
   document.addEventListener("click",function(e){var k=e.target.dataset&&e.target.dataset.edk;if(!k)return;var s=document.getElementById("eds");s.value=k;s.dispatchEvent(new Event("change",{bubbles:true}));
    var r=document.getElementById("edr"),q=document.getElementById("edq");if(r)r.innerHTML="";if(q)q.value="";});
   document.addEventListener("change",function(e){if(e.target.id==="hpall2"){var on=e.target.checked;document.querySelectorAll(".hps").forEach(function(c){c.checked=on;});}});}
- var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"],["Total de portas","📊 Total de portas"]];
+ var ABA=0,NOMES=[["Trocar senha","🔑 Chaves"],["Reset","🔄 Reset"],["Trocas","🔁 Trocas"],["Editar endere","✏️ Editar endereço"],["Acrescentar endere","➕ Endereço novo"],["Locais","📍 Locais de encontro"],["Lista de dirigentes","👥 Dirigentes"],["Área","🗺️ Área"],["Portas retiradas","📦 Portas retiradas"],["Histórico de visitas","📅 Histórico de visitas"],["Histórico de portas","📜 Histórico de portas"],["Importar portas","📥 Importar portas"],["Grupos dos territórios","🗂️ Grupos dos territórios"],["Total de portas","📊 Total de portas"],["Uso dos territórios","📒 Uso dos territórios"]];
  function nome(h){var t=(h&&h.firstChild&&h.firstChild.textContent||"").trim();for(var i=0;i<NOMES.length;i++)if(t.indexOf(NOMES[i][0])===0)return NOMES[i][1];return t;}
  function abas(){var ap=document.getElementById("ap");
   function aplicar(){var ss=Array.prototype.filter.call(ap.children,function(e){return e.classList.contains("sec");});if(!ss.length)return;
