@@ -332,6 +332,9 @@ td.pin{white-space:nowrap}
 .mleg2 span{display:none}
 .mflag b{border-color:var(--f,rgba(0,0,0,.35));border-width:2px}
 .mflag .mp{filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+.zmat{margin-top:4px;font-size:12px!important}
+.zmlk{display:inline-block;margin-top:4px;font-weight:600;color:var(--azul)}
+#mapmv.on{background:#b3261e;border-color:#b3261e;color:#fff}
 </style>
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">
@@ -693,7 +696,7 @@ function wkCell(k,e0,f){var e=e0;if(!PE&&e0.tr)e=Object.assign({},e0,{terr:e0.tr
  if(f==="hora")return'<td class="pc'+(e.hora&&e.hora<"12"?" pam":"")+'">'+(PE?'<input type="time" class="pin2" data-pk="'+k+'" data-pf="hora" value="'+esc(e.hora||"")+'">':esc(e.hora||""))+'</td>';
  if(f==="terr"){var i=tinfo(e.terr);return'<td class="pc" style="background:'+(i?GC[i.g]:"#fff")+'">'+(PE?(function(){var gs=e.terr==="zoom"?"zoom":(i?i.g:(e.grp||""));return'<select class="pin2" data-pk="'+k+'" data-pf="grp"><option value="">Grupo…</option>'+GRP.map(function(g){return'<option value="'+g+'"'+(g===gs?" selected":"")+'>'+g.charAt(0)+g.slice(1).toLowerCase()+'</option>';}).join("")+'<option value="zoom"'+(gs==="zoom"?" selected":"")+'>Zoom</option></select>'+(gs&&gs!=="zoom"?'<select class="pin2" data-pk="'+k+'" data-pf="terr">'+tOptsAll(e.terr,gs)+'</select>':'');})():(e.terr==="zoom"?'<span class="zm">Zoom</span>':tLink(e.terr))+trNote(k,e0,""))+(PE&&e0.tr?trNote(k,e0,""):"")+'</td>';}
  var LS=(e.terr&&e.terr!=="zoom")?locs(e.terr):[],cur=e.loc||"",fo=LS.filter(function(o){return o.n===cur;})[0];
- if(e.terr==="zoom")return'<td class="pc pl2 pz">'+(PE?'<input class="pin2" data-pk="'+k+'" data-pf="loc" value="'+esc(cur)+'" placeholder="ID da reunião">':(cur?'ID da reunião:<br>'+esc(cur):''))+'</td>';
+ if(e.terr==="zoom")return'<td class="pc pl2 pz">'+(PE?'<input class="pin2" data-pk="'+k+'" data-pf="loc" value="'+esc(cur)+'" placeholder="ID da reunião"><input class="pin2 zmat" data-pk="'+k+'" data-pf="mat" value="'+esc(e.mat||"")+'" placeholder="📖 Link da matéria (opcional)">':(cur?'ID da reunião:<br>'+esc(cur):'')+(e.mat?'<br><a class="zmlk" href="'+esc(e.mat)+'" target="_blank" rel="noopener">📖 Matéria</a>':''))+'</td>';
  var cx=e.locx||(cur&&!fo),href=cx?(e.lurl||mapq(cur)):(fo?lhref(fo):mapq(cur));
  var opts='<option value="">—</option>'+LS.map(function(o){return'<option'+(!cx&&o.n===cur?" selected":"")+'>'+esc(o.n)+'</option>';}).join("")+'<option value="__outro"'+(cx?" selected":"")+'>Outro local…</option>';
  return'<td class="pc pl2'+(cur?(cx?" px":fo&&fo.p?" pk":" bu"):"")+'">'+(PE?'<select class="pin2" data-pk="'+k+'" data-pf="loc">'+opts+'</select>'+(cx?'<input class="pin2" data-pk="'+k+'" data-pf="locn" value="'+esc(cur)+'" placeholder="Nome do local"><input class="pin2" data-pk="'+k+'" data-pf="lurl" value="'+esc(e.lurl||"")+'" placeholder="Link do Google Maps (opcional)">':''):(cur?'<a href="'+esc(href)+'" target="_blank" rel="noopener">'+esc(cur)+'</a>':""))+'</td>';
@@ -771,6 +774,7 @@ VP.onchange=function(e){var t=e.target;
  else if(f==="dirn"){o.dir=t.value.trim();}
  else if(f==="loc"){if(t.value==="__outro"){o.locx=true;o.loc="";o.lurl="";}else{o.locx=false;o.loc=t.value;o.lurl="";}}
  else if(f==="locn"){o.loc=t.value.trim();}
+ else if(f==="mat"){var um=t.value.trim();o.mat=/^https?:\/\//i.test(um)?um:"";if(um&&!o.mat){t.value="";alert("Cole um link que comece com https://");}}
  else if(f==="lurl"){var u=t.value.trim();o.lurl=/^https?:\/\//i.test(u)?u:"";}
  else{o[f]=t.value;if(f==="terr"){delete o.tr;var i=tinfo(t.value);o.locx=false;o.lurl="";var L0=locs(t.value);o.loc=L0.length?L0[0].n:"";}}
  savePG();renderProg();
@@ -1028,10 +1032,10 @@ window.MODO="admin";
  "📒 Início e fim do uso (Histórico)":"📒 使用の開始と終了（履歴）","Início e fim do uso (Histórico)":"使用の開始と終了（履歴）","Início":"開始","Fim":"終了","Dias":"日数","Como terminou":"終了の理由","Portas não feitas":"回っていない戸","Livre":"空き","Começar hoje":"今日から開始","Encerrar hoje":"今日で終了","Todas feitas":"全部完了","Nenhum período terminado ainda.":"終了した期間はまだありません。","Primeira porta marcada":"最初の戸を記録","Reset dos territórios":"区域のリセット","Concluído — todas as portas feitas":"完了 — 全ての戸を訪問","Começado manualmente":"手動で開始","Encerrado manualmente":"手動で終了",
  "📊 Total de portas":"📊 戸の合計","Total de portas":"戸の合計","Relatório dos últimos 6 meses":"過去6か月の報告","6 meses":"6か月","TOTAL (todos os grupos)":"合計（全グループ）","TOTAL":"合計","Contagem automática: muda sozinha quando portas são acrescentadas, apagadas, retiradas no reset ou mudadas de grupo.":"自動で数えます。戸の追加・削除・リセットでの取り外し・グループ変更で自動的に変わります。","Em cada mês: portas acrescentadas (+), retiradas ou apagadas (−) e o total no fim do mês (quando já registrado).":"各月：追加された戸（＋）、外した・削除した戸（−）、月末の合計（記録がある場合）。",
  "📲 Instalar ícone":"📲 アイコンを追加",
- "Mapa":"地図","🧭 mapa":"🧭 地図","Todos os números":"全部の番号","🧭 Mapa":"🧭 地図","🧭 Abrir o mapa":"🧭 地図を開く","Mapa dos territórios":"区域の地図",
+ "Mapa":"地図","📖 Matéria":"📖 資料","Para mudar a posição, use o botão ✏️ Mover bandeiras.":"位置を変えるには「✏️ 旗を動かす」ボタンを使います。","🧭 mapa":"🧭 地図","Todos os números":"全部の番号","🧭 Mapa":"🧭 地図","🧭 Abrir o mapa":"🧭 地図を開く","Mapa dos territórios":"区域の地図",
  "Online":"オンライン","Sem internet":"インターネットなし","Visualização":"閲覧"
  };
- var JP={"Prédio":"建物","Porta (ex: T 10-401)":"部屋番号（例：T 10-401）","住所":"住所","Nova chave mestra":"新しいマスターキー","Nova chave mestra (opcional)":"新しいマスターキー（任意）","Nova senha (mínimo 4 caracteres)":"新しいパスワード（4文字以上）","Senha (mínimo 4 caracteres)":"パスワード（4文字以上）","Senha":"パスワード","Chave mestra":"マスターキー","Seu nome":"名前","Porta":"部屋番号","Endereço":"住所（ローマ字）","Prédio (ou Casa)":"建物（または一戸建て）","住所 (endereço em japonês)":"住所","建物名 (nome do prédio em japonês, opcional)":"建物名（任意）","Observações (opcional)":"備考（任意）","Congregação de origem (opcional)":"元の会衆（任意）","Nome do local":"場所の名前","Link do Google Maps (opcional)":"Googleマップのリンク（任意）","🔍 Pesquisar endereço, prédio, porta ou 住所…":"🔍 住所・建物・部屋番号で検索…","Nome do grupo (ex.: KIYOSU)":"グループ名（例：KIYOSU）","Código (ex.: 清須)":"番号（例：清須）"};
+ var JP={"📖 Link da matéria (opcional)":"📖 資料のリンク（任意）","Prédio":"建物","Porta (ex: T 10-401)":"部屋番号（例：T 10-401）","住所":"住所","Nova chave mestra":"新しいマスターキー","Nova chave mestra (opcional)":"新しいマスターキー（任意）","Nova senha (mínimo 4 caracteres)":"新しいパスワード（4文字以上）","Senha (mínimo 4 caracteres)":"パスワード（4文字以上）","Senha":"パスワード","Chave mestra":"マスターキー","Seu nome":"名前","Porta":"部屋番号","Endereço":"住所（ローマ字）","Prédio (ou Casa)":"建物（または一戸建て）","住所 (endereço em japonês)":"住所","建物名 (nome do prédio em japonês, opcional)":"建物名（任意）","Observações (opcional)":"備考（任意）","Congregação de origem (opcional)":"元の会衆（任意）","Nome do local":"場所の名前","Link do Google Maps (opcional)":"Googleマップのリンク（任意）","🔍 Pesquisar endereço, prédio, porta ou 住所…":"🔍 住所・建物・部屋番号で検索…","Nome do grupo (ex.: KIYOSU)":"グループ名（例：KIYOSU）","Código (ex.: 清須)":"番号（例：清須）"};
  var LANG=(function(){try{return localStorage.getItem("tlang")||"pt";}catch(e){return"pt";}})(),TRAD=false;
  function trTxt(t){var k=t.trim();if(!k)return null;if(JA[k])return t.replace(k,JA[k]);var m=/^Grupo (.+)$/.exec(k);if(m)return t.replace(k,"グループ"+m[1]);m=/^(Janeiro|Fevereiro|Março|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro) de (\d{4})$/.exec(k);if(m)return t.replace(k,m[2]+"年"+(["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"].indexOf(m[1])+1)+"月");m=/^(Trocar território|Apagar troca) — dia (\d+)\/(\d+) \((.+)\)$/.exec(k);if(m)return(m[1]==="Trocar território"?"区域の交換":"交換の取り消し")+" — "+m[3]+"月"+m[2]+"日（"+(JA[m[4]]||m[4])+"）";
   m=/^Designado pelo responsável: (.+)\. Escolha o território que o grupo vai trabalhar\. Só os dirigentes da lista podem trocar\.$/.exec(k);if(m)return"責任者が割り当てた区域："+m[1]+"。グループが奉仕する区域を選んでください。リストにある司会者だけが交換できます。";
@@ -1143,16 +1147,16 @@ window.MODO="admin";
   try{localStorage.setItem("tmc",JSON.stringify(loc));}catch(e){}if(window.MODO==="admin"&&feitos&&window.__genLoaded)saveGen();
   if(st)st.textContent="";MCALC=false;if(MAPA&&feitos){if(!window.__apoly)MAPA.__fit=false;desenha();}}
  function desenha(){if(!MAPA)return;if(MLAY)MLAY.remove();MLAY=leaflet.layerGroup().addTo(MAPA);var bs=[],ja=(function(){try{return localStorage.getItem("tlang")==="ja";}catch(e){return false;}})();
-  var podeMover=window.MODO==="admin";
+  var podeMover=window.MODO==="admin"&&!!window.__mover;
   TL.forEach(function(g){g[1].forEach(function(t){var tid=t[0],p=mcPos(tid);if(!p)return;bs.push(p);var cor=GC[g[0]]||"#fff",nPortas=0;(S[tid]?S[tid].g:[]).forEach(function(gg){nPortas+=gg.r.length;});
    var ic=leaflet.divIcon({className:"mfi",html:'<div class="mflag" style="--c:'+cor+';--f:'+corG(g[0])+'"><span class="mp">🚩</span><b>'+esc(tid+" "+t[1])+'</b></div>',iconSize:null,iconAnchor:[6,30]});
    var mk=leaflet.marker(p,{icon:ic,draggable:podeMover,title:tid+" "+t[1],tid:tid}).addTo(MLAY);
    var lc=locs(tid).map(function(l){return'<li><a href="'+esc(lhref(l))+'" target="_blank" rel="noopener">'+esc(l.n)+'</a></li>';}).join("");
-   mk.bindPopup('<div class="mpop"><b>'+esc(tid+" "+t[1])+'</b><br><span style="background:'+cor+'" class="mg2">'+esc(g[0])+' · '+esc(t[3])+'</span><br>'+nPortas+(ja?' 戸':' portas')+(lc?'<br><span class="hn">'+(ja?'集合場所':'Locais de encontro')+':</span><ul>'+lc+'</ul>':'')+'<div class="mbs"><button class="btn mvp" data-mvp="'+tid+'">📍 '+(ja?'戸を地図で見る':'Ver portas no mapa')+'</button><button class="btn mab" data-mab="'+tid+'">'+(ja?'区域を開く':'Abrir território')+'</button></div>'+(podeMover?'<p class="hn">'+(ja?'旗はドラッグで移動できます':'Arraste a bandeira para ajustar a posição.')+'</p>':'')+'</div>');
+   mk.bindPopup('<div class="mpop"><b>'+esc(tid+" "+t[1])+'</b><br><span style="background:'+cor+'" class="mg2">'+esc(g[0])+' · '+esc(t[3])+'</span><br>'+nPortas+(ja?' 戸':' portas')+(lc?'<br><span class="hn">'+(ja?'集合場所':'Locais de encontro')+':</span><ul>'+lc+'</ul>':'')+'<div class="mbs"><button class="btn mvp" data-mvp="'+tid+'">📍 '+(ja?'戸を地図で見る':'Ver portas no mapa')+'</button><button class="btn mab" data-mab="'+tid+'">'+(ja?'区域を開く':'Abrir território')+'</button></div>'+(podeMover?'<p class="hn">'+(ja?'旗はドラッグで移動できます':'Para mudar a posição, use o botão ✏️ Mover bandeiras.')+'</p>':'')+'</div>');
    if(podeMover)mk.on("dragend",function(){var ll=mk.getLatLng();MC[tid]=[+ll.lat.toFixed(5),+ll.lng.toFixed(5)];var lo=mcLocal();lo[tid]=MC[tid];try{localStorage.setItem("tmc",JSON.stringify(lo));}catch(e){}saveGen();});});});
   if(bs.length&&!MAPA.__fit){MAPA.fitBounds(bs,{padding:[30,30]});MAPA.__fit=true;}}
  window.mapaRender=function(){var v=document.getElementById("vm");if(!v)return;var ja=(function(){try{return localStorage.getItem("tlang")==="ja";}catch(e){return false;}})();
-  if(!document.getElementById("mapbox")){v.innerHTML='<div class="mapw"><div class="maph"><h2>'+(ja?'区域の地図':'Mapa dos territórios')+'</h2><span id="mapst" class="hn"></span>'+(window.MODO==="admin"?'<button class="btn" id="mapre" type="button">🔄 '+(ja?'位置を再計算':'Recalcular posições')+'</button>':'')+'</div><div class="mleg">'+TL.map(function(g){return'<span style="background:'+corG(g[0])+';color:'+txtG(g[0])+'">'+esc(g[0])+'</span>';}).join("")+'</div><div id="mapbox"></div></div>';}
+  if(!document.getElementById("mapbox")){v.innerHTML='<div class="mapw"><div class="maph"><h2>'+(ja?'区域の地図':'Mapa dos territórios')+'</h2><span id="mapst" class="hn"></span>'+(window.MODO==="admin"?'<button class="btn" id="mapmv" type="button">✏️ '+(ja?'旗を動かす':'Mover bandeiras')+'</button><button class="btn" id="mapre" type="button">🔄 '+(ja?'位置を再計算':'Recalcular posições')+'</button>':'')+'</div><div class="mleg">'+TL.map(function(g){return'<span style="background:'+corG(g[0])+';color:'+txtG(g[0])+'">'+esc(g[0])+'</span>';}).join("")+'</div><div id="mapbox"></div></div>';}
   carregaLeaflet(function(){if(!MAPA){MAPA=leaflet.map("mapbox",{zoomControl:true,zoomSnap:0.25,zoomDelta:0.5}).setView([35.13,136.82],11);
     leaflet.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",{maxZoom:18,attribution:'<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>'}).addTo(MAPA);
     var AP=window.AREAPOLY||(window.__BASE&&window.__BASE.AREAPOLY);if(AP&&AP.length>2){window.__apoly=leaflet.polygon(AP,{color:"#3f63b0",weight:4,opacity:.95,fill:false,interactive:false});var bb=window.__apoly.getBounds(),bo=bb.pad(4),mundo=[[bo.getSouth(),bo.getWest()],[bo.getSouth(),bo.getEast()],[bo.getNorth(),bo.getEast()],[bo.getNorth(),bo.getWest()]];
@@ -1161,7 +1165,8 @@ window.MODO="admin";
      MAPA.setMaxBounds(bb.pad(0.15));MAPA.options.maxBoundsViscosity=1;setTimeout(function(){MAPA.setMinZoom(Math.max(MAPA.getZoom()-1,8));},300);}
     MAPA.on("popupopen",function(e){var b=e.popup.getElement().querySelector("[data-mab]");if(b)b.onclick=function(){openT(b.dataset.mab);scrollTo(0,0);};});document.addEventListener("click",function(ev){var b2=ev.target.closest&&ev.target.closest("#mpanel [data-mab]");if(b2){openT(b2.dataset.mab);scrollTo(0,0);}});}
    setTimeout(function(){MAPA.invalidateSize();desenha();calculaFaltando(false);if(window.__pendVer){var pv=window.__pendVer;window.__pendVer=null;verPortas(pv[0],pv[1]);}},60);});};
- document.addEventListener("click",function(e){if(e.target.id==="mapre"){if(!window.__apoly)MAPA.__fit=false;calculaFaltando(true);}});
+ document.addEventListener("click",function(e){if(e.target.id==="mapmv"){window.__mover=!window.__mover;var ja=(function(){try{return localStorage.getItem("tlang")==="ja";}catch(x){return false;}})();e.target.textContent=window.__mover?(ja?"🔒 旗を固定する":"🔒 Fixar bandeiras"):(ja?"✏️ 旗を動かす":"✏️ Mover bandeiras");e.target.classList.toggle("on",!!window.__mover);desenha();return;}
+  if(e.target.id==="mapre"){if(!window.__apoly)MAPA.__fit=false;calculaFaltando(true);}});
  // ---------- portas do território no mapa + mais perto de você ----------
  var GDB=null,GLOAD=false,DLAY=null,EU=null,EUMK=null,TSEL=null;
  function geoLocal(){try{return JSON.parse(localStorage.getItem("tgeo")||"{}");}catch(e){return{};}}
@@ -1169,7 +1174,7 @@ window.MODO="admin";
  function geoSalva(novos){try{localStorage.setItem("tgeo",JSON.stringify(GDB));}catch(e){}
   if(novos&&window.MODO==="admin"&&window.FB_DB){FB_DB.doc("territorios/geo").set({data:JSON.stringify(GDB)}).catch(function(){});}}
  function distKm(a,b){return km(a,b);}
- var GCF0={MINATO:"#d32f2f",DOUTOKU:"#f2c200",NAKAGAWA:"#2e9a3e",INAZAWA:"#1e63c6"},GCFX=["#8e44ad","#e67e22","#16a085","#795548","#c2185b"];
+ var GCF0={MINATO:"#d32f2f",DOUTOKU:"#f2c200",NAKAGAWA:"#1e63c6",INAZAWA:"#2e9a3e"},GCFX=["#8e44ad","#e67e22","#16a085","#795548","#c2185b"];
  function corG(gr){if(GCF0[gr])return GCF0[gr];var i=0;TL.forEach(function(g,k){if(g[0]===gr)i=k;});return GCFX[i%GCFX.length];}
  function txtG(gr){return gr==="DOUTOKU"?"#1d1915":"#fff";}
  function simb(x){if(!x[0]&&!x[1])return"";if(x[1]==="Não quer visita")return"✕";if(x[1]==="NC")return"N";if(x[1]==="VISITADO"||x[1]==="CONVITE"||x[0])return"✓";return"•";}
