@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" translate="no" class="notranslate">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -346,6 +346,7 @@ td.pin{white-space:nowrap}
 #splash .sp2{margin-top:10px;font:500 13px "DM Sans",Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#c9a65b}
 @keyframes spIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 </style>
+<meta name="google" content="notranslate">
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -1042,7 +1043,7 @@ window.MODO="ver";
   L.forEach(function(n){var p=n.parentElement;if(!p||p.closest("textarea,.ix td.xe,table.hs td:not(:first-child) .x,script,style"))return;var r=trTxt(n.nodeValue);if(r!==null&&r!==n.nodeValue){if(n.__pt===undefined)n.__pt=n.nodeValue;n.nodeValue=r;}});
   root.querySelectorAll("[placeholder]").forEach(function(e){var k=e.getAttribute("placeholder");if(JP[k]){e.dataset.pt=k;e.setAttribute("placeholder",JP[k]);}});
   TRAD=false;}
- function tudo(){["va","vi","vp","vplista","vt","pgt"].forEach(function(id){traduz(document.getElementById(id));});document.querySelectorAll(".btn.voltar").forEach(traduz);traduz(document.querySelector(".nv"));traduz(document.querySelector(".barra"));var hm=document.getElementById("hdm");if(hm){if(!hm.dataset.pt)hm.dataset.pt=hm.textContent;var dd=new Date(),hmt=LANG==="ja"?dd.getFullYear()+"年"+(dd.getMonth()+1)+"月":hm.dataset.pt;if(hm.textContent!==hmt)hm.textContent=hmt;}var h1=document.querySelector(".hd1"),h1t=LANG==="ja"?"区域":"Territórios";if(h1&&h1.textContent!==h1t)h1.textContent=h1t;var h=document.querySelector(".hd2");if(h){if(!h.dataset.pt)h.dataset.pt=h.textContent;var ht=LANG==="ja"?(window.MODO==="admin"?"長老・奉仕の僕 · ":"")+"名古屋ポルトガル語会衆":h.dataset.pt;if(h.textContent!==ht)h.textContent=ht;}var lb=document.getElementById("lgbt"),lt=LANG==="ja"?"🇧🇷 Português":"🇯🇵 日本語";if(lb&&lb.textContent!==lt)lb.textContent=lt;}
+ function tudo(){document.documentElement.lang=LANG==="ja"?"ja":"pt-BR";["va","vi","vp","vplista","vt","pgt"].forEach(function(id){traduz(document.getElementById(id));});document.querySelectorAll(".btn.voltar").forEach(traduz);traduz(document.querySelector(".nv"));traduz(document.querySelector(".barra"));var hm=document.getElementById("hdm");if(hm){if(!hm.dataset.pt)hm.dataset.pt=hm.textContent;var dd=new Date(),hmt=LANG==="ja"?dd.getFullYear()+"年"+(dd.getMonth()+1)+"月":hm.dataset.pt;if(hm.textContent!==hmt)hm.textContent=hmt;}var h1=document.querySelector(".hd1"),h1t=LANG==="ja"?"区域":"Territórios";if(h1&&h1.textContent!==h1t)h1.textContent=h1t;var h=document.querySelector(".hd2");if(h){if(!h.dataset.pt)h.dataset.pt=h.textContent;var ht=LANG==="ja"?(window.MODO==="admin"?"長老・奉仕の僕 · ":"")+"名古屋ポルトガル語会衆":h.dataset.pt;if(h.textContent!==ht)h.textContent=ht;}var lb=document.getElementById("lgbt"),lt=LANG==="ja"?"🇧🇷 Português":"🇯🇵 日本語";if(lb&&lb.textContent!==lt)lb.textContent=lt;}
  window.idioma=function(){var br=document.querySelector(".barra");if(!br||document.getElementById("lgbt"))return;var b=document.createElement("button");b.id="lgbt";b.className="pill lg";b.type="button";
   b.onclick=function(){LANG=LANG==="ja"?"pt":"ja";try{localStorage.setItem("tlang",LANG);}catch(e){}if(LANG==="pt"){location.reload();return;}tudo();};br.appendChild(b);
   var agd=0;new MutationObserver(function(){if(LANG!=="ja"||agd)return;agd=requestAnimationFrame(function(){agd=0;tudo();});}).observe(document.getElementById("app"),{childList:true,subtree:true});tudo();};
