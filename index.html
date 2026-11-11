@@ -335,6 +335,9 @@ td.pin{white-space:nowrap}
 .zmat{margin-top:4px;font-size:12px!important}
 .zmlk{display:inline-block;margin-top:4px;font-weight:600;color:var(--azul)}
 #mapmv.on{background:#b3261e;border-color:#b3261e;color:#fff}
+.gnl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}
+.gnk{border-radius:999px;padding:3px 12px;font-weight:700;font-size:13px;min-width:90px;text-align:center}
+#ap .gnl input{max-width:220px}
 </style>
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">
@@ -404,7 +407,7 @@ function mq(jp,en){var q=un(jp||en).trim();if(jp&&q&&!/[県市]/.test(q)&&/区/.
 function pin(x){var L=un(x[11]||"").trim();if(/^https?:\/\//.test(L))return esc(L);return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(mq(x[6],x[4]));}
 function dmy(t){var d=new Date(t);return("0"+d.getDate()).slice(-2)+"/"+("0"+(d.getMonth()+1)).slice(-2)+"/"+d.getFullYear();}
 function save(tid){PUBD=true;var s=S[tid],v=JSON.stringify({g:s.g,h:s.h,vh:s.vh,ar:s.ar,u:s.u||[]});LAST[tid]=v;try{if(DB)DB.doc("territorios/t"+tid).set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("t"+tid,v);}catch(e){}}
-function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[],pc:window.PC||{},mc2:window.MC||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
+function saveGen(){var v=JSON.stringify({rs:RS,area:AREA,dl:DL,le:LE,tg:window.TG||{},gx:window.GX||[],zid:window.ZID||"860 418 5501",rsn:window.RSN||[],pc:window.PC||{},mc2:window.MC||{},gn:window.GN||{}});LAST.gen=v;try{if(gen)gen.set({data:v});else localStorage.setItem("tgeral",v);}catch(e){}}
 function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB.doc("territorios/pin").set({pin:PH||null});}else{localStorage.setItem("t7pin",PH||"");localStorage.setItem("t7mk",MK||"");}}catch(e){}}
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];s.u=o.u||[];
@@ -881,7 +884,7 @@ render();renderIdx();sv("vp");
   cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};window.MC=o.mc2||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};window.MC=o.mc2||{};window.GN=o.gn||{};if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
@@ -911,7 +914,7 @@ window.MODO="ver";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.idioma)idioma();if(window.instalar)instalar();if(window.usoHooks)usoHooks();apagar();}
+  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.nomesGrupos)nomesGrupos();if(window.idioma)idioma();if(window.instalar)instalar();if(window.usoHooks)usoHooks();apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
  window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
@@ -924,11 +927,11 @@ window.MODO="ver";
   TL.length=0;nw.forEach(function(g){TL.push(g);});};
  window.tgRender=function(){var b=document.getElementById("tgbox");if(!b)return;tl0();var gs=TL.map(function(g){return g[0];}),orig={};TL0.forEach(function(g){g[1].forEach(function(t){orig[t[0]]=g[0];});});
   var h='<p class="hn">Escolha em qual grupo de campo cada território fica. A mudança vale na lista de territórios e na programação (domingos) para todos, na hora.</p><table class="hs tgt"><tr><th>Território</th><th>Grupo de campo</th><th>Código</th></tr>';
-  TL.forEach(function(g){g[1].forEach(function(t){h+='<tr style="background:'+(GC[g[0]]||"#fff")+'"><td><b>'+esc(t[0]+" "+t[1])+'</b></td><td><select data-tgt="'+t[0]+'">'+gs.map(function(x){return'<option'+(x===g[0]?" selected":"")+'>'+x+'</option>';}).join("")+'</select>'+(g[0]!==orig[t[0]]?' <span class="hn">(antes: '+orig[t[0]]+')</span>':'')+'</td><td>'+esc(t[3])+'</td></tr>';});});
+  TL.forEach(function(g){g[1].forEach(function(t){h+='<tr style="background:'+(GC[g[0]]||"#fff")+'"><td><b>'+esc(t[0]+" "+t[1])+'</b></td><td><select data-tgt="'+t[0]+'">'+gs.map(function(x){return'<option value="'+x+'"'+(x===g[0]?" selected":"")+'>'+x+'</option>';}).join("")+'</select>'+(g[0]!==orig[t[0]]?' <span class="hn">(antes: '+orig[t[0]]+')</span>':'')+'</td><td>'+esc(t[3])+'</td></tr>';});});
   var PAL=["#e6d5f5","#fde2cf","#d0f0ef","#f9d9e8","#e2e8c8","#dfe3ea"];
   h+='</table><div class="tgn"><h5>Acrescentar grupo de campo novo</h5><div class="fm"><input id="tgnn" placeholder="Nome do grupo (ex.: KIYOSU)"><input id="tgnp" placeholder="Código (ex.: 清須)" size="10"><select id="tgnc">'+PAL.map(function(c,i){return'<option value="'+c+'" style="background:'+c+'">Cor '+(i+1)+'</option>';}).join("")+'</select><button class="btn" id="tgnok">+ Acrescentar grupo</button></div>';
   if((window.GX||[]).length){h+='<p class="hn">Grupos novos:</p>'+GX.map(function(x,i){var n=0;TL.forEach(function(g){if(g[0]===x.n)n=g[1].length;});return'<div class="tgx" style="background:'+esc(x.c)+'"><b>'+esc(x.n)+'</b> ('+esc(x.p)+') — '+n+' território(s) '+(n?'<span class="hn">Para apagar, mude antes os territórios para outro grupo.</span>':'<button class="btn rd" data-tgdel="'+i+'">Apagar grupo</button>')+'</div>';}).join("");}
-  b.innerHTML=h+'<p class="mg" id="tgnm"></p></div><p class="ok" id="tgm"></p>';};
+  b.innerHTML=h+'<p class="mg" id="tgnm"></p></div><div class="tgn" id="gnbox"></div><p class="ok" id="tgm"></p>';if(window.gnBox)gnBox();};
  document.addEventListener("click",function(e){var id=e.target.id,dl=e.target.dataset&&e.target.dataset.tgdel;
   if(id==="tgnok"){var n=document.getElementById("tgnn").value.trim().toUpperCase(),p=document.getElementById("tgnp").value.trim(),c=document.getElementById("tgnc").value,m=document.getElementById("tgnm");
    if(!n){m.textContent="Digite o nome do grupo.";return;}if(TL.some(function(g){return g[0]===n;})){m.textContent="Já existe um grupo com esse nome.";return;}
@@ -985,7 +988,7 @@ window.MODO="ver";
   m=/^Apaga a troca para (.+) e volta para o território designado(?:: (.+))?\.$/.exec(k);if(m)return m[1]+"への交換を取り消し、割り当てられた区域"+(m[2]?"（"+m[2]+"）":"")+"に戻します。";
   m=/^Território (\d+)$/.exec(k);if(m)return t.replace(k,"区域"+m[1]);
   m=/^● (Online|Sem internet) – (.+)$/.exec(k);if(m)return"● "+JA[m[1]]+" – "+(JA[m[2]]||m[2]);return null;}
- function traduz(root){if(LANG!=="ja"||!root)return;TRAD=true;
+ function traduz(root){if(LANG!=="ja"||!root)return;if(window.renomeia)renomeia(root);TRAD=true;
   var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n,L=[];while(n=w.nextNode())L.push(n);
   L.forEach(function(n){var p=n.parentElement;if(!p||p.closest("textarea,.ix td.xe,table.hs td:not(:first-child) .x,script,style"))return;var r=trTxt(n.nodeValue);if(r!==null&&r!==n.nodeValue){if(n.__pt===undefined)n.__pt=n.nodeValue;n.nodeValue=r;}});
   root.querySelectorAll("[placeholder]").forEach(function(e){var k=e.getAttribute("placeholder");if(JP[k]){e.dataset.pt=k;e.setAttribute("placeholder",JP[k]);}});
@@ -1129,6 +1132,26 @@ window.MODO="ver";
    t.textContent="⏳";navigator.geolocation.getCurrentPosition(function(pos){EU=[pos.coords.latitude,pos.coords.longitude];if(EUMK)EUMK.remove();EUMK=leaflet.circleMarker(EU,{radius:9,color:"#fff",weight:3,fillColor:"#1a73e8",fillOpacity:1}).addTo(MAPA).bindPopup(ja?"現在地":"Você está aqui");t.textContent="📍 "+(ja?"現在地から近い戸":"Mais perto de mim");listaPerto();
     var near=(window.__lista||[]).filter(function(e){return!e.o.x[0]&&!e.o.x[1];}).sort(function(a,b){return a.d-b.d;})[0];MAPA.fitBounds(near?[EU,near.p]:[EU],{padding:[60,60],maxZoom:17});},
     function(){t.textContent="📍 "+(ja?"現在地から近い戸":"Mais perto de mim");alert(ja?"現在地を取得できませんでした。設定で位置情報を許可してください。":"Não foi possível pegar a localização. Permita o acesso à localização nas configurações do celular.");},{enableHighAccuracy:true,timeout:15000});}});
+ // ---------- nomes dos grupos de campo (mudar o nome em todo o site) ----------
+ window.GN=window.GN||{};var RNT=false;
+ function capW(g){return g.charAt(0)+g.slice(1).toLowerCase();}
+ window.renomeia=function(root){var gn=window.GN||{},ks=Object.keys(gn).filter(function(k){return gn[k]&&gn[k]!==k;});if(!ks.length||!root)return;
+  var mapa={};ks.forEach(function(k){mapa[k]=gn[k];mapa[capW(k)]=gn[k];});
+  var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n,L=[];while(n=w.nextNode())L.push(n);
+  L.forEach(function(n){var p=n.parentElement;if(!p||p.closest("script,style,textarea,input,#gnbox .gnk"))return;var t=n.nodeValue,k=t.trim();if(!k)return;
+   if(mapa[k]){n.nodeValue=t.replace(k,mapa[k]);return;}
+   var m=/^([A-Za-z]+) · (.+)$/.exec(k);if(m&&mapa[m[1]]){n.nodeValue=t.replace(m[1],mapa[m[1]]);return;}
+   m=/\(([A-Za-z]+)\)$/.exec(k);if(m&&mapa[m[1]]&&/^(Trocar território|Apagar troca) — dia/.test(k)){n.nodeValue=t.replace("("+m[1]+")","("+mapa[m[1]]+")");}});};
+ window.nomesGrupos=function(){var app=document.getElementById("app");if(!app)return;var ag=0;
+  new MutationObserver(function(){if(ag)return;ag=requestAnimationFrame(function(){ag=0;renomeia(app);});}).observe(app,{childList:true,subtree:true});renomeia(app);};
+ window.gnBox=function(){var b=document.getElementById("gnbox");if(!b)return;var gs=(window.TL0||TL).map(function(g){return g[0];});(window.GX||[]).forEach(function(x){if(x&&x.n&&gs.indexOf(x.n)<0)gs.push(x.n);});
+  b.innerHTML='<h5>Nome dos grupos de campo</h5><p class="hn">Mude o nome e clique em Salvar. O nome novo aparece em todo o site na hora (programação, lista, mapa, troca…), para todos. As escolhas e históricos continuam iguais.</p>'+gs.map(function(g){return'<div class="gnl"><span class="gnk" style="background:'+(GC[g]||"#eee")+'">'+esc(g)+'</span> → <input data-gnk="'+esc(g)+'" value="'+esc((GN[g]&&GN[g]!==g)?GN[g]:"")+'" placeholder="'+esc(g)+'"><button class="btn" type="button" data-gnok="'+esc(g)+'">Salvar</button>'+((GN[g]&&GN[g]!==g)?'<button class="btn rd" type="button" data-gnx="'+esc(g)+'">Voltar ao original</button>':'')+'</div>';}).join("")+'<p class="ok" id="gnm"></p>';};
+ document.addEventListener("click",function(e){var d=e.target.dataset||{};
+  if(d.gnok){var inp=document.querySelector('input[data-gnk="'+d.gnok+'"]'),v=(inp.value||"").trim(),m=document.getElementById("gnm");
+   var usados=Object.keys(GN).filter(function(k){return k!==d.gnok;}).map(function(k){return(GN[k]||"").toUpperCase();}).concat(TL.map(function(g){return g[0];}).filter(function(x){return x!==d.gnok;}));
+   if(v&&usados.indexOf(v.toUpperCase())>=0){if(m){m.className="mg";m.textContent="Já existe um grupo com esse nome.";}return;}
+   if(v&&v!==d.gnok)GN[d.gnok]=v;else delete GN[d.gnok];saveGen();renderIdx();renderProg();renderAdm();var m2=document.getElementById("gnm");if(m2){m2.className="ok";m2.textContent=v?"Salvo: "+d.gnok+" agora aparece como "+v+".":"Nome original de volta.";}return;}
+  if(d.gnx){delete GN[d.gnx];saveGen();renderIdx();renderProg();renderAdm();}});
 
  function apagar(){
   function nomes(){return '<select class="apn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
