@@ -438,7 +438,7 @@ function render(){
 function openForm(gi){
  var g=S[CUR].g[gi],seen={},o="";
  g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;o+='<option value="'+i+'">'+x[2]+' — '+x[4]+'</option>';}});
- document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button></span><span class="mg" id="m'+gi+'"></span>';
+ document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="mg" id="m'+gi+'"></span>';
 }
 async function addDoor(gi){
  var s=S[CUR],g=s.g[gi],v=+document.getElementById("s"+gi).value,po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
@@ -1079,6 +1079,7 @@ window.MODO="ver";
      MAPA.setMaxBounds(bb.pad(0.15));MAPA.options.maxBoundsViscosity=1;setTimeout(function(){MAPA.setMinZoom(Math.max(MAPA.getZoom()-1,8));},300);}
     MAPA.on("popupopen",function(e){var b=e.popup.getElement().querySelector("[data-mab]");if(b)b.onclick=function(){openT(b.dataset.mab);scrollTo(0,0);};});document.addEventListener("click",function(ev){var b2=ev.target.closest&&ev.target.closest("#mpanel [data-mab]");if(b2){openT(b2.dataset.mab);scrollTo(0,0);}});}
    setTimeout(function(){MAPA.invalidateSize();desenha();calculaFaltando(false);if(window.__pendVer){var pv=window.__pendVer;window.__pendVer=null;verPortas(pv[0],pv[1]);}},60);});};
+ document.addEventListener("click",function(e){var fx=e.target.dataset&&e.target.dataset.fx;if(fx!==undefined){var f=document.getElementById("f"+fx);if(f)f.innerHTML="";return;}});
  document.addEventListener("click",function(e){if(e.target.id==="mapmv"){window.__mover=!window.__mover;var ja=(function(){try{return localStorage.getItem("tlang")==="ja";}catch(x){return false;}})();e.target.textContent=window.__mover?(ja?"🔒 旗を固定する":"🔒 Fixar bandeiras"):(ja?"✏️ 旗を動かす":"✏️ Mover bandeiras");e.target.classList.toggle("on",!!window.__mover);desenha();return;}
   if(e.target.id==="mapre"){if(!window.__apoly)MAPA.__fit=false;calculaFaltando(true);}});
  // ---------- portas do território no mapa + mais perto de você ----------
