@@ -345,6 +345,13 @@ td.pin{white-space:nowrap}
 #splash .sp1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(26px,6vw,44px);font-weight:700;color:#fff;text-shadow:0 0 18px rgba(80,200,255,.6);letter-spacing:.5px}
 #splash .sp2{margin-top:10px;font:500 13px "DM Sans",Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#c9a65b}
 @keyframes spIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.fimbar{border-top:2px solid var(--borda);margin-top:10px;padding:12px 14px;background:#fbfaf6;border-radius:0 0 12px 12px}
+.fbtop{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.fbb{background:var(--escuro);border-color:var(--escuro);color:#fff;font-size:14px;padding:8px 16px}
+.fbf{margin-top:10px;background:#fff;border:1.5px solid var(--borda);border-radius:12px;padding:12px 14px;font-size:14px;max-width:760px}
+.fbo{display:block;margin:5px 0;cursor:pointer}.fbc{margin-top:10px}
+.fbf .fm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.fbf select,.fbf input[type=password]{border:1.5px solid var(--borda);border-radius:8px;padding:6px 10px}
 </style>
 <meta name="google" content="notranslate">
 <link rel="apple-touch-icon" href="icone-180.png">
@@ -964,7 +971,7 @@ window.MODO="ver";
    copia();new MutationObserver(copia).observe(vi,{childList:true,subtree:true,characterData:true});
    L.onclick=function(e){var v=e.target.dataset&&e.target.dataset.open;if(v){openT(v);scrollTo(0,0);}};})();
   ["vt","vi"].forEach(function(id){var el=document.getElementById(id),vb=document.createElement("button");vb.className="btn voltar";vb.type="button";vb.textContent="‹ Voltar à programação";vb.onclick=function(){sv("vp");scrollTo(0,0);};el.parentNode.insertBefore(vb,el);});
-  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.nomesGrupos)nomesGrupos();if(window.idioma)idioma();if(window.instalar)instalar();if(window.usoHooks)usoHooks();apagar();}
+  if(window.MODO==="admin"){abas();zoomBar();if(window.protegeAdm)protegeAdm();}if(window.nomesGrupos)nomesGrupos();if(window.idioma)idioma();if(window.instalar)instalar();if(window.usoHooks)usoHooks();if(window.finalBar)finalBar();apagar();}
  window.TG=window.TG||{};function tl0(){if(!window.TL0)window.TL0=JSON.parse(JSON.stringify(TL));return TL0;}
  window.GX=window.GX||[];if(!window.GRP0&&window.GRP)window.GRP0=GRP.slice();
  window.applyTG=function(){tl0();var pre={},ok={};TL0.forEach(function(g){ok[g[0]]=1;pre[g[0]]=((g[1][0]||[])[3]||"").replace(/[0-9０-９]+$/,"");});
@@ -1028,7 +1035,7 @@ window.MODO="ver";
  "📒 Início e fim do uso (Histórico)":"📒 使用の開始と終了（履歴）","Início e fim do uso (Histórico)":"使用の開始と終了（履歴）","Início":"開始","Fim":"終了","Dias":"日数","Como terminou":"終了の理由","Portas não feitas":"回っていない戸","Livre":"空き","Começar hoje":"今日から開始","Encerrar hoje":"今日で終了","Todas feitas":"全部完了","Nenhum período terminado ainda.":"終了した期間はまだありません。","Primeira porta marcada":"最初の戸を記録","Reset dos territórios":"区域のリセット","Concluído — todas as portas feitas":"完了 — 全ての戸を訪問","Começado manualmente":"手動で開始","Encerrado manualmente":"手動で終了",
  "📊 Total de portas":"📊 戸の合計","Total de portas":"戸の合計","Relatório dos últimos 6 meses":"過去6か月の報告","6 meses":"6か月","TOTAL (todos os grupos)":"合計（全グループ）","TOTAL":"合計","Contagem automática: muda sozinha quando portas são acrescentadas, apagadas, retiradas no reset ou mudadas de grupo.":"自動で数えます。戸の追加・削除・リセットでの取り外し・グループ変更で自動的に変わります。","Em cada mês: portas acrescentadas (+), retiradas ou apagadas (−) e o total no fim do mês (quando já registrado).":"各月：追加された戸（＋）、外した・削除した戸（−）、月末の合計（記録がある場合）。",
  "📲 Instalar ícone":"📲 アイコンを追加",
- "Mapa":"地図","📖 Matéria":"📖 資料","Para mudar a posição, use o botão ✏️ Mover bandeiras.":"位置を変えるには「✏️ 旗を動かす」ボタンを使います。","🧭 mapa":"🧭 地図","Todos os números":"全部の番号","🧭 Mapa":"🧭 地図","🧭 Abrir o mapa":"🧭 地図を開く","Mapa dos territórios":"区域の地図",
+ "Mapa":"地図","Concluído":"完了","Finalizar":"終了する","Encerrado por outro motivo":"その他の理由で終了","Dividido — outro grupo vai terminar o que falta":"分割 — 残りは別のグループが行う","📖 Matéria":"📖 資料","Para mudar a posição, use o botão ✏️ Mover bandeiras.":"位置を変えるには「✏️ 旗を動かす」ボタンを使います。","🧭 mapa":"🧭 地図","Todos os números":"全部の番号","🧭 Mapa":"🧭 地図","🧭 Abrir o mapa":"🧭 地図を開く","Mapa dos territórios":"区域の地図",
  "Online":"オンライン","Sem internet":"インターネットなし","Visualização":"閲覧"
  };
  var JP={"📖 Link da matéria (opcional)":"📖 資料のリンク（任意）","Prédio":"建物","Porta (ex: T 10-401)":"部屋番号（例：T 10-401）","住所":"住所","Nova chave mestra":"新しいマスターキー","Nova chave mestra (opcional)":"新しいマスターキー（任意）","Nova senha (mínimo 4 caracteres)":"新しいパスワード（4文字以上）","Senha (mínimo 4 caracteres)":"パスワード（4文字以上）","Senha":"パスワード","Chave mestra":"マスターキー","Seu nome":"名前","Porta":"部屋番号","Endereço":"住所（ローマ字）","Prédio (ou Casa)":"建物（または一戸建て）","住所 (endereço em japonês)":"住所","建物名 (nome do prédio em japonês, opcional)":"建物名（任意）","Observações (opcional)":"備考（任意）","Congregação de origem (opcional)":"元の会衆（任意）","Nome do local":"場所の名前","Link do Google Maps (opcional)":"Googleマップのリンク（任意）","🔍 Pesquisar endereço, prédio, porta ou 住所…":"🔍 住所・建物・部屋番号で検索…","Nome do grupo (ex.: KIYOSU)":"グループ名（例：KIYOSU）","Código (ex.: 清須)":"番号（例：清須）"};
@@ -1080,6 +1087,28 @@ window.MODO="ver";
   b.innerHTML=h;};
  document.addEventListener("click",function(e){var d=e.target.dataset||{};if(d.usi){if(usAbre(d.usi,hojeISO(),"","Começado manualmente")){save(d.usi);renderAdm();}}
   if(d.usf){if(usFecha(d.usf,hojeISO(),"Encerrado manualmente","")){save(d.usf);renderAdm();}}});
+ // ---------- botão Finalizar território (no fim da página do território) ----------
+ window.finalBar=function(){var vt=document.getElementById("vt");if(!vt)return;
+  function poe(){if(!CUR||!S[CUR]||vt.hidden)return;var w=vt.querySelector(".wrap")||vt;if(w.querySelector(".fimbar"))return;var a=usAberto(CUR),pe=pendentes(CUR),ja=(function(){try{return localStorage.getItem("tlang")==="ja";}catch(e){return false;}})();
+   var d=document.createElement("div");d.className="fimbar";
+   d.innerHTML='<div class="fbtop"><button class="btn fbb" type="button" data-fim="'+CUR+'">🏁 '+(ja?"区域を終了する":"Finalizar território")+'</button><span class="hn">'+(a?(ja?"使用開始：":"Em uso desde ")+fdt(a.i)+" — ":"")+(pe.tot-pe.p.length)+(ja?" / "+pe.tot+" 戸 完了":" de "+pe.tot+" portas feitas")+'</span></div><div class="fbf" hidden></div>';w.appendChild(d);}
+  new MutationObserver(function(){poe();}).observe(vt,{childList:true,subtree:true});
+  var vtObs=new MutationObserver(function(){poe();});vtObs.observe(vt,{attributes:true,attributeFilter:["hidden"]});poe();};
+ function nomesSel(){return'<select class="fbn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join("")+'</select>';}
+ document.addEventListener("click",async function(e){var t=e.target,d=t.dataset||{};
+  if(d.fim){var bar=t.closest(".fimbar"),f=bar.querySelector(".fbf"),pe=pendentes(d.fim);f.hidden=!f.hidden;if(f.hidden)return;
+   f.innerHTML='<p><b>Finalizar o uso deste território</b> — fica registrado em <b>Início e fim do uso (Histórico)</b>, com a lista das <b>'+pe.p.length+'</b> porta(s) que faltaram. As portas e datas não são apagadas.</p>'+
+    '<label class="fbo"><input type="radio" name="fbm" value="Concluído" '+(pe.p.length?'':'checked')+'> Concluído</label>'+
+    '<label class="fbo"><input type="radio" name="fbm" value="Dividido — outro grupo vai terminar o que falta" '+(pe.p.length?'checked':'')+'> Dividido — outro grupo vai terminar o que falta</label>'+
+    '<label class="fbo"><input type="radio" name="fbm" value="Encerrado"> Encerrado por outro motivo</label>'+
+    '<label class="fbo fbc"><input type="checkbox" class="fbnovo" '+(pe.p.length?'checked':'')+'> Abrir agora um <b>novo período</b> para o grupo que vai terminar o que falta</label>'+
+    '<div class="fm">'+nomesSel()+'<input class="fbs" type="password" placeholder="Senha"><button class="btn rd go" type="button" data-fimok="'+d.fim+'">Finalizar</button><button class="btn" type="button" data-fimx="1">Cancelar</button></div><p class="mg fbm2"></p>';return;}
+  if(d.fimx){var f2=t.closest(".fbf");f2.hidden=true;f2.innerHTML="";return;}
+  if(d.fimok){var bx=t.closest(".fbf"),nm=bx.querySelector(".fbn").value,pw=bx.querySelector(".fbs").value.trim(),m=bx.querySelector(".fbm2"),mot=(bx.querySelector('input[name=fbm]:checked')||{}).value||"Encerrado",novo=bx.querySelector(".fbnovo").checked;
+   if(!nm){m.textContent="Escolha seu nome.";return;}if(!PH||await hash(pw)!==PH){m.textContent="Senha incorreta.";return;}
+   var tid=d.fimok;usFecha(tid,hojeISO(),mot,nm);if(novo)usAbre(tid,hojeISO(),nm,"Continuação — "+(mot==="Concluído"?"novo ciclo":"terminar o que faltou"));save(tid);
+   var bar2=bx.closest(".fimbar");bar2.querySelector(".fbf").innerHTML='<p class="ok">✓ Território finalizado por '+esc(nm)+' ('+esc(mot)+').'+(novo?' Novo período aberto.':'')+' Veja em Início e fim do uso (Histórico).</p>';
+   setTimeout(function(){var b3=document.querySelector(".fimbar");if(b3)b3.remove();if(window.finalBar){var vt=document.getElementById("vt");}render();},1800);}});
  // ---------- botão Instalar ícone ----------
  window.__bip=null;addEventListener("beforeinstallprompt",function(e){e.preventDefault();window.__bip=e;});
  window.instalar=function(){var br=document.querySelector(".barra");if(!br||document.getElementById("instbt"))return;
