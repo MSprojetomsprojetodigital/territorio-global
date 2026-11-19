@@ -365,8 +365,66 @@ td.pin{white-space:nowrap}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Tema futurista suave  ===== */
+body.fx{--fundo:#eef3fa;--escuro:#0e1a2b;--ouro:#d9b45a;--azul:#1f7ae0;--ciano:#29c7e6;--borda:#d6e2f0;--card:rgba(255,255,255,.86);
+ background:radial-gradient(1200px 500px at 85% -10%,rgba(41,199,230,.12),transparent 60%),radial-gradient(900px 500px at -10% 30%,rgba(31,122,224,.08),transparent 60%),
+ linear-gradient(rgba(31,122,224,.045) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,rgba(31,122,224,.045) 1px,transparent 1px) 0 0/28px 28px,#eef3fa;background-attachment:fixed}
+body.fx .hd{background:linear-gradient(120deg,#0b1626 0%,#10233b 55%,#0d2d4a 100%);position:relative;border-bottom:1px solid rgba(41,199,230,.55);box-shadow:0 6px 24px rgba(10,30,60,.25)}
+body.fx .hd:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,#29c7e6 30%,#7fe3ff 50%,#29c7e6 70%,transparent);opacity:.9}
+body.fx .hd1{font-family:"Sora","DM Sans",Arial,sans-serif;font-weight:600;letter-spacing:.5px;font-size:30px;background:linear-gradient(90deg,#fff,#bdefff);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.fx .hd2{color:#9fdcf0;letter-spacing:3.5px}
+body.fx .hdm{background:rgba(41,199,230,.12);color:#bdefff;border:1px solid rgba(41,199,230,.6);box-shadow:0 0 12px rgba(41,199,230,.35) inset}
+body.fx .pill.on{background:rgba(46,154,62,.12);color:#1f7a37;border:1px solid rgba(46,154,62,.45)}
+body.fx .pill.cz{background:#0e1a2b}
+body.fx .pill.inst{background:linear-gradient(90deg,#d9b45a,#f0d28a);box-shadow:0 2px 10px rgba(217,180,90,.35)}
+body.fx .pill.lg{background:rgba(255,255,255,.8);backdrop-filter:blur(6px)}
+body.fx .nv{background:rgba(14,26,43,.92);backdrop-filter:blur(8px);border-radius:14px;border:1px solid rgba(41,199,230,.25);box-shadow:0 8px 24px rgba(10,30,60,.18)}
+body.fx .nv .tb{color:#a9bfd6;font-family:"Sora","DM Sans",Arial,sans-serif!important;font-size:14px;letter-spacing:.3px}
+body.fx .nv .tb:hover{color:#fff}
+body.fx .nv .tb.on{color:#7fe3ff;border-bottom-color:#29c7e6;text-shadow:0 0 10px rgba(41,199,230,.6)}
+body.fx .iw,body.fx #pgt,body.fx #vt>.wrap,body.fx .mapw,body.fx #lk,body.fx #ap .sec,body.fx .cx{background:var(--card);backdrop-filter:blur(10px);border:1px solid rgba(31,122,224,.18);box-shadow:0 10px 30px rgba(15,40,80,.08),0 0 0 1px rgba(255,255,255,.6) inset;border-radius:16px}
+body.fx .pgt2,body.fx #va>h3,body.fx #vplista .vlt,body.fx .maph h2,body.fx #ap .sec h4{font-family:"Sora","DM Sans",Arial,sans-serif!important;font-weight:600;letter-spacing:.3px}
+body.fx .pgt1{letter-spacing:3px;color:#5d7894}
+body.fx .btn{border-radius:10px;border-color:rgba(31,122,224,.55);color:#1f6fd0;background:#fff;transition:box-shadow .2s,transform .1s}
+body.fx .btn:hover{box-shadow:0 0 0 3px rgba(41,199,230,.18);background:#f4faff}
+body.fx .btn:active{transform:translateY(1px)}
+body.fx #ap .sec .btn:not(.rd),body.fx #lk .btn,body.fx .btn.voltar,body.fx .fbb{background:linear-gradient(90deg,#1f7ae0,#29c7e6);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(31,122,224,.3)}
+body.fx .btn.rd{border-color:#e26a6a;color:#c33}
+body.fx .btn.rd.go{background:linear-gradient(90deg,#d64545,#ee6a5a);color:#fff;border-color:transparent}
+body.fx .stb button{border-radius:12px;background:rgba(255,255,255,.85);border-color:rgba(31,122,224,.18)}
+body.fx .stb button.on{background:#0e1a2b;color:#7fe3ff;border-color:#29c7e6;box-shadow:0 0 12px rgba(41,199,230,.35)}
+body.fx th{background:#0e1a2b;color:#dff6ff}
+body.fx .ix th.xt,body.fx .ix th.xg,body.fx .ix th.xl,body.fx .ix th.x0{background:#0e1a2b;border-color:#0e1a2b}
+body.fx .top .ab{background:linear-gradient(135deg,#1f9e5a,#29c7a0)}
+body.fx .top .ti{font-family:"Sora","DM Sans",Arial,sans-serif!important;font-weight:600}
+body.fx td.n{color:#1f6fd0;font-family:"Sora","DM Sans",Arial,sans-serif}
+body.fx input,body.fx select,body.fx textarea{border-radius:10px}
+body.fx input:focus,body.fx select:focus,body.fx textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(41,199,230,.25);border-color:#29c7e6!important}
+
+/* ===== mapa: estilo futurista + dia/noite ===== */
+body.fx .mapw{border-radius:16px}
+body.fx #mapbox{border-radius:12px;background:#eef3fa;border:1px solid rgba(31,122,224,.2)}
+.apoly{filter:drop-shadow(0 0 4px rgba(41,199,230,.9)) drop-shadow(0 0 10px rgba(41,199,230,.55))}
+.mflag{align-items:flex-end}
+.mflag .mp{font-size:0!important;width:20px;height:30px;position:relative;filter:none!important}
+.mflag .mp:before{content:"";position:absolute;left:3px;bottom:0;width:2px;height:28px;background:#e8f2ff;box-shadow:0 0 3px rgba(0,0,0,.5)}
+.mflag .mp:after{content:"";position:absolute;left:5px;top:2px;border-left:16px solid var(--f,#d33);border-top:6px solid transparent;border-bottom:6px solid transparent;filter:drop-shadow(0 0 4px var(--f,#d33))}
+.mflag b{background:rgba(12,24,40,.9)!important;color:#ebf8ff!important;border:2px solid var(--f,#999)!important;border-radius:999px!important;padding:2px 10px 2px 8px!important;box-shadow:0 2px 8px rgba(0,0,0,.35),0 0 10px color-mix(in srgb,var(--f,#999) 45%,transparent)!important;font-weight:700!important}
+.mflag b:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--f,#999);margin-right:5px;vertical-align:1px;box-shadow:0 0 6px var(--f,#999)}
+.maph .mmodo{margin-left:auto;border-radius:999px;padding:6px 14px;font:600 13.5px "DM Sans",Arial,sans-serif;cursor:pointer;border:1.5px solid rgba(31,122,224,.45);background:#fff;color:#0e1a2b}
+/* noite */
+.mnoite #mapbox{background:#07111f;border-color:rgba(41,199,230,.4)}
+.mnoite .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.7) brightness(.85) contrast(.95)}
+.mnoite .amask{fill:#07111f!important}
+.mnoite .maph .mmodo{background:#0e1a2b;color:#bdefff;border-color:#29c7e6}
+.mnoite .leaflet-control-zoom a{background:#0e1a2b;color:#bdefff;border-color:#1d3a5a}
+.mnoite .leaflet-control-attribution{background:rgba(7,17,31,.7);color:#8fb3cf}
+.mnoite .leaflet-control-attribution a{color:#7fe3ff}
+</style>
 </head>
-<body>
+<body class="fx">
 <header class="hd"><div><div class="hd1">Territórios</div><div class="hd2">Congregação Nagoya · Língua Portuguesa</div></div><span class="hdm" id="hdm"></span></header>
 <div id="msg" class="cx">Carregando…</div>
 <div id="app" hidden>
@@ -1152,8 +1210,8 @@ window.MODO="ver";
   if(!document.getElementById("mapbox")){v.innerHTML='<div class="mapw"><div class="maph"><h2>'+(ja?'区域の地図':'Mapa dos territórios')+'</h2><span id="mapst" class="hn"></span>'+(window.MODO==="admin"?'<button class="btn" id="mapmv" type="button">✏️ '+(ja?'旗を動かす':'Mover bandeiras')+'</button><button class="btn" id="mapre" type="button">🔄 '+(ja?'位置を再計算':'Recalcular posições')+'</button>':'')+'</div><div class="mleg">'+TL.map(function(g){return'<span style="background:'+corG(g[0])+';color:'+txtG(g[0])+'">'+esc(g[0])+'</span>';}).join("")+'</div><div id="mapbox"></div></div>';}
   carregaLeaflet(function(){if(!MAPA){MAPA=leaflet.map("mapbox",{zoomControl:true,zoomSnap:0.25,zoomDelta:0.5}).setView([35.13,136.82],11);
     leaflet.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png",{maxZoom:18,attribution:'<a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank">地理院タイル</a>'}).addTo(MAPA);
-    var AP=window.AREAPOLY||(window.__BASE&&window.__BASE.AREAPOLY);if(AP&&AP.length>2){window.__apoly=leaflet.polygon(AP,{color:"#3f63b0",weight:4,opacity:.95,fill:false,interactive:false});var bb=window.__apoly.getBounds(),bo=bb.pad(4),mundo=[[bo.getSouth(),bo.getWest()],[bo.getSouth(),bo.getEast()],[bo.getNorth(),bo.getEast()],[bo.getNorth(),bo.getWest()]];
-     leaflet.polygon([mundo,AP],{stroke:false,fillColor:"#e8f0f8",fillOpacity:1,fillRule:"evenodd",interactive:false}).addTo(MAPA);window.__apoly.addTo(MAPA);
+    var AP=window.AREAPOLY||(window.__BASE&&window.__BASE.AREAPOLY);if(AP&&AP.length>2){window.__apoly=leaflet.polygon(AP,{color:"#29c7e6",weight:4,opacity:.95,fill:false,interactive:false,className:"apoly"});var bb=window.__apoly.getBounds(),bo=bb.pad(4),mundo=[[bo.getSouth(),bo.getWest()],[bo.getSouth(),bo.getEast()],[bo.getNorth(),bo.getEast()],[bo.getNorth(),bo.getWest()]];
+     leaflet.polygon([mundo,AP],{stroke:false,fillColor:"#e8f0f8",fillOpacity:1,fillRule:"evenodd",interactive:false,className:"amask"}).addTo(MAPA);window.__apoly.addTo(MAPA);
      MAPA.fitBounds(bb,{padding:[10,10]});MAPA.__fit=true;
      MAPA.setMaxBounds(bb.pad(0.15));MAPA.options.maxBoundsViscosity=1;setTimeout(function(){MAPA.setMinZoom(Math.max(MAPA.getZoom()-1,8));},300);}
     MAPA.on("popupopen",function(e){var b=e.popup.getElement().querySelector("[data-mab]");if(b)b.onclick=function(){openT(b.dataset.mab);scrollTo(0,0);};});document.addEventListener("click",function(ev){var b2=ev.target.closest&&ev.target.closest("#mpanel [data-mab]");if(b2){openT(b2.dataset.mab);scrollTo(0,0);}});}
@@ -1291,6 +1349,21 @@ window.MODO="ver";
   f.text().then(function(tx){var o=JSON.parse(tx);if(!o.TD||!o.SNAP)throw{code:"arquivo errado"};
    return B.set({data:JSON.stringify(o)}).then(function(){document.getElementById("imp").hidden=true;iniciar(o);});
   }).catch(function(e){im.textContent="Não foi possível enviar ("+(e.code||e.message||e)+").";});};
+})();
+</script>
+<script>
+(function(){
+ function ja(){try{return localStorage.getItem("tlang")==="ja";}catch(e){return false;}}
+ function pref(){try{return localStorage.getItem("tmapmodo")||"auto";}catch(e){return"auto";}}
+ function noiteAgora(){var h=new Date().getHours();return h<6||h>=18;}
+ function rot(m){var j=ja();return m==="dia"?(j?"☀️ 昼":"☀️ Dia"):m==="noite"?(j?"🌙 夜":"🌙 Noite"):(noiteAgora()?(j?"🌗 自動（夜）":"🌗 Automático (noite)"):(j?"🌗 自動（昼）":"🌗 Automático (dia)"));}
+ function aplica(){var w=document.querySelector(".mapw");if(!w)return;var m=pref(),n=m==="noite"||(m==="auto"&&noiteAgora());w.classList.toggle("mnoite",n);
+  var h=w.querySelector(".maph");if(!h)return;var b=h.querySelector(".mmodo");if(!b){b=document.createElement("button");b.type="button";b.className="mmodo";b.title="Mapa claro (dia) ou escuro (noite)";h.appendChild(b);
+   b.onclick=function(){var o=["auto","dia","noite"],p=pref();try{localStorage.setItem("tmapmodo",o[(o.indexOf(p)+1)%3]);}catch(e){}aplica();};}
+  var t=rot(m);if(b.textContent!==t)b.textContent=t;
+  var svg=w.querySelectorAll(".leaflet-overlay-pane path");svg.forEach(function(p){var f=p.getAttribute("fill"),s=p.getAttribute("stroke");if(f==="#e8f0f8"||p.classList.contains("amask")){p.classList.add("amask");}else if(s==="#29c7e6"||s==="#3f63b0"){p.classList.add("apoly");}});}
+ var ag=0;new MutationObserver(function(){if(ag)return;ag=requestAnimationFrame(function(){ag=0;aplica();});}).observe(document.documentElement,{childList:true,subtree:true});
+ setInterval(aplica,5*60*1000);
 })();
 </script>
 </body>
