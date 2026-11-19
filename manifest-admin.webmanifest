@@ -2,7 +2,7 @@
  "name": "Territórios — Anciãos e Servos Ministeriais",
  "short_name": "Anciãos",
  "start_url": "./admin.html",
- "scope": "./",
+ "scope": "./admin.html",
  "display": "standalone",
  "background_color": "#03070f",
  "theme_color": "#1d1915",
@@ -31,5 +31,6 @@
    "type": "image/png",
    "purpose": "maskable"
   }
- ]
+ ],
+ "id": "./admin.html"
 }
