@@ -359,12 +359,12 @@ table.pg th,body.fx table.pg th{color:#111!important;font-weight:700;text-shadow
 #splash .sp1b{margin-top:8px;font:600 clamp(16px,4vw,24px) "DM Sans",Arial,sans-serif;color:#bdefff;letter-spacing:1px}
 </style>
 <meta name="google" content="notranslate">
-<link rel="apple-touch-icon" href="icone-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="icone-180.png?v=3">
+<link rel="icon" type="image/png" sizes="192x192" href="icone-192.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
 <meta name="apple-mobile-web-app-title" content="Anciãos">
 <meta name="theme-color" content="#1d1915">
-<link rel="manifest" href="manifest-admin.webmanifest">
+<link rel="manifest" href="manifest-admin.webmanifest?v=3">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1283,7 +1283,7 @@ window.MODO="admin";
    var P=ja?{t:"アイコンをホーム画面に追加",i1:"<b>Safari</b>でこのページを開いてください。",i2:"下の<b>共有</b>ボタン（四角に上向き矢印 ⬆️）を押します。",i3:"<b>ホーム画面に追加</b>を選び、右上の<b>追加</b>を押します。",a1:"<b>Chrome</b>でこのページを開いてください。",a2:"右上の<b>⋮</b>（3つの点）を押します。",a3:"<b>アプリをインストール</b>または<b>ホーム画面に追加</b>を選び、<b>インストール</b>を押します。",d1:"パソコン（Chrome・Edge）では、アドレスバーの右にある<b>インストール</b>アイコン（⊕）を押します。",d2:"スマートフォンでは、このページを開いて同じボタンを押すと手順が表示されます。",f:"閉じる",ok:"ホーム画面のアイコンから、すぐに開けます。"}
     :{t:"Instalar o ícone na tela do celular",i1:"Abra esta página no <b>Safari</b>.",i2:"Toque no botão <b>Compartilhar</b> (o quadrado com a seta para cima ⬆️), embaixo.",i3:"Escolha <b>Adicionar à Tela de Início</b> e toque em <b>Adicionar</b>, no canto de cima.",a1:"Abra esta página no <b>Chrome</b>.",a2:"Toque nos <b>três pontinhos ⋮</b>, no canto de cima.",a3:"Escolha <b>Instalar app</b> ou <b>Adicionar à tela inicial</b> e confirme.",d1:"No computador (Chrome ou Edge), clique no ícone de <b>instalar</b> (⊕) no fim da barra de endereço.",d2:"No celular, abra esta página e toque neste mesmo botão para ver os passos.",f:"Fechar",ok:"Depois é só tocar no ícone da tela para abrir o site."};
    var p0=ja?"<b>LINE・WhatsAppなどから開いた場合</b>：まず右上の<b>⋯</b>（または↗）を押し、<b>Safariで開く</b>を選びます。":"<b>Se abriu pelo LINE, WhatsApp ou outro app</b>: primeiro toque em <b>⋯</b> (ou no ícone ↗) e escolha <b>Abrir no Safari</b>.";var passos=ios?[p0,P.i1,P.i2,P.i3]:and?[P.a1,P.a2,P.a3]:[P.d1,P.d2];
-   var o=document.createElement("div");o.className="instov";o.innerHTML='<div class="instbx"><img src="icone-192.png" alt=""><h3>'+P.t+'</h3><ol>'+passos.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ol><p class="hn">'+P.ok+'</p>'+(window.__bip?'<button class="btn instnow" type="button" data-in="1">📲 '+(ja?"今すぐインストール":"Instalar agora")+'</button> ':'')+'<button class="btn" type="button">'+P.f+'</button>'+(window.__instAuto?' <button class="btn nmais" type="button" data-nm="1">'+(ja?"今後表示しない":"Não mostrar de novo")+'</button>':'')+'</div>';window.__instAuto=false;
+   var o=document.createElement("div");o.className="instov";o.innerHTML='<div class="instbx"><img src="icone-192.png?v=3" alt=""><h3>'+P.t+'</h3><ol>'+passos.map(function(x){return"<li>"+x+"</li>";}).join("")+'</ol><p class="hn">'+P.ok+'</p>'+(window.__bip?'<button class="btn instnow" type="button" data-in="1">📲 '+(ja?"今すぐインストール":"Instalar agora")+'</button> ':'')+'<button class="btn" type="button">'+P.f+'</button>'+(window.__instAuto?' <button class="btn nmais" type="button" data-nm="1">'+(ja?"今後表示しない":"Não mostrar de novo")+'</button>':'')+'</div>';window.__instAuto=false;
    o.onclick=function(e){var d=e.target.dataset||{};if(d.nm){try{localStorage.setItem("tinstno","1");}catch(x){}}if(d.in&&window.__bip){__bip.prompt();__bip.userChoice.then(function(){window.__bip=null;});}if(e.target===o||e.target.tagName==="BUTTON")o.remove();};document.body.appendChild(o);};
   try{var ua2=navigator.userAgent,mob=/iPhone|iPad|iPod|Android/.test(ua2)||(/Macintosh/.test(ua2)&&navigator.maxTouchPoints>1),no=localStorage.getItem("tinstno"),vis=sessionStorage.getItem("tinstvis");
    if(mob&&!no&&!vis){sessionStorage.setItem("tinstvis","1");setTimeout(function(){if(document.querySelector(".instov")||!document.getElementById("instbt"))return;window.__instAuto=true;b.onclick();},4200);}}catch(x){}};
