@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Territórios da congregação</title>
+<title>Territórios – Dirigentes e Publicadores</title>
 <style id="css">
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*:before,*:after{box-sizing:inherit}
@@ -362,7 +362,7 @@ table.pg th,body.fx table.pg th{color:#111!important;font-weight:700;text-shadow
 <link rel="apple-touch-icon" href="icone-180.png?v=3">
 <link rel="icon" type="image/png" sizes="192x192" href="icone-192.png?v=3">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
-<meta name="apple-mobile-web-app-title" content="Territórios">
+<meta name="apple-mobile-web-app-title" content="Dirigentes e Publicadores">
 <meta name="theme-color" content="#1d1915">
 <link rel="manifest" href="manifest.webmanifest?v=3">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -430,7 +430,7 @@ body.fx #mapbox{border-radius:12px;background:#eef3fa;border:1px solid rgba(31,1
 </style>
 </head>
 <body class="fx">
-<header class="hd"><div><div class="hd1">Territórios</div><div class="hd2">Congregação Nagoya · Língua Portuguesa</div></div><span class="hdm" id="hdm"></span></header>
+<header class="hd"><div><div class="hd1">Territórios</div><div class="hd2">Dirigentes e Publicadores · Congregação Nagoya · Língua Portuguesa</div></div><span class="hdm" id="hdm"></span></header>
 <div id="msg" class="cx">Carregando…</div>
 <div id="app" hidden>
 <nav class="nv"><button class="tb on" data-v="vp">Programação</button><button class="tb" data-v="vi">Territórios</button><button class="tb" data-v="vm">Mapa</button><button class="tb" data-v="vt" id="tbt">Território</button><button class="tb" data-v="va">Anciãos e Servos Ministeriais</button></nav>
@@ -954,7 +954,7 @@ try{var c0=localStorage.getItem("tcur");if(c0&&TD[c0])CUR=c0;}catch(e){}
 if(SNAP){if(SNAP.pg)PG=SNAP.pg;if(SNAP.le)LE=SNAP.le;Object.keys(SNAP.s||{}).forEach(function(tid){if(S[tid]){S[tid].g=SNAP.s[tid];fix(tid);}});PM=pickPM();}
 function snapHTML(){var pg=JSON.parse(JSON.stringify(PG));delete pg.log;Object.keys(pg).forEach(function(m){var d=(pg[m]||{}).d||{};Object.keys(d).forEach(function(k){if(d[k].tr)delete d[k].tr.by;if(d[k].str)Object.keys(d[k].str).forEach(function(g){delete d[k].str[g].by;});});});
  var sn={v:Date.now(),pg:pg,le:LE,s:{}};TIDS().forEach(function(tid){sn.s[tid]=S[tid].g;});
- var head='<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Territórios da congregação</title>\n<style id="css">'+document.getElementById("css").textContent+'</style>\n<script id="snap" type="application/json">'+JSON.stringify(sn).replace(/</g,"\\u003c")+'<\/script>';
+ var head='<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Territórios – Dirigentes e Publicadores</title>\n<style id="css">'+document.getElementById("css").textContent+'</style>\n<script id="snap" type="application/json">'+JSON.stringify(sn).replace(/</g,"\\u003c")+'<\/script>';
  return'<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n'+head+'\n</head>\n<body>\n'+TPL+'\n<script id="main" type="text/plain">'+document.getElementById("main").textContent+'<\/script>\n</body>\n</html>\n';}
 async function pubNow(msgEl){var a=null;try{a=await claude.use("artifact");}catch(e){}
  if(!a){if(msgEl)msgEl.textContent=" Não foi possível publicar daqui.";return;}
@@ -979,7 +979,7 @@ render();renderIdx();sv("vp");
  var MSG_PT="Seja bem-vindo ao Território de Nagoya",MSG_JA="名古屋の区域へようこそ";
  var ja=false;try{ja=localStorage.getItem("tlang")==="ja";}catch(e){}
  try{if(sessionStorage.getItem("splash1")){window.__splashFim=function(){};return;}sessionStorage.setItem("splash1","1");}catch(e){}
- var d=document.createElement("div");d.id="splash";d.innerHTML='<canvas id="spc"></canvas><div class="spt"><div class="sp1">'+(ja?MSG_JA:MSG_PT)+'</div><div class="sp2">'+(ja?"読み込み中…":"Carregando…")+'</div></div>';
+ var d=document.createElement("div");d.id="splash";d.innerHTML='<canvas id="spc"></canvas><div class="spt"><div class="sp1">'+(ja?MSG_JA:MSG_PT)+'</div><div class="sp1b">'+(ja?"司会者・伝道者":"Dirigentes e Publicadores")+'</div><div class="sp2">'+(ja?"読み込み中…":"Carregando…")+'</div></div>';
  document.body.appendChild(d);
  var c=document.getElementById("spc"),x=c.getContext("2d"),W,H,R,dpr=Math.min(2,window.devicePixelRatio||1);
  function tam(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;c.style.width=W+"px";c.style.height=H+"px";x.setTransform(dpr,0,0,dpr,0,0);R=Math.min(W,H)*0.28;}
@@ -1122,7 +1122,7 @@ window.MODO="ver";
   L.forEach(function(n){var p=n.parentElement;if(!p||p.closest("textarea,.ix td.xe,table.hs td:not(:first-child) .x,script,style"))return;var r=trTxt(n.nodeValue);if(r!==null&&r!==n.nodeValue){if(n.__pt===undefined)n.__pt=n.nodeValue;n.nodeValue=r;}});
   root.querySelectorAll("[placeholder]").forEach(function(e){var k=e.getAttribute("placeholder");if(JP[k]){e.dataset.pt=k;e.setAttribute("placeholder",JP[k]);}});
   TRAD=false;}
- function tudo(){document.documentElement.lang=LANG==="ja"?"ja":"pt-BR";["va","vi","vp","vplista","vt","pgt"].forEach(function(id){traduz(document.getElementById(id));});document.querySelectorAll(".btn.voltar").forEach(traduz);traduz(document.querySelector(".nv"));traduz(document.querySelector(".barra"));var hm=document.getElementById("hdm");if(hm){if(!hm.dataset.pt)hm.dataset.pt=hm.textContent;var dd=new Date(),hmt=LANG==="ja"?dd.getFullYear()+"年"+(dd.getMonth()+1)+"月":hm.dataset.pt;if(hm.textContent!==hmt)hm.textContent=hmt;}var h1=document.querySelector(".hd1"),h1t=LANG==="ja"?"区域":"Territórios";if(h1&&h1.textContent!==h1t)h1.textContent=h1t;var h=document.querySelector(".hd2");if(h){if(!h.dataset.pt)h.dataset.pt=h.textContent;var ht=LANG==="ja"?(window.MODO==="admin"?"長老・奉仕の僕 · ":"")+"名古屋ポルトガル語会衆":h.dataset.pt;if(h.textContent!==ht)h.textContent=ht;}var lb=document.getElementById("lgbt"),lt=LANG==="ja"?"🇧🇷 Português":"🇯🇵 日本語";if(lb&&lb.textContent!==lt)lb.textContent=lt;}
+ function tudo(){document.documentElement.lang=LANG==="ja"?"ja":"pt-BR";["va","vi","vp","vplista","vt","pgt"].forEach(function(id){traduz(document.getElementById(id));});document.querySelectorAll(".btn.voltar").forEach(traduz);traduz(document.querySelector(".nv"));traduz(document.querySelector(".barra"));var hm=document.getElementById("hdm");if(hm){if(!hm.dataset.pt)hm.dataset.pt=hm.textContent;var dd=new Date(),hmt=LANG==="ja"?dd.getFullYear()+"年"+(dd.getMonth()+1)+"月":hm.dataset.pt;if(hm.textContent!==hmt)hm.textContent=hmt;}var h1=document.querySelector(".hd1"),h1t=LANG==="ja"?"区域":"Territórios";if(h1&&h1.textContent!==h1t)h1.textContent=h1t;var h=document.querySelector(".hd2");if(h){if(!h.dataset.pt)h.dataset.pt=h.textContent;var ht=LANG==="ja"?(window.MODO==="admin"?"長老・奉仕の僕 · ":"司会者・伝道者 · ")+"名古屋ポルトガル語会衆":h.dataset.pt;if(h.textContent!==ht)h.textContent=ht;}var lb=document.getElementById("lgbt"),lt=LANG==="ja"?"🇧🇷 Português":"🇯🇵 日本語";if(lb&&lb.textContent!==lt)lb.textContent=lt;}
  window.idioma=function(){var br=document.querySelector(".barra");if(!br||document.getElementById("lgbt"))return;var b=document.createElement("button");b.id="lgbt";b.className="pill lg";b.type="button";
   b.onclick=function(){LANG=LANG==="ja"?"pt":"ja";try{localStorage.setItem("tlang",LANG);}catch(e){}if(LANG==="pt"){location.reload();return;}tudo();};br.appendChild(b);
   var agd=0;new MutationObserver(function(){if(LANG!=="ja"||agd)return;agd=requestAnimationFrame(function(){agd=0;tudo();});}).observe(document.getElementById("app"),{childList:true,subtree:true});tudo();};

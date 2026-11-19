@@ -1,6 +1,6 @@
 {
- "name": "Territórios",
- "short_name": "Territórios",
+ "name": "Territórios — Dirigentes e Publicadores",
+ "short_name": "Dirigentes e Publicadores",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
