@@ -353,6 +353,7 @@ td.pin{white-space:nowrap}
 .fbf .fm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
 .fbf select,.fbf input[type=password]{border:1.5px solid var(--borda);border-radius:8px;padding:6px 10px}
 .rkh{font:600 16px "DM Sans",Arial,sans-serif;margin:16px 0 6px}.rkd{background:#fff;border:1.5px solid var(--borda);border-radius:10px;padding:8px 12px;margin:6px 0}.rkd summary{cursor:pointer}.rkt{margin:8px 0}.rkt table td,.rkt table th{font-size:12.5px}
+select.hrs{min-width:86px}.hrn{width:86px}
 </style>
 <meta name="google" content="notranslate">
 <link rel="apple-touch-icon" href="icone-180.png">
@@ -776,7 +777,7 @@ function pkey(dd){return PM+"-"+("0"+dd).slice(-2);}
 function sundays(){var p=PM.split("-"),Y=+p[0],M=+p[1]-1,n=new Date(Y,M+1,0).getDate(),a=[];for(var d=1;d<=n;d++)if(new Date(Y,M,d).getDay()===0)a.push(pkey(d));return a;}
 function wkCell(k,e0,f){var e=e0;if(!PE&&e0.tr)e=Object.assign({},e0,{terr:e0.tr.terr,loc:e0.tr.loc,locx:!!e0.tr.locx,lurl:e0.tr.lurl||""});
  if(f==="dir")return'<td class="pc">'+(PE?(function(){var dx=e.dirx||(e.dir&&DL.indexOf(e.dir)<0);return'<select class="pin2" data-pk="'+k+'" data-pf="dir"><option value="">—</option>'+DL.map(function(n){return'<option'+(!dx&&n===e.dir?" selected":"")+'>'+esc(n)+'</option>';}).join("")+'<option value="__outro"'+(dx?" selected":"")+'>Digitar outro nome…</option></select>'+(dx?'<input class="pin2" data-pk="'+k+'" data-pf="dirn" value="'+esc(e.dir||"")+'" placeholder="Nome do dirigente">':'');})():esc(e.dir||""))+'</td>';
- if(f==="hora")return'<td class="pc'+(e.hora&&e.hora<"12"?" pam":"")+'">'+(PE?'<input type="time" class="pin2" data-pk="'+k+'" data-pf="hora" value="'+esc(e.hora||"")+'">':esc(e.hora||""))+'</td>';
+ if(f==="hora")return'<td class="pc'+(e.hora&&e.hora<"12"?" pam":"")+'">'+(PE?(e.horax?'<input class="pin2 hrn" data-pk="'+k+'" data-pf="horan" value="'+esc(e.hora||"")+'" placeholder="ex.: 9:45" inputmode="numeric" maxlength="5">':(function(){var hs=["—"],h=e.hora||"";for(var m=6*60;m<=21*60;m+=30)hs.push(String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"));if(h&&hs.indexOf(h)<0)hs.push(h);return'<select class="pin2 hrs" data-pk="'+k+'" data-pf="hora">'+hs.map(function(x){var v=x==="—"?"":x;return'<option value="'+v+'"'+(v===h?" selected":"")+'>'+x+'</option>';}).join("")+'<option value="__outro">✏️ Outro…</option></select>';})()):esc(e.hora||""))+'</td>';
  if(f==="terr"){var i=tinfo(e.terr);return'<td class="pc" style="background:'+(i?GC[i.g]:"#fff")+'">'+(PE?(function(){var gs=e.terr==="zoom"?"zoom":(i?i.g:(e.grp||""));return'<select class="pin2" data-pk="'+k+'" data-pf="grp"><option value="">Grupo…</option>'+GRP.map(function(g){return'<option value="'+g+'"'+(g===gs?" selected":"")+'>'+g.charAt(0)+g.slice(1).toLowerCase()+'</option>';}).join("")+'<option value="zoom"'+(gs==="zoom"?" selected":"")+'>Zoom</option></select>'+(gs&&gs!=="zoom"?'<select class="pin2" data-pk="'+k+'" data-pf="terr">'+tOptsAll(e.terr,gs)+'</select>':'');})():(e.terr==="zoom"?'<span class="zm">Zoom</span>':tLink(e.terr))+trNote(k,e0,""))+(PE&&e0.tr?trNote(k,e0,""):"")+'</td>';}
  var LS=(e.terr&&e.terr!=="zoom")?locs(e.terr):[],cur=e.loc||"",fo=LS.filter(function(o){return o.n===cur;})[0];
  if(e.terr==="zoom")return'<td class="pc pl2 pz">'+(PE?'<input class="pin2" data-pk="'+k+'" data-pf="loc" value="'+esc(cur)+'" placeholder="ID da reunião"><input class="pin2 zmat" data-pk="'+k+'" data-pf="mat" value="'+esc(e.mat||"")+'" placeholder="📖 Link da matéria (opcional)">':(cur?'ID da reunião:<br>'+esc(cur):'')+(e.mat?'<br><a class="zmlk" href="'+esc(e.mat)+'" target="_blank" rel="noopener">📖 Matéria</a>':''))+'</td>';
@@ -855,6 +856,8 @@ VP.onchange=function(e){var t=e.target;
  else if(f==="grp"){delete o.tr;o.grp=t.value;if(t.value==="zoom"){o.terr="zoom";o.loc=window.ZID||"860 418 5501";o.locx=false;o.lurl="";}else{var ti=tinfo(o.terr);if(!ti||ti.g!==t.value){o.terr="";o.loc="";o.locx=false;o.lurl="";}}}
  else if(f==="dir"){if(t.value==="__outro"){o.dirx=true;o.dir="";}else{o.dirx=false;o.dir=t.value;}}
  else if(f==="dirn"){o.dir=t.value.trim();}
+ else if(f==="hora"){if(t.value==="__outro"){o.horax=true;}else{o.horax=false;o.hora=t.value;}}
+ else if(f==="horan"){var hv=t.value.replace(/[^0-9:]/g,""),mm=/^(\d{1,2}):?(\d{2})?$/.exec(hv),ok="";if(mm){var hh=+mm[1],mi=+(mm[2]||0);if(hh<24&&mi<60)ok=String(hh).padStart(2,"0")+":"+String(mi).padStart(2,"0");}o.hora=ok;o.horax=false;}
  else if(f==="loc"){if(t.value==="__outro"){o.locx=true;o.loc="";o.lurl="";}else{o.locx=false;o.loc=t.value;o.lurl="";}}
  else if(f==="locn"){o.loc=t.value.trim();}
  else if(f==="mat"){var um=t.value.trim();o.mat=/^https?:\/\//i.test(um)?um:"";if(um&&!o.mat){t.value="";alert("Cole um link que comece com https://");}}
