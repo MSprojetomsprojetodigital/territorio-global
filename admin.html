@@ -774,7 +774,7 @@ function tinfo(n){var r=null;TL.forEach(function(gr){gr[1].forEach(function(t){i
 function mapq(n){return"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(n+" 愛知県");}
 function pmonth(){return PG[PM]=PG[PM]||{d:{}};}
 function savePG(){PUBD=true;var v=JSON.stringify(PG);LAST.pg=v;try{if(pdoc)pdoc.set({data:v}).catch(function(e){alert("Não foi possível salvar ("+(e.code||e)+"). Avise o responsável.");});else localStorage.setItem("tprog",v);}catch(e){}}
-function tOptsAll(sel,grp){var o='<option value="">—</option>';TL.forEach(function(gr){if(grp&&gr[0]!==grp)return;o+='<optgroup label="'+gr[0]+'">'+gr[1].map(function(t){return'<option value="'+t[0]+'"'+(t[0]===sel?" selected":"")+'>'+t[0]+' '+t[1]+'</option>';}).join("")+'</optgroup>';});return o;}
+function tOptsAll(sel,grp){var o='<option value="">—</option>',L2=TL.slice();if(grp)L2.sort(function(x,y){return(x[0]===grp?0:1)-(y[0]===grp?0:1);});L2.forEach(function(gr){o+='<optgroup label="'+gr[0]+'">'+gr[1].map(function(t){return'<option value="'+t[0]+'"'+(t[0]===sel?" selected":"")+'>'+t[0]+' '+t[1]+'</option>';}).join("")+'</optgroup>';});return o;}
 function tLink(n){var i=tinfo(n);if(!i)return"";var lab=n+" "+i.t[1];return TD[n]?'<button class="lk2" data-open="'+n+'">'+esc(lab)+'</button>':esc(lab);}
 function pkey(dd){return PM+"-"+("0"+dd).slice(-2);}
 function sundays(){var p=PM.split("-"),Y=+p[0],M=+p[1]-1,n=new Date(Y,M+1,0).getDate(),a=[];for(var d=1;d<=n;d++)if(new Date(Y,M,d).getDay()===0)a.push(pkey(d));return a;}
