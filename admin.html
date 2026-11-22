@@ -511,7 +511,7 @@ function render(){
    if(i===0)h+='<td class="n'+(g.n?"":" n0")+'" rowspan="'+(g.r.length+1)+'" data-mg="'+gi+'" title="Ver no mapa">'+(g.n?'<span class="nmap">'+g.n+'</span><span class="nmt">🧭 mapa</span>':'')+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>';
    h+='<td class="pin"><span class="rn">'+(i+1)+'</span><a href="'+pin(x)+'" target="_blank" rel="noopener" title="Abrir no mapa">📌</a></td><td class="p">'+x[2]+'</td><td>'+x[3]+(x[9]&&Date.now()-x[9]<2592e6&&!(RO&&!window.TRV)?'<button class="btn rd dpb" data-del="'+gi+'_'+i+'">Apagar</button><span class="dpf" id="dp'+gi+'_'+i+'"></span>':"")+'</td><td>'+x[4]+'</td><td class="o">'+x[5]+'</td><td>'+x[6]+'</td><td>'+x[7]+(RJ[x[7]]?'<span class="rj">'+RJ[x[7]]+'</span>':'')+'</td></tr>';
   });
-  h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO&&!window.TRV?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>')+'</td></tr>';
+  h+='<tr class="add"><td></td><td></td>'+(g.r.length?'':'<td class="n'+(g.n?"":" n0")+'">'+g.n+(g.o?'<span class="og">'+esc(g.o)+'</span>':'')+'</td>')+'<td class="fm" colspan="7">'+(RO&&!window.TRV?'':'<button class="btn" data-add="'+gi+'">+ Acrescentar nova porta</button><span id="f'+gi+'"></span>'+(g.r.length?'':'<button class="btn rd" data-dg="'+gi+'">🗑️ Apagar este grupo vazio</button><span class="dpf" id="dg'+gi+'"></span>'))+'</td></tr>';
   if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
  });
  T.innerHTML=h;
@@ -1421,6 +1421,9 @@ window.MODO="admin";
    if(d.apx){e.stopPropagation();var bx=t.closest(".dpf");if(bx)bx.innerHTML="";else{var pg=document.getElementById("pgt");if(pg)pg.innerHTML="";}return;}
    if(d.del){e.stopPropagation();document.querySelectorAll(".dpf").forEach(function(x){x.innerHTML="";});var f=document.getElementById("dp"+d.del);
     f.innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" placeholder="Senha" size="5"><button class="btn rd go" data-delok="'+d.del+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
+   if(d.dg){e.stopPropagation();document.querySelectorAll(".dpf").forEach(function(x){x.innerHTML="";});document.getElementById("dg"+d.dg).innerHTML='<span class="apx fm">'+nomes()+'<input class="app" type="password" placeholder="Senha" size="5"><button class="btn rd go" data-dgok="'+d.dg+'">Confirmar</button><button class="btn" data-apx="1">Cancelar</button><span class="mg apm"></span></span>';return;}
+   if(d.dgok){e.stopPropagation();var bx4=t.closest(".apx"),nm4=await pinOk(bx4);if(!nm4)return;var s4=S[CUR],g4=s4.g[+d.dgok];
+    if(g4&&!g4.r.length&&s4.g.length>1){s4.g.splice(+d.dgok,1);s4.h.unshift({t:Date.now(),k:"d",by:nm4,n:g4.n,pr:"(grupo vazio apagado)",po:""});save(CUR);}render();return;}
    if(d.delok){e.stopPropagation();var bx2=t.closest(".apx"),nm2=await pinOk(bx2);if(!nm2)return;var p=d.delok.split("_"),s=S[CUR],g=s.g[+p[0]],x=g&&g.r[+p[1]];
     if(x&&x[9]){g.r.splice(+p[1],1);s.h.unshift({t:Date.now(),k:"d",by:nm2,n:g.n,pr:x[2],po:x[3]});save(CUR);}render();return;}
    if(d.hpd){e.stopPropagation();var sel=d.hpd==="sel",ks=Array.prototype.map.call(document.querySelectorAll(".hps:checked"),function(c){return c.dataset.k;}),bx3=document.getElementById("cf-hp");
