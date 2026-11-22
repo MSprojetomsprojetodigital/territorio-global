@@ -358,6 +358,7 @@ select.hrs{min-width:86px}.hrn{width:86px}
 .instbx .instnow{background:linear-gradient(90deg,#1f7ae0,#29c7e6);color:#fff;border-color:transparent}.instbx .nmais{background:#fff;color:#5d7894;border-color:#d6e2f0}.instbx ol li:first-child b:first-child{color:#b3261e}
 table.pg th,body.fx table.pg th{color:#111!important;font-weight:700;text-shadow:none}
 #splash .sp1b{margin-top:6px;font:600 clamp(15px,3.6vw,20px) "DM Sans",Arial,sans-serif;color:#bdefff;letter-spacing:1px}
+.fmx .selx{min-width:300px;flex:1 1 300px}.fmx #mv0,.fmx .mvb{white-space:nowrap}.mvb.off{opacity:.45;pointer-events:none}.fxh{display:block;margin:4px 0 0 4px;font-size:12.5px}
 </style>
 <meta name="google" content="notranslate">
 <link rel="apple-touch-icon" href="icone-180.png?v=3">
@@ -514,20 +515,27 @@ function render(){
  T.innerHTML=h;
  if(ADM)renderAdm();
 }
+var FX={};
+function selIdx(gi){var v=(document.getElementById("s"+gi).value||"").trim(),L=FX[gi]||[];for(var k=0;k<L.length;k++)if(L[k][0]===v)return L[k][1];return -1;}
+function fxMapa(gi){var a=document.getElementById("mv"+gi);if(!a)return;var g=S[CUR].g[gi],i=selIdx(gi),q="";
+ if(i>=0){var x=g.r[i];q=mq(un(x[6]||""),un(x[4]||""));}else{var jp=(document.getElementById("jp"+gi)||{}).value||"",en=(document.getElementById("en"+gi)||{}).value||"",tx=(document.getElementById("s"+gi).value||"").trim();q=mq(jp.trim(),(en.trim()||tx));}
+ if(q){a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);a.classList.remove("off");}else{a.removeAttribute("href");a.classList.add("off");}
+ var n=document.getElementById("n"+gi),tx2=(document.getElementById("s"+gi).value||"").trim();if(n)n.hidden=!(tx2&&i<0);
+ var h=document.getElementById("h"+gi);if(h)h.textContent=!tx2?"Escolha um endereço da lista ou digite um novo.":(i>=0?"✓ Endereço que já existe no território.":"➕ Endereço novo — preencha o endereço e confira no mapa.");}
 function openForm(gi){
- var g=S[CUR].g[gi],seen={},o="";
- g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;o+='<option value="'+i+'">'+x[2]+' — '+x[4]+'</option>';}});
- document.getElementById("f"+gi).innerHTML=' <span class="fm"><select class="sel" id="s'+gi+'">'+o+'<option value="-1">Novo endereço…</option></select><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'"'+(o?' hidden':'')+'><input id="pr'+gi+'" placeholder="Prédio"><input id="en'+gi+'" placeholder="Endereço"><input id="jp'+gi+'" placeholder="住所"><a id="mv'+gi+'" target="_blank" rel="noopener">Conferir no mapa</a></span><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="mg" id="m'+gi+'"></span>';
+ var g=S[CUR].g[gi],seen={},o="";FX[gi]=[];
+ g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;var lab=un(x[2])+" — "+un(x[4]);FX[gi].push([lab,i]);o+='<option value="'+esc(lab)+'"></option>';}});
+ document.getElementById("f"+gi).innerHTML=' <span class="fm fmx"><input class="selx" id="s'+gi+'" list="dl'+gi+'" autocomplete="off" placeholder="Prédio ou endereço — escolha ou digite um novo"><datalist id="dl'+gi+'">'+o+'</datalist><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'" hidden><input id="en'+gi+'" placeholder="Endereço (romaji, ex: Minato-ku Inaei 4-8-7)"><input id="jp'+gi+'" placeholder="住所 (ex: 愛知県名古屋市港区…)"></span><a id="mv'+gi+'" class="btn mvb off" target="_blank" rel="noopener">🗺️ Conferir no mapa</a><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="hn fxh" id="h'+gi+'">Escolha um endereço da lista ou digite um novo.</span><span class="mg" id="m'+gi+'"></span>';
 }
 async function addDoor(gi){
- var s=S[CUR],g=s.g[gi],v=+document.getElementById("s"+gi).value,po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
+ var s=S[CUR],g=s.g[gi],v=selIdx(gi),po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
  if(!po){m.textContent=" Digite a porta.";return;}
  if(!by){m.textContent=" Digite seu nome.";return;}
  if(!/^.{4,}$/.test(pn)){m.textContent=" Digite a senha (mínimo 4 caracteres).";return;}
  if(!PH){m.textContent=" Os responsáveis ainda não foram configurados. O responsável deve criar a chave mestra e a senha na aba Anciãos e Servos Ministeriais.";return;}
  var hh=await hash(pn);
  if(PH!==hh){m.textContent=" Senha incorreta.";return;}
- if(v<0){var q=function(i){return esc(document.getElementById(i+gi).value.trim());};if(!q("pr"))return;if(!inArea(q("jp"),q("en"))&&!m.dataset.ok){m.dataset.ok=1;m.textContent=" Atenção: esse endereço não pertence ao nosso território. Confira o endereço. Para colocar mesmo assim, clique em Adicionar de novo.";return;}n=["","",q("pr"),esc(po),q("en"),"",q("jp"),"","",ts,"n"+ts];g.r.push(n);}
+ if(v<0){var q=function(i){return esc(document.getElementById(i+gi).value.trim());},prN=q("s");if(!prN){m.textContent=" Escolha ou digite o prédio / endereço.";return;}if(!inArea(q("jp"),q("en")||prN)&&!m.dataset.ok){m.dataset.ok=1;m.textContent=" Atenção: esse endereço não pertence ao nosso território. Confira o endereço. Para colocar mesmo assim, clique em Adicionar de novo.";return;}n=["","",prN,esc(po),q("en")||prN,"",q("jp"),"","",ts,"n"+ts];g.r.push(n);}
  else{var b=g.r[v],at=v;g.r.forEach(function(x,i){if(x[2]===b[2]&&x[4]===b[4])at=i;});n=["","",b[2],esc(po),b[4],"",b[6],b[7],"",ts,"n"+ts];g.r.splice(at+1,0,n);}
  s.h.unshift({t:ts,by:by,n:g.n,pr:n[2],po:po});save(CUR);render();
 }
@@ -536,9 +544,9 @@ T.onclick=function(e){var t=e.target;
  if(t.dataset.add!==undefined)openForm(+t.dataset.add);
  if(t.dataset.go!==undefined)addDoor(+t.dataset.go);
 };
-T.oninput=function(e){var m=/^(en|jp)(\d+)$/.exec(e.target.id);if(!m)return;var g=m[2],a=document.getElementById("mv"+g),q=mq(document.getElementById("jp"+g).value.trim(),document.getElementById("en"+g).value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");};
+T.oninput=function(e){var m0=/^(en|jp|s)(\d+)$/.exec(e.target.id);if(m0){fxMapa(+m0[2]);return;}var m=null;if(!m)return;var g=m[2],a=document.getElementById("mv"+g),q=mq(document.getElementById("jp"+g).value.trim(),document.getElementById("en"+g).value.trim());if(q)a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);else a.removeAttribute("href");};
 T.onchange=function(e){var t=e.target;
- if(t.classList.contains("sel")){document.getElementById("n"+t.id.slice(1)).hidden=t.value!=="-1";return;}
+ if(t.classList.contains("sel")||t.classList.contains("selx")){fxMapa(+t.id.slice(1));return;}
  var k=t.dataset.k;if(!k)return;
  var p=k.split("_"),x=S[CUR].g[p[0]].r[p[1]];
  if(t.type==="date")x[0]=t.value;else x[1]=t.value;
