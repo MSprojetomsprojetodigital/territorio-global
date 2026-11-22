@@ -515,7 +515,7 @@ function render(){
   if(gi<G.length-1)for(var k=0;k<3;k++)h+='<tr class="gap"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
  });
  T.innerHTML=h;
- if(ADM)renderAdm();
+ if(ADM&&VA&&!VA.hidden)renderAdm();
 }
 var FX={};
 function selIdx(gi){var v=(document.getElementById("s"+gi).value||"").trim(),L=FX[gi]||[];for(var k=0;k<L.length;k++)if(L[k][0]===v)return L[k][1];return -1;}
@@ -567,6 +567,7 @@ async function geo(q){q=toHalf(un(q)).trim();if(!q)return null;if(GEO[q]!==undef
 function km(a,b){var r=Math.PI/180,dl=(b[0]-a[0])*r,dg=(b[1]-a[1])*r,x=Math.pow(Math.sin(dl/2),2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.pow(Math.sin(dg/2),2);return 12742*Math.asin(Math.sqrt(x));}
 // ---------- administração ----------
 var VA=document.getElementById("va"),LK=document.getElementById("lk"),AP=document.getElementById("ap");
+function admAuto(){if(ADM||!MK)return;try{if(localStorage.getItem("tadmk")===MK){ADM=true;LW=null;}else if(localStorage.getItem("tadmk"))localStorage.removeItem("tadmk");}catch(_){}}
 function lockView(){
  AP.hidden=true;AP.innerHTML="";LK.hidden=false;
  LK.innerHTML=(MK?'<p class="hn">Para entrar, digite a chave mestra e a senha.</p>':'<p class="hn">Primeira configuração: crie a chave mestra (mínimo 6 caracteres) e a senha dos responsáveis (mínimo 4 caracteres). Guarde bem a chave mestra.</p>')
@@ -579,6 +580,7 @@ async function enter(){
  var kh=await hash("mk:"+k),ph=await hash(p);
  if(MK){if(MK!==kh||PH!==ph){m.textContent="Chave mestra ou senha incorreta.";return;}}
  else{MK=kh;PH=ph;saveCfg();}
+ try{localStorage.setItem("tadmk",MK);}catch(_){}
  ADM=true;LW=null;LK.hidden=true;LK.innerHTML="";AP.hidden=false;renderAdm();
 }
 function lastV(tid,x){if(x[0])return{d:x[0],c:x[1]};var a=(S[tid].vh[x[10]]||[]).filter(function(e){return e.d;});return a.length?a[a.length-1]:null;}
@@ -610,7 +612,7 @@ function renderAdm(){
  });
  hs.sort(function(a,b){return b.t-a.t;});ar.sort(function(a,b){return b.a.t-a.a.t;});
  var hh=hs.map(function(e){return'<tr><td><input type="checkbox" class="hps" data-k="'+e.tid+'|'+e.t+'"></td><td>'+dmy(e.t)+'</td><td>'+esc(e.by)+'</td><td>'+hist(e)+'</td></tr>';}).join("");
- AP.innerHTML='<p><button class="btn" id="aout">Sair desta área</button></p>'
+ AP.innerHTML='<p><button class="btn" id="aout" style="background:linear-gradient(90deg,#1f7ae0,#29c7e6);color:#fff;border-color:#1f7ae0;font-weight:700">🔒 Sair do site</button> <span class="hn">Você continua conectado até clicar aqui.</span></p>'
  +'<div class="sec"><h4>Trocar senha e chave mestra</h4><div class="fm adm"><input id="np" type="password" placeholder="Nova senha (mínimo 4 caracteres)"><input id="nm" type="password" placeholder="Nova chave mestra (opcional)"><button class="btn" id="tps">Salvar</button></div><p class="mg" id="tpm"></p></div>'
  +'<div class="sec"><h4>Reset dos territórios</h4><p class="hn">Apaga a data e a condição de todas as portas de todos os territórios. As portas marcadas como "Não quer visita" ficam como estão. O histórico de visitas não é apagado. As portas visitadas nos últimos 14 dias (pela data) não são apagadas, para não visitar de novo cedo demais; elas ficam guardadas no histórico abaixo. As portas VAZIO, de outros idiomas e Porta inexistente saem do território e vão para Portas retiradas no reset, de onde podem voltar.'+(RS.length?' Último reset: '+dmy(RS[0])+(window.RSN&&RSN[0]&&RSN[0].t===RS[0]?' por '+esc(RSN[0].by):'')+'.':'')+'</p>'+(RC?'<div class="fm rsf"><select id="rsn"><option value="">Seu nome…</option>'+DL.map(function(n){return'<option>'+esc(n)+'</option>';}).join('')+'</select><input id="rsp" type="password" placeholder="Senha"></div>':'')+'<button class="btn rd'+(RC?' go':'')+'" id="rst">'+(RC?'Confirmar: apagar datas e condições':'Resetar todos os territórios')+'</button>'+(RC?' <button class="btn" id="rcn">Cancelar</button>':'')+'<p class="ok" id="rsm"></p>'+(function(){var K=window.RK||[];if(!K.length)return'';return'<h5 class="rkh">Portas mantidas no reset (visitadas nos 14 dias antes)</h5>'+K.map(function(r){var d=new Date(r.t),ds=String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear(),by=(window.RSN||[]).filter(function(x){return x.t===r.t;})[0];
    var por={};(r.p||[]).forEach(function(x){(por[x.tid]=por[x.tid]||[]).push(x);});
@@ -750,7 +752,7 @@ VA.onclick=function(e){var id=e.target.id;
  if(id==="cfo"){cfDo();return;}
  if(id==="cfc"){PA=null;var o=document.querySelectorAll(".cfb");o.forEach(function(x){x.innerHTML="";});return;}
  if(id==="aent")enter();
- if(id==="aout"){ADM=false;RC=0;ED="";lockView();}
+ if(id==="aout"){ADM=false;RC=0;ED="";try{localStorage.removeItem("tadmk");}catch(_){}lockView();}
  if(id==="tps")setPin();
  if(id==="rst"){if(RC)doReset();else{RC=1;renderAdm();}}
  if(id==="rcn"){RC=0;renderAdm();}
@@ -938,8 +940,8 @@ async function dlProg(kind){var msg=document.getElementById("pgdm"),c=progCanvas
 function sv(v){
  document.querySelectorAll(".tb").forEach(function(b){b.classList.toggle("on",b.dataset.v===v);});
  document.getElementById("vi").hidden=v!=="vi";document.getElementById("vt").hidden=v!=="vt";VA.hidden=v!=="va";document.getElementById("vp").hidden=v!=="vp";var vmE=document.getElementById("vm");if(vmE)vmE.hidden=v!=="vm";if(v==="vm"&&window.mapaRender)mapaRender();if(v!=="vp")PE=false;else renderProg();
- if(v==="va"&&!ADM)lockView();
- if(v!=="va"){ADM=false;RC=0;ED="";AP.innerHTML="";AP.hidden=true;}
+ if(v==="va"){admAuto();if(ADM){LK.hidden=true;LK.innerHTML="";AP.hidden=false;renderAdm();}else lockView();}
+ if(v!=="va"){RC=0;ED="";AP.innerHTML="";AP.hidden=true;}
  if(v==="vi")document.title="Territórios da congregação";
  window.scrollTo(0,0);
 }
@@ -978,10 +980,10 @@ render();renderIdx();sv("vp");
  var g=d.doc("territorios/geral"),p=d.doc("territorios/prog"),erro=function(){};
  if(adm){DB=d;gen=g;pdoc=p;cfg=d.doc("territorios/config");var pp=d.doc("territorios/pin"),pin0;
   pp.onSnapshot(function(sn){pin0=sn.exists?sn.data().pin||null:null;},erro);
-  cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);if(!ADM&&!VA.hidden)lockView();},erro);}
+  cfg.onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;MK=sn.exists?sn.data().master||null:null;if(PH&&PH!==pin0)pp.set({pin:PH}).catch(erro);admAuto();if(!VA.hidden){if(ADM){if(AP.hidden){LK.hidden=true;LK.innerHTML="";AP.hidden=false;renderAdm();}}else lockView();}},erro);}
  else{pdoc=p;DB=d;d.doc("territorios/pin").onSnapshot(function(sn){PH=sn.exists?sn.data().pin||null:null;},erro);}
  p.onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.pg){LAST.pg=v;PG=JSON.parse(v);if(!PMU)PM=pickPM();if(!VP.hidden)renderProg();}},erro);
- g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};window.MC=o.mc2||{};window.GN=o.gn||{};window.RK=o.rk||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM)renderAdm();}},erro);
+ g.onSnapshot(function(sn){window.__genLoaded=1;if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST.gen){LAST.gen=v;var o=JSON.parse(v);RS=o.rs||[];AREA=o.area!==undefined?o.area:null;DL=o.dl||DL;LE=o.le||null;window.TG=o.tg||{};window.GX=o.gx||[];window.ZID=o.zid||"860 418 5501";window.RSN=o.rsn||[];window.PC=o.pc||{};window.MC=o.mc2||{};window.GN=o.gn||{};window.RK=o.rk||[];if(window.applyTG)applyTG();renderIdx();if(!VP.hidden)renderProg();if(ADM&&VA&&!VA.hidden)renderAdm();}},erro);
  Object.keys(TD).forEach(function(tid){d.doc("territorios/t"+tid).onSnapshot(function(sn){if(!sn.exists)return;var v=sn.data().data;if(v&&v!==LAST[tid]){LAST[tid]=v;load(tid,v);if(tid===CUR||ADM)render();}},erro);});
 })();
 </script>
