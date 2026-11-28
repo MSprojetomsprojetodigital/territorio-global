@@ -475,7 +475,7 @@ function fix(tid){var g=S[tid].g;
  if(tid==="7"&&g.length>1&&!g[0].n&&g[0].r[0]&&g[0].r[0][2]==="Miyata Sou"&&g[1].n==="1"){g[1].r=g[0].r.concat(g[1].r);g.splice(0,1);}
  g.forEach(function(gr,gi){if(!gr.id)gr.id=pre(tid)+"G"+gi;if(tid==="7"&&!gr.n&&gr.r[0]&&gr.r[0][2]==="インペリアルコート")gr.n="4";
   gr.r.forEach(function(x,i){if(x[8]==="r"&&!x[1])x[1]=NQ;if(!x[10])x[10]="m"+tid+"_"+gi+"_"+i+"_"+Date.now().toString(36);});});}
-function initT(tid){var g=JSON.parse(JSON.stringify(TD[tid].g));g.forEach(function(gr,gi){gr.id=pre(tid)+"G"+gi;gr.r.forEach(function(x,i){if(L[x[1]])x[1]=L[x[1]];x[10]=pre(tid)+"g"+gi+"r"+i;});});S[tid]={g:g,h:[],vh:{},ar:[],u:[]};fix(tid);}
+function initT(tid){var g=JSON.parse(JSON.stringify(TD[tid].g));g.forEach(function(gr,gi){gr.id=pre(tid)+"G"+gi;gr.r.forEach(function(x,i){if(L[x[1]])x[1]=L[x[1]];x[10]=pre(tid)+"g"+gi+"r"+i;});});S[tid]={g:g,h:[],vh:{},ar:[],u:[]};fix(tid);g.forEach(function(gr){if(gr&&gr.r)ordPortas(gr.r);});}
 Object.keys(TD).forEach(initT);
 async function hash(p){try{var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("t7:"+p));return Array.from(new Uint8Array(b)).map(function(x){return("0"+x.toString(16)).slice(-2);}).join("");}catch(e){return"p"+btoa(unescape(encodeURIComponent("t7:"+p)));}}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
