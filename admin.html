@@ -529,6 +529,8 @@ function openForm(gi){
  g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;var lab=un(x[2])+" — "+un(x[4]);FX[gi].push([lab,i]);o+='<option value="'+esc(lab)+'"></option>';}});
  document.getElementById("f"+gi).innerHTML=' <span class="fm fmx"><input class="selx" id="s'+gi+'" list="dl'+gi+'" autocomplete="off" placeholder="Prédio ou endereço — escolha ou digite um novo"><datalist id="dl'+gi+'">'+o+'</datalist><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'" hidden><input id="en'+gi+'" placeholder="Endereço (romaji, ex: Minato-ku Inaei 4-8-7)"><input id="jp'+gi+'" placeholder="住所 (ex: 愛知県名古屋市港区…)"></span><a id="mv'+gi+'" class="btn mvb off" target="_blank" rel="noopener">🗺️ Conferir no mapa</a><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="hn fxh" id="h'+gi+'">Escolha um endereço da lista ou digite um novo.</span><span class="mg" id="m'+gi+'"></span>';
 }
+function mesmoPr(a,b){var ea=un(a[4]||""),ja=un(a[6]||"");return un(a[2])===un(b[2])&&((ea&&ea===un(b[4]||""))||(ja&&ja===un(b[6]||"")));}
+function ordPortas(r){var feito=[];r.forEach(function(x,i){if(feito[i])return;var pos=[];r.forEach(function(y,j){if(!feito[j]&&mesmoPr(x,y)){pos.push(j);feito[j]=1;}});if(pos.length<2)return;var its=pos.map(function(j){return r[j];}).sort(function(a,b){return un(a[3]).localeCompare(un(b[3]),undefined,{numeric:true,sensitivity:"base"});});pos.forEach(function(j,k){r[j]=its[k];});});}
 async function addDoor(gi){
  var s=S[CUR],g=s.g[gi],v=selIdx(gi),po=document.getElementById("p"+gi).value.trim(),n,m=document.getElementById("m"+gi),by=document.getElementById("w"+gi).value.trim(),pn=document.getElementById("k"+gi).value.trim(),ts=Date.now();
  if(!po){m.textContent=" Digite a porta.";return;}
@@ -539,6 +541,7 @@ async function addDoor(gi){
  if(PH!==hh){m.textContent=" Senha incorreta.";return;}
  if(v<0){var q=function(i){return esc(document.getElementById(i+gi).value.trim());},prN=q("s");if(!prN){m.textContent=" Escolha ou digite o prédio / endereço.";return;}if(!inArea(q("jp"),q("en")||prN)&&!m.dataset.ok){m.dataset.ok=1;m.textContent=" Atenção: esse endereço não pertence ao nosso território. Confira o endereço. Para colocar mesmo assim, clique em Adicionar de novo.";return;}n=["","",prN,esc(po),q("en")||prN,"",q("jp"),"","",ts,"n"+ts];g.r.push(n);}
  else{var b=g.r[v],at=v;g.r.forEach(function(x,i){if(x[2]===b[2]&&x[4]===b[4])at=i;});n=["","",b[2],esc(po),b[4],"",b[6],b[7],"",ts,"n"+ts];g.r.splice(at+1,0,n);}
+ ordPortas(g.r);
  s.h.unshift({t:ts,by:by,n:g.n,pr:n[2],po:po});save(CUR);render();
 }
 T.onclick=function(e){var t=e.target;
@@ -650,7 +653,7 @@ function saveEd(){var o=edX(),m=document.getElementById("edm");if(!o)return;var 
  var mvv=document.getElementById("edmv"),mvTo=(mvv&&mvv.value!==o.tid+"|"+ED.split("|")[1])?mvv.value:"";if(mvTo)ch.push("Território/grupo");if(!ch.length){m.textContent="Nada foi alterado.";return;}
  if(nv[2]===""||nv[3]===""){m.textContent="O prédio e a porta não podem ficar vazios.";return;}
  var nj=nv[6]!==undefined?nv[6]:x[6],ne=nv[4]!==undefined?nv[4]:x[4];if((nv[4]!==undefined||nv[6]!==undefined)&&!inArea(nj,ne)&&!m.dataset.ok){m.dataset.ok=1;m.textContent="Atenção: esse endereço não pertence ao nosso território. Para salvar mesmo assim, clique em Salvar de novo.";return;}
- for(var k in nv)x[k]=nv[k];if(mvTo){var mq2=mvTo.split("|"),tg=S[mq2[0]]&&S[mq2[0]].g[+mq2[1]];if(tg){var de=TD[o.tid].t+" grupo "+(o.g.n||"—"),pa=TD[mq2[0]].t+" grupo "+(tg.n||"—");o.g.r.splice(+ED.split("|")[2],1);var at=-1;tg.r.forEach(function(y,i){if(un(y[2])===un(x[2]))at=i;});if(at>=0)tg.r.splice(at+1,0,x);else tg.r.push(x);ch[ch.indexOf("Território/grupo")]="Território/grupo (de "+de+" para "+pa+")";if(mq2[0]!==o.tid){S[mq2[0]].h.unshift({t:Date.now(),by:by,n:tg.n,k:"e",pr:x[2],po:un(x[3]),ch:"Veio de "+de});save(mq2[0]);}ED=mq2[0]+"|"+mq2[1]+"|"+tg.r.indexOf(x);}}
+ for(var k in nv)x[k]=nv[k];if(mvTo){var mq2=mvTo.split("|"),tg=S[mq2[0]]&&S[mq2[0]].g[+mq2[1]];if(tg){var de=TD[o.tid].t+" grupo "+(o.g.n||"—"),pa=TD[mq2[0]].t+" grupo "+(tg.n||"—");o.g.r.splice(+ED.split("|")[2],1);var at=-1;tg.r.forEach(function(y,i){if(un(y[2])===un(x[2]))at=i;});if(at>=0)tg.r.splice(at+1,0,x);else tg.r.push(x);ordPortas(tg.r);ch[ch.indexOf("Território/grupo")]="Território/grupo (de "+de+" para "+pa+")";if(mq2[0]!==o.tid){S[mq2[0]].h.unshift({t:Date.now(),by:by,n:tg.n,k:"e",pr:x[2],po:un(x[3]),ch:"Veio de "+de});save(mq2[0]);}ED=mq2[0]+"|"+mq2[1]+"|"+tg.r.indexOf(x);}}
  S[o.tid].h.unshift({t:Date.now(),by:by,n:o.g.n,k:"e",pr:x[2],po:un(x[3]),ch:ch.join(", ")});
  save(o.tid);render();
  var m2=document.getElementById("edm");if(m2){m2.className="ok";m2.textContent="Alterações salvas. O marcador do mapa 📌 já usa o endereço novo.";}}
@@ -658,6 +661,7 @@ function restore(key){var p=key.split("|"),tid=p[0],i=+p[1],s=S[tid],a=s&&s.ar[i
  if(!g){m.className="mg";m.textContent="O grupo dessa porta não existe mais.";return;}
  var x=a.x,at=-1;x[0]="";x[1]="";g.r.forEach(function(y,j){if(y[2]===x[2]&&y[4]===x[4])at=j;});
  if(at<0)g.r.push(x);else g.r.splice(at+1,0,x);
+ ordPortas(g.r);
  s.ar.splice(i,1);s.h.unshift({t:Date.now(),by:"Anciãos e Servos Ministeriais",n:g.n,k:"v",pr:x[2],po:un(x[3])});
  save(tid);render();var m2=document.getElementById("arm");if(m2){m2.className="ok";m2.textContent="A porta voltou para o território "+tid+", grupo "+(un(g.n)||"sem número")+".";}}
 async function findNear(){
@@ -699,7 +703,7 @@ function newTerr(){
  var obs=esc(ob);if(og)obs=(obs?obs+"<br>":"")+"Veio da congregação "+esc(og);
  row=["","",esc(pr),esc(po),esc(en),obs,esc(jp),esc(bk),"",ts,"n"+ts];
  if(sel==="new"){tid=v("ntt");var nu=v("ntn");if(!nu){m.textContent="Digite o número do grupo novo.";return;}if(S[tid].g.some(function(y){return y.n===esc(nu);})){m.textContent="Esse território já tem um grupo "+nu+".";return;}g={id:pre(tid)+"T"+ts,n:esc(nu),o:og,r:[row]};S[tid].g.push(g);}
- else{var p=sel.split("|");tid=p[0];g=S[tid].g[+p[1]];if(!g)return;var at=-1;g.r.forEach(function(y,j){if(un(y[2])===pr&&((jp&&un(y[6])===jp)||(en&&un(y[4])===en)))at=j;});if(at<0)g.r.push(row);else g.r.splice(at+1,0,row);}
+ else{var p=sel.split("|");tid=p[0];g=S[tid].g[+p[1]];if(!g)return;var at=-1;g.r.forEach(function(y,j){if(un(y[2])===pr&&((jp&&un(y[6])===jp)||(en&&un(y[4])===en)))at=j;});if(at<0)g.r.push(row);else g.r.splice(at+1,0,row);ordPortas(g.r);}
  S[tid].h.unshift({t:ts,by:by,n:g.n,k:sel==="new"?"t":"a",o:og,pr:esc(pr),po:po});
  save(tid);render();
  var m2=document.getElementById("ntm");if(m2){m2.className="ok";m2.textContent="Endereço acrescentado no território "+TD[tid].t+", grupo "+(un(g.n)||"sem número")+". O marcador do mapa 📌 já foi criado pelo endereço.";}
