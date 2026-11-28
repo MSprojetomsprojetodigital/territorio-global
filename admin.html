@@ -357,7 +357,9 @@ select.hrs{min-width:86px}.hrn{width:86px}
 .instbx .instnow{background:linear-gradient(90deg,#1f7ae0,#29c7e6);color:#fff;border-color:transparent}.instbx .nmais{background:#fff;color:#5d7894;border-color:#d6e2f0}.instbx ol li:first-child b:first-child{color:#b3261e}
 table.pg th,body.fx table.pg th{color:#111!important;font-weight:700;text-shadow:none}
 #splash .sp1b{margin-top:8px;font:600 clamp(16px,4vw,24px) "DM Sans",Arial,sans-serif;color:#bdefff;letter-spacing:1px}
-.fmx .selx{min-width:300px;flex:1 1 300px}.fmx #mv0,.fmx .mvb{white-space:nowrap}.mvb.off{opacity:.45;pointer-events:none}.fxh{display:block;margin:4px 0 0 4px;font-size:12.5px}
+.fmx .dlw{position:relative;display:inline-flex;min-width:300px;flex:1 1 300px}.fmx .dlw .selx{flex:1 1 auto;width:100%;min-width:0;box-sizing:border-box}
+.dlx{position:fixed;z-index:9999;background:#fff;border:1px solid #c9d6e8;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.18);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.dlx .dli{padding:11px 14px;border-bottom:1px solid #eef2f8;cursor:pointer;font-size:15px;line-height:1.35;color:#1f2a3a}.dlx .dli:last-child{border-bottom:0}.dlx .dli:hover,.dlx .dli:active{background:#e8f1ff}.dlx .dln{padding:11px 14px;font-size:14px;color:#6b7a90}.dlx .dlc{padding:6px 14px;font-size:12px;color:#6b7a90;background:#f6f9fd;border-bottom:1px solid #eef2f8;position:sticky;top:0}.fmx #mv0,.fmx .mvb{white-space:nowrap}.mvb.off{opacity:.45;pointer-events:none}.fxh{display:block;margin:4px 0 0 4px;font-size:12.5px}
 </style>
 <meta name="google" content="notranslate">
 <link rel="apple-touch-icon" href="icone-180.png?v=3">
@@ -524,10 +526,30 @@ function fxMapa(gi){var a=document.getElementById("mv"+gi);if(!a)return;var g=S[
  if(q){a.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);a.classList.remove("off");}else{a.removeAttribute("href");a.classList.add("off");}
  var n=document.getElementById("n"+gi),tx2=(document.getElementById("s"+gi).value||"").trim();if(n)n.hidden=!(tx2&&i<0);
  var h=document.getElementById("h"+gi);if(h)h.textContent=!tx2?"Escolha um endereço da lista ou digite um novo.":(i>=0?"✓ Endereço que já existe no território.":"➕ Endereço novo — preencha o endereço e confira no mapa.");}
+var DLG=null,DLIN=false;
+function dlPop(){var d=document.getElementById("dlxPop");if(d)return d;d=document.createElement("div");d.id="dlxPop";d.className="dlx";d.hidden=true;document.body.appendChild(d);
+ d.addEventListener("pointerdown",function(){DLIN=true;});d.addEventListener("mousedown",function(e){e.preventDefault();});
+ d.addEventListener("click",function(e){DLIN=false;var it=e.target.closest(".dli");if(!it||DLG===null)return;var gi=DLG,inp=document.getElementById("s"+gi),L=FX[gi]||[];if(!inp||!L[+it.dataset.i])return;inp.value=L[+it.dataset.i][0];dlHide();fxMapa(gi);var pp=document.getElementById("p"+gi);if(pp)pp.focus();});
+ return d;}
+function dlHide(){var d=document.getElementById("dlxPop");if(d)d.hidden=true;DLG=null;DLIN=false;}
+function dlPos(){if(DLG===null)return;var inp=document.getElementById("s"+DLG),d=dlPop();if(!inp||!inp.isConnected){dlHide();return;}
+ var r=inp.getBoundingClientRect(),W=window.innerWidth,H=window.visualViewport?window.visualViewport.height:window.innerHeight,w=Math.min(Math.max(r.width,320),W-8),below=H-r.bottom-10,above=r.top-10,up=below<220&&above>below;
+ d.style.width=w+"px";d.style.left=Math.max(4,Math.min(r.left,W-w-4))+"px";d.style.maxHeight=Math.max(160,Math.min(440,up?above:below))+"px";
+ if(up){d.style.top="auto";d.style.bottom=(window.innerHeight-r.top+3)+"px";}else{d.style.bottom="auto";d.style.top=(r.bottom+3)+"px";}}
+function dlShow(gi){var inp=document.getElementById("s"+gi);if(!inp)return;DLG=gi;var d=dlPop(),L=FX[gi]||[],v=inp.value.trim(),ex=L.some(function(e){return e[0]===v;}),ws=ex?[]:nmPr(v).split(/[—\-,]+/).filter(Boolean),h="",n=0;
+ L.forEach(function(e,i){var lb=nmPr(e[0]);if(ws.every(function(w){return lb.indexOf(w)>=0;})){n++;h+='<div class="dli" data-i="'+i+'">'+esc(e[0])+'</div>';}});
+ d.innerHTML=(n?'<div class="dlc">'+n+(n===1?' endereço':' endereços')+'</div>'+h:'<div class="dln">Nenhum endereço da lista combina. Pode continuar digitando um endereço novo.</div>');d.scrollTop=0;d.hidden=false;dlPos();}
+document.addEventListener("focusin",function(e){var t=e.target;if(t&&t.classList&&t.classList.contains("selx")&&/^s\d+$/.test(t.id))dlShow(+t.id.slice(1));});
+document.addEventListener("click",function(e){var t=e.target;if(t&&t.classList&&t.classList.contains("selx")&&/^s\d+$/.test(t.id))dlShow(+t.id.slice(1));});
+document.addEventListener("input",function(e){var t=e.target;if(t&&t.classList&&t.classList.contains("selx")&&/^s\d+$/.test(t.id))dlShow(+t.id.slice(1));});
+document.addEventListener("focusout",function(e){var t=e.target;if(t&&t.classList&&t.classList.contains("selx"))setTimeout(function(){if(!DLIN&&!(document.activeElement&&document.activeElement.classList.contains("selx")))dlHide();},250);});
+document.addEventListener("pointerdown",function(e){if(DLG===null)return;var d=document.getElementById("dlxPop");if(d&&d.contains(e.target))return;if(e.target.classList&&e.target.classList.contains("selx"))return;dlHide();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&DLG!==null)dlHide();});
+window.addEventListener("resize",dlPos);window.addEventListener("scroll",dlPos,true);if(window.visualViewport){visualViewport.addEventListener("resize",dlPos);visualViewport.addEventListener("scroll",dlPos);}
 function openForm(gi){
  var g=S[CUR].g[gi],seen={},o="";FX[gi]=[];
  g.r.forEach(function(x,i){var key=x[2]+"|"+x[4];if(!seen[key]){seen[key]=1;var lab=un(x[2])+" — "+un(x[4]);FX[gi].push([lab,i]);o+='<option value="'+esc(lab)+'"></option>';}});
- document.getElementById("f"+gi).innerHTML=' <span class="fm fmx"><input class="selx" id="s'+gi+'" list="dl'+gi+'" autocomplete="off" placeholder="Prédio ou endereço — escolha ou digite um novo"><datalist id="dl'+gi+'">'+o+'</datalist><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'" hidden><input id="en'+gi+'" placeholder="Endereço (romaji, ex: Minato-ku Inaei 4-8-7)"><input id="jp'+gi+'" placeholder="住所 (ex: 愛知県名古屋市港区…)"></span><a id="mv'+gi+'" class="btn mvb off" target="_blank" rel="noopener">🗺️ Conferir no mapa</a><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="hn fxh" id="h'+gi+'">Escolha um endereço da lista ou digite um novo.</span><span class="mg" id="m'+gi+'"></span>';
+ document.getElementById("f"+gi).innerHTML=' <span class="fm fmx"><span class="dlw"><input class="selx" id="s'+gi+'" autocomplete="off" placeholder="Prédio ou endereço — escolha ou digite um novo"></span><input id="p'+gi+'" placeholder="Porta (ex: T 10-401)" size="16"><span id="n'+gi+'" hidden><input id="en'+gi+'" placeholder="Endereço (romaji, ex: Minato-ku Inaei 4-8-7)"><input id="jp'+gi+'" placeholder="住所 (ex: 愛知県名古屋市港区…)"></span><a id="mv'+gi+'" class="btn mvb off" target="_blank" rel="noopener">🗺️ Conferir no mapa</a><input id="w'+gi+'" placeholder="Seu nome" size="14"><input id="k'+gi+'" type="password" placeholder="Senha" size="5"><button class="btn" data-go="'+gi+'">Adicionar</button><button class="btn rd" type="button" data-fx="'+gi+'">Cancelar</button></span><span class="hn fxh" id="h'+gi+'">Escolha um endereço da lista ou digite um novo.</span><span class="mg" id="m'+gi+'"></span>';
 }
 function nmPr(v){return un(v||"").normalize("NFKC").toLowerCase().replace(/[\s\u3000]+/g,"").replace(/[\u2010-\u2015\u2212\uff0d]/g,"-");}
 function mesmoEnd(x,y){return x===y||x.indexOf(y+"-")===0||y.indexOf(x+"-")===0;}
