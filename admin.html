@@ -494,7 +494,7 @@ function saveCfg(){try{if(cfg){cfg.set({pin:PH,master:MK});if(window.FB_DB)FB_DB
 function load(tid,v){var o=JSON.parse(v),s=S[tid];
  if(Array.isArray(o)){s.g=o;}else{s.g=o.g;s.h=o.h||[];s.vh=o.vh||{};s.ar=o.ar||[];s.u=o.u||[];
   if(tid==="7"&&!RS.length&&AREA===null&&((o.rs&&o.rs.length)||o.area!=null)){RS=o.rs||[];AREA=o.area!=null?o.area:null;saveGen();}}
- fix(tid);}
+ fix(tid);(s.g||[]).forEach(function(g){if(g&&g.r)ordPortas(g.r);});}
 function logV(tid,x){var k=x[10],vh=S[tid].vh;(vh[k]=vh[k]||[]).push({t:Date.now(),d:x[0],c:x[1]});}
 function TIDS(){var a=[];TL.forEach(function(gr){gr[1].forEach(function(t){if(TD[t[0]])a.push(t[0]);});});Object.keys(TD).forEach(function(k){if(a.indexOf(k)<0)a.push(k);});return a;}
 function gname(tid,gi){return TD[tid].t+", grupo "+(un(S[tid].g[gi].n)||"sem número");}
